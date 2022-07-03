@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.example.newsgb.utils.EquilateralImageView
+                android:id="@+id/selected_news_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                tool:src="@drawable/example_image" />
+
+            <TextView
+                android:id="@+id/selected_news_header_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tool:text="@string/example_header_text" />
+
+            <TextView
+                android:id="@+id/selected_news_body_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/default_margin"
+                android:textSize="20sp"
+                tool:text="@string/example_body_text" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</FrameLayout>

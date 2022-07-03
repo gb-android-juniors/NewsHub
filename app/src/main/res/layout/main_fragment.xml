@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:tool="http://schemas.android.com/tools">
+
+    <TableLayout
+        android:id="@+id/news_categories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_half_margin"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/last_news_button"
+                android:text="@string/last_news_button_text"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"
+                tool:textStyle="bold"
+                />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/politic_news_button"
+                android:text="@string/politic_news_button_text"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/world_news_button"
+                android:text="@string/world_news_button_text"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_half_margin"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/sport_news_button"
+                android:text="@string/sport_news_button_text"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/economic_news_button"
+                android:text="@string/economic_news_button_text"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/culture_news_button"
+                android:text="@string/culture_news_button_text"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"/>
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginHorizontal="@dimen/default_half_margin"
+
+            android:backgroundTint="@color/white">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/technology_news_button"
+                android:text="@string/technology_news_button_text"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/science_news_button"
+                android:text="@string/science_news_button_text"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/auto_news_button"
+                android:text="@string/auto_news_button_text"
+                android:layout_weight="1"
+                android:backgroundTint="@color/white"/>
+        </TableRow>
+    </TableLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="@dimen/default_margin"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tool:listitem="@layout/activity_recycler_item"/>
+
+</LinearLayout>
