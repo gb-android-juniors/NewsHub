@@ -20,22 +20,18 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/last_news_button"
                 android:text="@string/last_news_button_text"
-                android:layout_weight="1"
-                android:backgroundTint="@color/white"
-                tool:textStyle="bold"
-                />
+                style="@style/NewsCategoryButtonStyle"
+                tool:textStyle="bold"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/politic_news_button"
                 android:text="@string/politic_news_button_text"
-                android:layout_weight="1"
-                android:backgroundTint="@color/white"/>
+                style="@style/NewsCategoryButtonStyle"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/world_news_button"
                 android:text="@string/world_news_button_text"
-                android:layout_weight="1"
-                android:backgroundTint="@color/white"/>
+                style="@style/NewsCategoryButtonStyle"/>
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
@@ -46,20 +42,17 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/sport_news_button"
                 android:text="@string/sport_news_button_text"
-                android:layout_weight="1"
-                android:backgroundTint="@color/white"/>
+                style="@style/NewsCategoryButtonStyle"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/economic_news_button"
                 android:text="@string/economic_news_button_text"
-                android:layout_weight="1"
-                android:backgroundTint="@color/white"/>
+                style="@style/NewsCategoryButtonStyle"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/culture_news_button"
                 android:text="@string/culture_news_button_text"
-                android:layout_weight="1"
-                android:backgroundTint="@color/white"/>
+                style="@style/NewsCategoryButtonStyle"/>
         </TableRow>
         <TableRow
             android:layout_width="match_parent"
@@ -72,27 +65,26 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/technology_news_button"
                 android:text="@string/technology_news_button_text"
-                android:layout_weight="1"
-                android:backgroundTint="@color/white"/>
+                style="@style/NewsCategoryButtonStyle"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/science_news_button"
                 android:text="@string/science_news_button_text"
-                android:layout_weight="1"
-                android:backgroundTint="@color/white"/>
+                style="@style/NewsCategoryButtonStyle"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/auto_news_button"
                 android:text="@string/auto_news_button_text"
-                android:layout_weight="1"
-                android:backgroundTint="@color/white"/>
+                style="@style/NewsCategoryButtonStyle"/>
         </TableRow>
+
+        <View
+            style="@style/Separator"/>
     </TableLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/default_margin"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tool:listitem="@layout/activity_recycler_item"/>
 

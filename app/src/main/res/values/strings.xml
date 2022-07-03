@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NewsGB</string>
+    <string name="app_name" translatable="false">NewsGB</string>
     <string name="last_news_button_text">Last</string>
     <string name="politic_news_button_text">Politic</string>
     <string name="world_news_button_text">World</string>
@@ -9,6 +9,10 @@
     <string name="technology_news_button_text">Technology</string>
     <string name="science_news_button_text">Science</string>
     <string name="auto_news_button_text">Auto</string>
-    <string name="example_header_text">Эксперты американского CBS назвали рост рубля вопреки санкциям потрясающим</string>
-    <string name="example_body_text">Рубль демонстрирует потрясающий рост и входит в список лучших мировых валют в этом году, несмотря на многочисленные антироссийские санкции Запада. Об этом заявили опрошенные американским телеканалом CBS эксперты. По словам специалистов, в обычной ситуации страна, сталкивающаяся с ограничительными мерами США и Евросоюза, теряет инвесторов и страдает от оттока капиталов, что, в свою очередь, приводит к падению национального платежного средства. Однако Россия предприняла невероятно энергичные шаги по предотвращению вывода денег за границу. В сочетании с резким ростом цен на топливо это увеличило спрос на рубль и укрепило его, отмечается в публикации.</string>
+    <string name="news_source">Source:</string>
+    <string name="example_header_text" translatable="false">Эксперты американского CBS назвали рост рубля вопреки санкциям потрясающим</string>
+    <string name="example_body_text" translatable="false">Рубль демонстрирует потрясающий рост и входит в список лучших мировых валют в этом году, несмотря на многочисленные антироссийские санкции Запада. Об этом заявили опрошенные американским телеканалом CBS эксперты. По словам специалистов, в обычной ситуации страна, сталкивающаяся с ограничительными мерами США и Евросоюза, теряет инвесторов и страдает от оттока капиталов, что, в свою очередь, приводит к падению национального платежного средства. Однако Россия предприняла невероятно энергичные шаги по предотвращению вывода денег за границу. В сочетании с резким ростом цен на топливо это увеличило спрос на рубль и укрепило его, отмечается в публикации.</string>
+    <string name="example_resource_name_text" translatable="false">Комсомольская правда</string>
+    <string name="publication_date">Publication date:</string>
+    <string name="example_news_publication_date" translatable="false">01.02.2022</string>
 </resources>

@@ -7,7 +7,8 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/default_margin">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -18,27 +19,60 @@
                 android:id="@+id/selected_news_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/default_margin"
                 tool:src="@drawable/example_image" />
 
             <TextView
                 android:id="@+id/selected_news_header_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/default_margin"
                 android:gravity="center"
-                android:textSize="20sp"
+                android:textSize="@dimen/selected_news_header_text_size"
                 android:textStyle="bold"
                 tool:text="@string/example_header_text" />
 
             <TextView
-                android:id="@+id/selected_news_body_text"
+                android:id="@+id/selected_news_description_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/default_margin"
-                android:textSize="20sp"
+                android:textSize="@dimen/selected_news_description_text_size"
                 tool:text="@string/example_body_text" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/news_source"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/news_source_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textColor="@color/resource_name_color"
+                tool:text="@string/example_resource_name_text" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="@string/publication_date" />
+
+                <TextView
+                    android:id="@+id/publication_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@string/example_news_publication_date" />
+            </LinearLayout>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

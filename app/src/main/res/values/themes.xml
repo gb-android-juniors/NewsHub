@@ -13,4 +13,19 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="NewsCategoryButtonStyle">
+        <item name="android:layout_weight">1</item>
+        <item name="android:backgroundTint">@color/category_button_background_color</item>
+        <item name="android:textColor">@color/category_button_text_color</item>
+        <item name="android:textSize">15sp</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="Separator">
+        <item name="android:layout_height">1px</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">@dimen/default_half_margin</item>
+        <item name="android:background">@color/separator_color</item>
+    </style>
 </resources>
