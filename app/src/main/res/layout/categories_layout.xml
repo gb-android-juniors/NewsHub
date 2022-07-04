@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/default_margin">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                style="@style/NewsCategoryLayoutStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/NewsCategoryCardImageStyle"
+                    android:src="@drawable/latest" />
+
+                <TextView
+                    android:id="@+id/last_news_button"
+                    style="@style/NewsCategoryTextStyle"
+                    android:text="@string/last_news_button_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/NewsCategoryLayoutStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/NewsCategoryCardImageStyle"
+                    android:src="@drawable/politic" />
+
+                <TextView
+                    android:id="@+id/politic_news_button"
+                    style="@style/NewsCategoryTextStyle"
+                    android:text="@string/politic_news_button_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/NewsCategoryLayoutStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/NewsCategoryCardImageStyle"
+                    android:src="@drawable/world" />
+
+                <TextView
+                    android:id="@+id/world_news_button"
+                    style="@style/NewsCategoryTextStyle"
+                    android:text="@string/world_news_button_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/NewsCategoryLayoutStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/NewsCategoryCardImageStyle"
+                    android:src="@drawable/sport" />
+
+                <TextView
+                    android:id="@+id/sport_news_button"
+                    style="@style/NewsCategoryTextStyle"
+                    android:text="@string/sport_news_button_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/NewsCategoryLayoutStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/NewsCategoryCardImageStyle"
+                    android:src="@drawable/economic" />
+
+                <TextView
+                    android:id="@+id/economic_news_button"
+                    style="@style/NewsCategoryTextStyle"
+                    android:text="@string/economic_news_button_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/NewsCategoryLayoutStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/NewsCategoryCardImageStyle"
+                    android:src="@drawable/culture" />
+
+                <TextView
+                    android:id="@+id/culture_news_button"
+                    style="@style/NewsCategoryTextStyle"
+                    android:text="@string/culture_news_button_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/NewsCategoryLayoutStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/NewsCategoryCardImageStyle"
+                    android:src="@drawable/technology" />
+
+                <TextView
+                    android:id="@+id/technology_news_button"
+                    style="@style/NewsCategoryTextStyle"
+                    android:text="@string/technology_news_button_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/NewsCategoryLayoutStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/NewsCategoryCardImageStyle"
+                    android:src="@drawable/science" />
+
+                <TextView
+                    android:id="@+id/science_news_button"
+                    style="@style/NewsCategoryTextStyle"
+                    android:text="@string/science_news_button_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                style="@style/NewsCategoryLayoutStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    style="@style/NewsCategoryCardImageStyle"
+                    android:src="@drawable/auto" />
+
+                <TextView
+                    android:id="@+id/auto_news_button"
+                    style="@style/NewsCategoryTextStyle"
+                    android:text="@string/auto_news_button_text" />
+            </LinearLayout>
+        </LinearLayout>
+    </HorizontalScrollView>
+</ScrollView>

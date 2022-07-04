@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/app_background_color">
 
     <TextView
         android:id="@+id/news_header"
@@ -12,7 +13,6 @@
         android:layout_margin="@dimen/default_half_margin"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/news_resource_name"
-        app:layout_constraintBottom_toTopf="@+id/news_resource_name"
         app:layout_constraintEnd_toStartOf="@+id/news_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

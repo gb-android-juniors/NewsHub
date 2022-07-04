@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="category_button_background_color">#201F1F</color>
+    <color name="app_background_color">#2B2929</color>
     <color name="category_button_text_color">#BCACAC</color>
     <color name="separator_color">#BCACAC</color>
 </resources>

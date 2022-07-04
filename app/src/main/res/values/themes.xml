@@ -14,12 +14,28 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="NewsCategoryButtonStyle">
-        <item name="android:layout_weight">1</item>
-        <item name="android:backgroundTint">@color/category_button_background_color</item>
+
+    <style name="NewsCategoryLayoutStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:background">@color/app_background_color</item>
         <item name="android:textColor">@color/category_button_text_color</item>
+        <item name="android:layout_marginBottom">@dimen/default_margin</item>
+    </style>
+
+    <style name="NewsCategoryTextStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:textSize">15sp</item>
         <item name="textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_margin">@dimen/default_half_margin</item>
+    </style>
+
+    <style name="NewsCategoryCardImageStyle">
+        <item name="android:layout_height">100dp</item>
+        <item name="android:layout_width">100dp</item>
     </style>
 
     <style name="Separator">
