@@ -11,4 +11,7 @@
     <string name="auto_news_button_text">Авто</string>
     <string name="news_source">Источник:</string>
     <string name="publication_date">Дата публикации:</string>
+    <string name="news">Новости</string>
+    <string name="bookmarks">Закладки</string>
+    <string name="settings">Настройки</string>
 </resources>

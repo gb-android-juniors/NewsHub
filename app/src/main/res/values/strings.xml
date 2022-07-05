@@ -15,5 +15,8 @@
     <string name="example_resource_name_text" translatable="false">Комсомольская правда</string>
     <string name="publication_date">Publication date:</string>
     <string name="example_news_publication_date" translatable="false">01.02.2022</string>
-    <string name="example_first_news_header_text">Владимир Путин вновь прибыл в пострадавшую от потопа Иркутскую область</string>
+    <string name="example_first_news_header_text" translatable="false">Владимир Путин вновь прибыл в пострадавшую от потопа Иркутскую область</string>
+    <string name="news">News</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="settings">Settings</string>
 </resources>

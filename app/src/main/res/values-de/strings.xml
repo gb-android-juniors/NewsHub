@@ -11,4 +11,7 @@
     <string name="auto_news_button_text">Auto</string>
     <string name="news_source">Quelle:</string>
     <string name="publication_date">Veröffentlichungsdatum:</string>
+    <string name="settings">Einstellungen</string>
+    <string name="bookmarks">Lesezeichen</string>
+    <string name="news">Nachrichten</string>
 </resources>
