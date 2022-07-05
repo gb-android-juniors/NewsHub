@@ -18,9 +18,9 @@
 
             <com.example.newsgb.utils.EquilateralImageView
                 android:id="@+id/selected_news_image"
-                android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:scaleType="centerCrop"
                 tool:src="@drawable/example_image" />
 
             <TextView
@@ -32,49 +32,57 @@
                 android:textStyle="bold"
                 tool:text="@string/example_header_text" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/default_margin">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:layout_weight="1"
+                    android:text="@string/news_source"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/news_source_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:textColor="@color/resource_name_color"
+                    tool:text="@string/example_resource_name_text" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@string/publication_date" />
+
+                <TextView
+                    android:id="@+id/publication_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@string/example_news_publication_date" />
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/selected_news_description_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/selected_news_description_text_size"
                 tool:text="@string/example_body_text" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="@string/news_source"
-                android:textStyle="italic" />
-
-            <TextView
-                android:id="@+id/news_source_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:textColor="@color/resource_name_color"
-                tool:text="@string/example_resource_name_text" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:text="@string/publication_date" />
-
-                <TextView
-                    android:id="@+id/publication_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:text="@string/example_news_publication_date" />
-            </LinearLayout>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
