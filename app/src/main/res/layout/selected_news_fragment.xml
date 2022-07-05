@@ -18,6 +18,7 @@
 
             <com.example.newsgb.utils.EquilateralImageView
                 android:id="@+id/selected_news_image"
+                android:scaleType="centerCrop"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tool:src="@drawable/example_image" />
