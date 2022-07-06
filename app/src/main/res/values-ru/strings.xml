@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="last_news_button_text">Последние</string>
+    <string name="politic_news_button_text">Политика</string>
+    <string name="world_news_button_text">Мировые</string>
+    <string name="sport_news_button_text">Спорт</string>
+    <string name="economic_news_button_text">Экономика</string>
+    <string name="culture_news_button_text">Культура</string>
+    <string name="technology_news_button_text">Технологии</string>
+    <string name="science_news_button_text">Наука</string>
+    <string name="auto_news_button_text">Авто</string>
+    <string name="news_source">Источник:</string>
+    <string name="publication_date">Дата публикации:</string>
+    <string name="news">Новости</string>
+    <string name="bookmarks">Закладки</string>
+    <string name="settings">Настройки</string>
+</resources>

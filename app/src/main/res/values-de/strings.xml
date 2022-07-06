@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="last_news_button_text">Letzte</string>
+    <string name="politic_news_button_text">Politisch</string>
+    <string name="world_news_button_text">Welt</string>
+    <string name="sport_news_button_text">Sport</string>
+    <string name="economic_news_button_text">Wirtschaft</string>
+    <string name="culture_news_button_text">Kultur</string>
+    <string name="technology_news_button_text">Technologie</string>
+    <string name="science_news_button_text">Wissenschaft</string>
+    <string name="auto_news_button_text">Auto</string>
+    <string name="news_source">Quelle:</string>
+    <string name="publication_date">Veröffentlichungsdatum:</string>
+    <string name="settings">Einstellungen</string>
+    <string name="bookmarks">Lesezeichen</string>
+    <string name="news">Nachrichten</string>
+</resources>

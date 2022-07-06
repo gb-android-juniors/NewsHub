@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.example.newsgb.utils.EquilateralImageView
+                android:id="@+id/first_news_image"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:alpha="0.8"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tool:src="@drawable/example_first_news" />
+
+            <TextView
+                android:id="@+id/first_news_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:textColor="@color/white"
+                android:textSize="@dimen/first_news_header_text_size"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/first_news_source"
+                app:layout_constraintStart_toStartOf="@+id/first_news_image"
+                tool:text="@string/example_first_news_header_text" />
+
+            <TextView
+                android:id="@+id/first_news_source"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/default_margin"
+                android:textColor="@color/white"
+                android:textSize="@dimen/first_news_source_text_size"
+                android:textStyle="italic"
+                app:layout_constraintBottom_toBottomOf="@+id/first_news_image"
+                app:layout_constraintStart_toStartOf="@+id/first_news_image"
+                tool:text="@string/example_resource_name_text" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/main_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/first_news_image"
+                tool:listitem="@layout/news_fragment_recycler_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+</FrameLayout>

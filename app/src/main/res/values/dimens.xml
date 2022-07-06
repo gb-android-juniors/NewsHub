@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="default_margin">10dp</dimen>
+    <dimen name="default_half_margin">5dp</dimen>
+    <dimen name="header_text_size">24sp</dimen>
+    <dimen name="first_news_header_text_size">20sp</dimen>
+    <dimen name="first_news_source_text_size">15sp</dimen>
+    <dimen name="common_text_size">16sp</dimen>
+    <dimen name="margin_2">2dp</dimen>
+    <dimen name="margin_4">4dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="margin_16">16dp</dimen>
+    <dimen name="margin_24">24dp</dimen>
+</resources>
