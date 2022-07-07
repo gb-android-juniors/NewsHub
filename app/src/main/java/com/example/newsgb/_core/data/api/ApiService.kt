@@ -1,4 +1,4 @@
-package com.example.newsgb._core.data.remote
+package com.example.newsgb._core.data.api
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
