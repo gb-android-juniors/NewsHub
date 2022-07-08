@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.newsgb">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -13,6 +14,10 @@
         android:theme="@style/Theme.NewsGB">
         <activity
             android:name="._core.ui.MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="._core.ui.SplashScreenActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
