@@ -14,4 +14,8 @@
     <string name="settings">Einstellungen</string>
     <string name="bookmarks">Lesezeichen</string>
     <string name="news">Nachrichten</string>
+    <string name="dialog_message_device_is_offline">Sie können die App nicht ohne Internetverbindung verwenden. Bitte überprüfen Sie die Internetverbindung.</string>
+    <string name="dialog_title_device_is_offline">Keine Internetverbindung</string>
+    <string name="dialog_button_cancel">Absagen</string>
+    <string name="dialog_title_stub">Undefinierter Fehler</string>
 </resources>

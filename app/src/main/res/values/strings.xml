@@ -19,4 +19,8 @@
     <string name="news">News</string>
     <string name="bookmarks">Bookmarks</string>
     <string name="settings">Settings</string>
+    <string name="dialog_message_device_is_offline">You can not use app without internet connection. Please, check internet connection.</string>
+    <string name="dialog_title_device_is_offline">No internet connection</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_title_stub">Undefined error</string>
 </resources>
