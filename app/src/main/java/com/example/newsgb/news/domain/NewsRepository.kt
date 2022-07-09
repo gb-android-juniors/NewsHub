@@ -1,5 +1,8 @@
 package com.example.newsgb.news.domain
 
+import com.example.newsgb._core.data.api.NewsResponse
+
 interface NewsRepository {
-    fun <T> getNewsByCategory(category: String, countryCode: String): Result<T>
+   suspend fun getBreakingNews(page: Int, countryCode: String): Result<NewsResponse>
+   suspend fun getNewsByCategory(category: String, countryCode: String): Result<NewsResponse>
 }
