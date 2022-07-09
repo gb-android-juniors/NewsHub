@@ -18,4 +18,5 @@
     <string name="dialog_title_device_is_offline">Keine Internetverbindung</string>
     <string name="dialog_button_cancel">Absagen</string>
     <string name="dialog_title_stub">Undefinierter Fehler</string>
+    <string name="loading">WIRD GELADEN…</string>
 </resources>

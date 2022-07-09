@@ -5,6 +5,17 @@
     android:layout_height="match_parent"
     tools:context="._core.ui.MainActivity">
 
+    <TextView
+        android:id="@+id/main_activity_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/padding_4"
+        android:text="@string/loading"
+        android:textColor="@color/category_button_text_color"
+        android:textSize="@dimen/main_activity_text_size"
+        android:visibility="visible" />
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_container"
         android:layout_width="match_parent"

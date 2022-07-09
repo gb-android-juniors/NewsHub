@@ -14,7 +14,6 @@
         <!-- Customize your theme here. -->
     </style>
 
-
     <style name="NewsCategoryLayoutStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>

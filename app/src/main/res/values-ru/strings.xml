@@ -18,4 +18,5 @@
     <string name="dialog_title_device_is_offline">Нет соединения с интернетом</string>
     <string name="dialog_button_cancel">Отмена</string>
     <string name="dialog_title_stub">Неопределенная ошибка</string>
+    <string name="loading">ЗАГРУЗКА…</string>
 </resources>

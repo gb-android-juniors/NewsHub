@@ -13,6 +13,6 @@
     <color name="category_button_text_color">#201F1F</color>
     <color name="separator_color">#FF000000</color>
     <color name="resource_name_color">#086088</color>
-    <color name="splash_background">#4C4C4C</color>
+    <color name="splash_background">#FFFFFFFF</color>
 
 </resources>

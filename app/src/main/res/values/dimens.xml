@@ -5,7 +5,9 @@
     <dimen name="header_text_size">24sp</dimen>
     <dimen name="first_news_header_text_size">20sp</dimen>
     <dimen name="first_news_source_text_size">15sp</dimen>
+    <dimen name="main_activity_text_size">20sp</dimen>
     <dimen name="common_text_size">16sp</dimen>
+    <dimen name="padding_4">4dp</dimen>
     <dimen name="margin_2">2dp</dimen>
     <dimen name="margin_4">4dp</dimen>
     <dimen name="margin_8">8dp</dimen>
