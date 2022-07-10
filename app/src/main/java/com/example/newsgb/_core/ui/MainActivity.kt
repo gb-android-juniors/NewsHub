@@ -15,7 +15,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import com.example.newsgb.R
 import com.example.newsgb._core.data.AppState
-import com.example.newsgb._core.viewmodel.BaseViewModel
 import com.example.newsgb.databinding.MainActivityBinding
 import com.example.newsgb.utils.network.OnlineLiveData
 import com.example.newsgb.utils.ui.AlertDialogFragment

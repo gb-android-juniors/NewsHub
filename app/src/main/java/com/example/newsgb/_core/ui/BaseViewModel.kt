@@ -1,14 +1,19 @@
-package com.example.newsgb._core.viewmodel
+package com.example.newsgb._core.ui
 
 import androidx.lifecycle.ViewModel
 import com.example.newsgb._core.data.AppState
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 /**Создадим базовую ViewModel, куда вынесем общий для всех функционал*/
-abstract class BaseViewModel<T : AppState>(
-    protected open val _stateFlow: MutableStateFlow<AppState> = MutableStateFlow(AppState.Success(emptyList()))
-) : ViewModel() {
+abstract class BaseViewModel<T : AppState>() : ViewModel() {
+
+    private val _stateFlow: MutableStateFlow<AppState> =
+        MutableStateFlow(AppState.Success(emptyList()))
+    val stateFlow: StateFlow<AppState> = _stateFlow.asStateFlow()
+
     /** Объявляем свой собственный скоуп
      *  В качестве аргумента передается CoroutineContext, который мы составляем через "+"
      *  из трех частей:
@@ -22,18 +27,22 @@ abstract class BaseViewModel<T : AppState>(
                 + SupervisorJob()
                 + CoroutineExceptionHandler { _, throwable -> handleError(throwable) }
     )
+
     /**обрабатываем ошибки в конкретной имплементации базовой ВьюМодели*/
     abstract fun handleError(error: Throwable)
+
     /** Метод, благодаря которому Activity подписывается на изменение данных,
     возвращает LiveData, через которую и передаются данные*/
     abstract fun getData()
+
     /**Единственный метод класса ViewModel, который вызывается перед уничтожением Activity*/
     override fun onCleared() {
         super.onCleared()
         cancelJob()
     }
+
     /**Завершаем все незавершённые корутины, потому что пользователь закрыл экран*/
-    protected fun cancelJob() {
+    private fun cancelJob() {
         viewModelCoroutineScope.coroutineContext.cancelChildren()
     }
 }
