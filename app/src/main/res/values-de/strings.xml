@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="last_news_button_text">Letzte</string>
-    <string name="politic_news_button_text">Politisch</string>
-    <string name="world_news_button_text">Welt</string>
-    <string name="sport_news_button_text">Sport</string>
-    <string name="economic_news_button_text">Wirtschaft</string>
-    <string name="culture_news_button_text">Kultur</string>
-    <string name="technology_news_button_text">Technologie</string>
-    <string name="science_news_button_text">Wissenschaft</string>
-    <string name="auto_news_button_text">Auto</string>
+
+    <!--    Category names-->
+    <string name="general_category_name_text">Allgemein</string>
+    <string name="health_category_name_text">Die Gesundheit</string>
+    <string name="sports_category_name_text">Sport</string>
+    <string name="business_category_name_text">Geschäft</string>
+    <string name="entertainment_category_name_text">Entertainment</string>
+    <string name="technology_category_name_text">Technologie</string>
+    <string name="science_category_name_text">Wissenschaft</string>
+
+    <!--    Details Fragment news-->
     <string name="news_source">Quelle:</string>
     <string name="publication_date">Veröffentlichungsdatum:</string>
-    <string name="settings">Einstellungen</string>
-    <string name="bookmarks">Lesezeichen</string>
+
+    <!--    BottomNavigation names-->
     <string name="news">Nachrichten</string>
+    <string name="bookmarks">Lesezeichen</string>
+    <string name="settings">Einstellungen</string>
+
+    <!--    AlertDialog-->
+    <string name="dialog_message_device_is_offline">Sie können die App nicht ohne Internetverbindung verwenden. Bitte überprüfen Sie die Internetverbindung.</string>
+    <string name="dialog_title_device_is_offline">Keine Internetverbindung</string>
+    <string name="dialog_button_cancel">Absagen</string>
+    <string name="dialog_title_stub">Undefinierter Fehler</string>
+
 </resources>

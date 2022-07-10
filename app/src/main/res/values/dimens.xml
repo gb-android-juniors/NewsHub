@@ -11,4 +11,5 @@
     <dimen name="margin_8">8dp</dimen>
     <dimen name="margin_16">16dp</dimen>
     <dimen name="margin_24">24dp</dimen>
+    <dimen name="ic_network_size">100dp</dimen>
 </resources>

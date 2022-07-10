@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="last_news_button_text">Последние</string>
-    <string name="politic_news_button_text">Политика</string>
-    <string name="world_news_button_text">Мировые</string>
-    <string name="sport_news_button_text">Спорт</string>
-    <string name="economic_news_button_text">Экономика</string>
-    <string name="culture_news_button_text">Культура</string>
-    <string name="technology_news_button_text">Технологии</string>
-    <string name="science_news_button_text">Наука</string>
-    <string name="auto_news_button_text">Авто</string>
+
+    <!--    Category names-->
+    <string name="general_category_name_text">Общие</string>
+    <string name="health_category_name_text">Здоровье</string>
+    <string name="sports_category_name_text">Спорт</string>
+    <string name="business_category_name_text">Бизнес</string>
+    <string name="entertainment_category_name_text">Развлечения</string>
+    <string name="technology_category_name_text">Технологии</string>
+    <string name="science_category_name_text">Наука</string>
+
+    <!--    Details Fragment news-->
     <string name="news_source">Источник:</string>
     <string name="publication_date">Дата публикации:</string>
+
+    <!--    BottomNavigation names-->
     <string name="news">Новости</string>
     <string name="bookmarks">Закладки</string>
     <string name="settings">Настройки</string>
+
+    <!--    AlertDialog-->
+    <string name="dialog_message_device_is_offline">Вы не можете использовать приложение без подключения к Интернету. Пожалуйста, проверьте интернет-соединение.</string>
+    <string name="dialog_title_device_is_offline">Нет соединения с интернетом</string>
+    <string name="dialog_button_cancel">Отмена</string>
+    <string name="dialog_title_stub">Неопределенная ошибка</string>
+
 </resources>
