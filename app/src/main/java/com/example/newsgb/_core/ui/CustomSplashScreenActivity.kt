@@ -19,9 +19,9 @@ class CustomSplashScreenActivity : AppCompatActivity() {
 
     private fun setCustomSplashScreenAnimation() {
         findViewById<AppCompatImageView>(R.id.splash_image_view).animate()
-            .rotationBy(360f)
+            .alpha(1f)
             .setInterpolator(LinearInterpolator())
-            .setDuration(3000)
+            .setDuration(SPLASHSCREEN_ANIMATION_DURATION)
             .setListener(object : Animator.AnimatorListener {
 
                 override fun onAnimationEnd(animation: Animator?) {
@@ -32,5 +32,9 @@ class CustomSplashScreenActivity : AppCompatActivity() {
                 override fun onAnimationRepeat(animation: Animator?) {}
                 override fun onAnimationStart(animation: Animator?) {}
             })
+    }
+
+    companion object {
+        const val SPLASHSCREEN_ANIMATION_DURATION = 2000L
     }
 }
