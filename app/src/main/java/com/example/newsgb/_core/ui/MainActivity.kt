@@ -1,14 +1,15 @@
 package com.example.newsgb._core.ui
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.animation.AnticipateInterpolator
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
@@ -23,61 +24,46 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: MainActivityBinding
     private var isNetworkAvailable: Boolean = true
-
     private val model: BaseViewModel<AppState>
         get() = TODO("заменить BaseViewModel на MainViewModel")
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            setDefaultSplashScreen()
-        } else {
-            setCustomSplashScreen()
-        }
-
+        setSplashScreen()
+        binding = MainActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        //проверяем наличие интернет-подключения на старте
+        isNetworkAvailable =
+            (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected == true
+        //запускаем главный фрагмент
+        startNewsFragment(savedInstanceState)
+        //подписываемся на изменение наличия интернет-подключения
         subscribeToNetworkChange(savedInstanceState)
     }
 
-    override fun onResume() {
-        super.onResume()
-        binding = MainActivityBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        if (!isNetworkAvailable && isDialogNull()) {
-            showNoInternetConnectionDialog()
-        }
-    }
-
-    private fun subscribeToNetworkChange(savedInstanceState: Bundle?) {
-        OnlineLiveData(this).observe(this@MainActivity) {
-            isNetworkAvailable = it
-            if (isNetworkAvailable) {
-                startNewsFragment(savedInstanceState)
-            } else {
-                binding.mainActivityText.text = getString(R.string.dialog_message_device_is_offline)
-
-                Toast.makeText(
-                    this,
-                    R.string.dialog_message_device_is_offline,
-                    Toast.LENGTH_LONG
-                ).show()
-            }
-        }
-    }
-
+    /** если интернет недоступен, уведомляем пользователя с помощью ImageView в активити и AlertDialog, иначе запускаем основной фрагмент */
     private fun startNewsFragment(savedInstanceState: Bundle?) {
+        if (!isNetworkAvailable && isDialogNull()) {
+            showNoInternetConnectionInfo()
+        } else if (isNetworkAvailable) {
+            binding.networkLostImage.visibility = View.GONE
 //        if (savedInstanceState == null) {
-//        binding.mainActivityText.visibility = View.GONE
 //            supportFragmentManager.beginTransaction()
 //                .replace(R.id.main_container, NewsFragment.newInstance()) //TODO переделать в зависимости от реализации фрагмента
 //                .commitNow()
 //        }
+        }
     }
 
-
+    /** метод проверяет, что AlertDialog не отображается в данный момент */
     private fun isDialogNull(): Boolean =
         supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) == null
+
+    /** Метод делает картинку отсутствия интернета видимой в макете и запускает AlertDialog */
+    private fun showNoInternetConnectionInfo() {
+        binding.networkLostImage.visibility = View.VISIBLE
+        showNoInternetConnectionDialog()
+    }
 
     private fun showNoInternetConnectionDialog() {
         showAlertDialog(
@@ -90,10 +76,24 @@ class MainActivity : AppCompatActivity() {
         AlertDialogFragment.newInstance(title, message)
             .show(supportFragmentManager, DIALOG_FRAGMENT_TAG)
 
-    private fun setCustomSplashScreen() {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
-            startActivity(Intent(this@MainActivity, CustomSplashScreenActivity::class.java))
+    private fun subscribeToNetworkChange(savedInstanceState: Bundle?) {
+        OnlineLiveData(this).observe(this@MainActivity) {
+            isNetworkAvailable = it
+            startNewsFragment(savedInstanceState)
         }
+    }
+
+    /** Устанавливает дефолтный SplashScreen если версия андроид 12 и выше, и кастомный SplashScreen, если у пользователя более ранняя версия андроид */
+    private fun setSplashScreen() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            setDefaultSplashScreen()
+        } else {
+            setCustomSplashScreen()
+        }
+    }
+
+    private fun setCustomSplashScreen() {
+        startActivity(Intent(this@MainActivity, CustomSplashScreenActivity::class.java))
     }
 
     @RequiresApi(Build.VERSION_CODES.S)

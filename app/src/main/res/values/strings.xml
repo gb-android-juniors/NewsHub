@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">NewsGB</string>
-    <string name="loading">LOADING…</string>
 
     <!--    Examples for tools-->
     <string name="example_header_text" translatable="false">Эксперты американского CBS назвали рост рубля вопреки санкциям потрясающим</string>

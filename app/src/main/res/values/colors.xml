@@ -11,7 +11,7 @@
     <color name="app_background_color">#F8FBFB</color>
     <color name="item_card_background_color">#E7EDED</color>
     <color name="category_button_text_color">#201F1F</color>
-    <color name="separator_color">#FF000000</color>
+    <color name="ic_network_tint_color">#FF000000</color>
     <color name="resource_name_color">#086088</color>
     <color name="splash_background">#FFFFFFFF</color>
 

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="loading">ЗАГРУЗКА…</string>
 
     <!--    Category names-->
     <string name="general_category_name_text">Общие</string>

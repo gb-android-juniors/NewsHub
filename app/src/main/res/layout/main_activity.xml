@@ -5,16 +5,15 @@
     android:layout_height="match_parent"
     tools:context="._core.ui.MainActivity">
 
-    <TextView
-        android:id="@+id/main_activity_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/network_lost_image"
+        android:layout_width="@dimen/ic_network_size"
+        android:layout_height="@dimen/ic_network_size"
         android:layout_gravity="center"
-        android:padding="@dimen/padding_4"
-        android:text="@string/loading"
-        android:textColor="@color/category_button_text_color"
-        android:textSize="@dimen/main_activity_text_size"
-        android:visibility="visible" />
+        android:src="@drawable/ic_network_connection_lost"
+        android:tint="@color/ic_network_tint_color"
+        android:visibility="gone"
+        tools:visibility="visible" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_container"
