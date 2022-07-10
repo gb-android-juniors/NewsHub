@@ -46,7 +46,6 @@ dependencies {
 
     // di koin
     implementation 'io.insert-koin:koin-android:3.1.2'
-    implementation 'io.insert-koin:koin-android:3.1.2'
 
     // retrofit2
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
