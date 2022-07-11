@@ -6,7 +6,9 @@ import com.example.newsgb.news.domain.NewsRepositoryImpl
 import org.koin.dsl.module
 
 val newsModule = module {
+
     single { provideNewsRepository(apiService = get()) }
+
 }
 
 private fun provideNewsRepository(apiService: ApiService) : NewsRepository{

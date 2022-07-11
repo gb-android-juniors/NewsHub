@@ -8,11 +8,13 @@ class NewsRepositoryImpl(
 ) : NewsRepository {
 
     override suspend fun getBreakingNews(
-        page: Int, countryCode: String,
+        page: Int
     ): Result<NewsResponse> {
 
         return try {
-            Result.success(apiService.getBreakingNews())
+            apiService.getBreakingNews(pageNumber = page).run {
+                Result.success(this)
+            }
         } catch (e: Exception) {
             Result.failure(e)
         }

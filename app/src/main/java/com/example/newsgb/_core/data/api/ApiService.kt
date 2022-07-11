@@ -1,7 +1,7 @@
 package com.example.newsgb._core.data.api
 
-import com.example.newsgb._core.utils.Constants.Companion.API_KEY
-import com.example.newsgb._core.utils.Constants.Companion.TOP_HEADLINES
+import com.example.newsgb.utils.Constants.Companion.API_KEY
+import com.example.newsgb.utils.Constants.Companion.TOP_HEADLINES
 import retrofit2.http.GET
 import retrofit2.http.Query
 
