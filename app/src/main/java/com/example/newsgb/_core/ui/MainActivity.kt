@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity() {
             showNoInternetConnectionInfo()
         } else if (isNetworkAvailable) {
             binding.networkLostImage.visibility = View.GONE
+            binding.mainContainer.visibility = View.VISIBLE
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container, NewsTabItemFragment.newInstance())
@@ -64,6 +65,7 @@ class MainActivity : AppCompatActivity() {
     /** Метод делает картинку отсутствия интернета видимой в макете и запускает AlertDialog */
     private fun showNoInternetConnectionInfo() {
         binding.networkLostImage.visibility = View.VISIBLE
+        binding.mainContainer.visibility = View.GONE
         showNoInternetConnectionDialog()
     }
 
