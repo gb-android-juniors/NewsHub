@@ -25,4 +25,7 @@
     <string name="dialog_button_cancel">Отмена</string>
     <string name="dialog_title_stub">Неопределенная ошибка</string>
 
+    <!--    Bookmarks Fragment news-->
+    <string name="empty_bookmark_warning_text">Нет избранных статей</string>
+
 </resources>
