@@ -1,23 +1,35 @@
 <resources>
     <string name="app_name" translatable="false">NewsGB</string>
-    <string name="last_news_button_text">Latest</string>
-    <string name="politic_news_button_text">Politic</string>
-    <string name="world_news_button_text">World</string>
-    <string name="sport_news_button_text">Sport</string>
-    <string name="economic_news_button_text">Economic</string>
-    <string name="culture_news_button_text">Culture</string>
-    <string name="technology_news_button_text">Technology</string>
-    <string name="science_news_button_text">Science</string>
-    <string name="auto_news_button_text">Auto</string>
-    <string name="news_source">Source:</string>
+
+    <!--    Examples for tools-->
     <string name="example_header_text" translatable="false">Эксперты американского CBS назвали рост рубля вопреки санкциям потрясающим</string>
     <string name="example_body_text" translatable="false">Рубль демонстрирует потрясающий рост и входит в список лучших мировых валют в этом году, несмотря на многочисленные антироссийские санкции Запада. Об этом заявили опрошенные американским телеканалом CBS эксперты. По словам специалистов, в обычной ситуации страна, сталкивающаяся с ограничительными мерами США и Евросоюза, теряет инвесторов и страдает от оттока капиталов, что, в свою очередь, приводит к падению национального платежного средства. Однако Россия предприняла невероятно энергичные шаги по предотвращению вывода денег за границу. В сочетании с резким ростом цен на топливо это увеличило спрос на рубль и укрепило его, отмечается в публикации.</string>
     <string name="example_resource_name_text" translatable="false">Комсомольская правда</string>
-    <string name="publication_date">Publication date:</string>
     <string name="example_news_publication_date" translatable="false">01.02.2022</string>
     <string name="example_first_news_header_text" translatable="false">Владимир Путин вновь прибыл в пострадавшую от потопа Иркутскую область</string>
+
+    <!--    Category names-->
+    <string name="general_category_name_text">General</string>
+    <string name="health_category_name_text">Health</string>
+    <string name="sports_category_name_text">Sports</string>
+    <string name="business_category_name_text">Business</string>
+    <string name="entertainment_category_name_text">Entertainment</string>
+    <string name="technology_category_name_text">Technology</string>
+    <string name="science_category_name_text">Science</string>
+
+    <!--    Details Fragment news-->
+    <string name="news_source">Source:</string>
+    <string name="publication_date">Publication date:</string>
+
+    <!--    BottomNavigation names-->
     <string name="news">News</string>
     <string name="bookmarks">Bookmarks</string>
     <string name="settings">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
+    <!--    AlertDialog-->
+    <string name="dialog_message_device_is_offline">You can not use app without internet connection. Please, check internet connection.</string>
+    <string name="dialog_title_device_is_offline">No internet connection</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_title_stub">Undefined error</string>
+
 </resources>

@@ -14,7 +14,6 @@
         <!-- Customize your theme here. -->
     </style>
 
-
     <style name="NewsCategoryLayoutStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
@@ -36,13 +35,6 @@
     <style name="NewsCategoryCardImageStyle">
         <item name="android:layout_height">100dp</item>
         <item name="android:layout_width">100dp</item>
-    </style>
-
-    <style name="Separator">
-        <item name="android:layout_height">1px</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginTop">@dimen/default_half_margin</item>
-        <item name="android:background">@color/separator_color</item>
     </style>
 
     <style name="CustomTabStyle">
