@@ -1,31 +1,27 @@
-package com.example.newsgb.news.view
+package com.example.newsgb.news.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsgb.R
 import com.example.newsgb._core.data.db.entity.ArticleEntity
 import com.example.newsgb._core.state.ViewState
-import com.example.newsgb._core.utils.Constants.Companion.QUERY_PAGE_SIZE
 import com.example.newsgb.databinding.NewsFragmentTabItemBinding
-import com.example.newsgb.news.view.adapter.NewsAdapter
-import com.example.newsgb.news.viewmodel.NewsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class NewsTabItemFragment : Fragment() {
 
-    private lateinit var binding: NewsFragmentTabItemBinding
+    private var _binding: NewsFragmentTabItemBinding? = null
+    private val binding get() = _binding!!
+
     private val viewModel by viewModel<NewsViewModel>()
     private lateinit var newsAdapter: NewsAdapter
 
@@ -33,7 +29,7 @@ class NewsTabItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = NewsFragmentTabItemBinding.inflate(inflater, container, false)
+        _binding = NewsFragmentTabItemBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,6 +40,11 @@ class NewsTabItemFragment : Fragment() {
         newsAdapter.setOnItemClickListener {
             // TODO: display detailsFragment
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun checkViewState() {
@@ -94,7 +95,6 @@ class NewsTabItemFragment : Fragment() {
     private fun hideProgressBar() {
         binding.loader.isVisible = false
     }
-
 
     private fun showToastMessage(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()

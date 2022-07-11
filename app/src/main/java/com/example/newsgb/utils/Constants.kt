@@ -1,4 +1,4 @@
-package com.example.newsgb._core.utils
+package com.example.newsgb.utils
 
 class Constants {
     companion object {

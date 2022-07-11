@@ -2,9 +2,9 @@ package com.example.newsgb._core.ui
 
 import android.animation.Animator
 import android.annotation.SuppressLint
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.animation.LinearInterpolator
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import com.example.newsgb.R
 

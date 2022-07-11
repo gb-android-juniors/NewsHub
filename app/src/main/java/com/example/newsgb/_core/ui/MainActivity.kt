@@ -17,6 +17,7 @@ import androidx.core.animation.doOnEnd
 import com.example.newsgb.R
 import com.example.newsgb._core.data.AppState
 import com.example.newsgb.databinding.MainActivityBinding
+import com.example.newsgb.news.ui.NewsTabItemFragment
 import com.example.newsgb.utils.network.OnlineLiveData
 import com.example.newsgb.utils.ui.AlertDialogFragment
 
@@ -48,11 +49,11 @@ class MainActivity : AppCompatActivity() {
             showNoInternetConnectionInfo()
         } else if (isNetworkAvailable) {
             binding.networkLostImage.visibility = View.GONE
-//        if (savedInstanceState == null) {
-//            supportFragmentManager.beginTransaction()
-//                .replace(R.id.main_container, NewsFragment.newInstance()) //TODO переделать в зависимости от реализации фрагмента
-//                .commitNow()
-//        }
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, NewsTabItemFragment.newInstance())
+                .commitNow()
+        }
         }
     }
 

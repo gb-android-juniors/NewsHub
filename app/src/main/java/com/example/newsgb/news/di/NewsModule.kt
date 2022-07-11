@@ -3,8 +3,6 @@ package com.example.newsgb.news.di
 import com.example.newsgb._core.data.api.ApiService
 import com.example.newsgb.news.domain.NewsRepository
 import com.example.newsgb.news.domain.NewsRepositoryImpl
-import com.example.newsgb.news.viewmodel.NewsViewModel
-import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 val newsModule = module {

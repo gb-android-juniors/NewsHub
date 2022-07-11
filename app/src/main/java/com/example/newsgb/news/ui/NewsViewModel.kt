@@ -1,8 +1,7 @@
-package com.example.newsgb.news.viewmodel
+package com.example.newsgb.news.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsgb._core.data.api.NewsResponse
 import com.example.newsgb._core.state.ViewState
 import com.example.newsgb.news.domain.NewsRepository
 import kotlinx.coroutines.Dispatchers
@@ -24,7 +23,7 @@ class NewsViewModel(
         getBreakingNews()
     }
 
-    fun getBreakingNews() {
+    private fun getBreakingNews() {
         _viewState.value = ViewState.LoadingState
         viewModelScope.launch(Dispatchers.IO) {
             newsRepo.getBreakingNews(hotPageNews).run {

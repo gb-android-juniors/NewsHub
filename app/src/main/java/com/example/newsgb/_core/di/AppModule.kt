@@ -4,8 +4,8 @@ import androidx.room.Room
 import com.example.newsgb._core.data.api.ApiService
 import com.example.newsgb._core.data.db.BookmarkDataBase
 import com.example.newsgb._core.data.db.DbUtils.DB_NAME
-import com.example.newsgb._core.utils.Constants.Companion.BASE_URL
-import com.example.newsgb.news.viewmodel.NewsViewModel
+import com.example.newsgb.utils.Constants.Companion.BASE_URL
+import com.example.newsgb.news.ui.NewsViewModel
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
