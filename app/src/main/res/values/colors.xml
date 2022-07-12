@@ -13,6 +13,7 @@
     <color name="category_button_text_color">#201F1F</color>
     <color name="ic_network_tint_color">#FF000000</color>
     <color name="resource_name_color">#086088</color>
+    <color name="bookmark_selected_color">#FF9800</color>
     <color name="splash_background">#FFFFFFFF</color>
 
 </resources>

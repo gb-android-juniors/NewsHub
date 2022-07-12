@@ -32,4 +32,7 @@
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_title_stub">Undefined error</string>
 
+    <!--    Bookmarks Fragment news-->
+    <string name="empty_bookmark_warning_text">No favourite articles</string>
+
 </resources>

@@ -25,4 +25,7 @@
     <string name="dialog_button_cancel">Absagen</string>
     <string name="dialog_title_stub">Undefinierter Fehler</string>
 
+<!--    Bookmarks Fragment news-->
+    <string name="empty_bookmark_warning_text">Keine ausgewählten Artikel</string>
+
 </resources>
