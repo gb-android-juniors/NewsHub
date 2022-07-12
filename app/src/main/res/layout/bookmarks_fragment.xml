@@ -13,19 +13,10 @@
         android:elevation="@dimen/toolbar_elevation"
         android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/margin_4"
-            android:src="@drawable/ic_back_button"
-            app:tint="@color/category_button_text_color" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="@dimen/margin_4"
-
             android:gravity="center"
             android:text="@string/bookmarks"
             android:textColor="@color/category_button_text_color"
@@ -35,22 +26,22 @@
 
     <LinearLayout
         android:id="@+id/empty_bookmarks_warning"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?actionBarSize"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="@dimen/empty_bookmarks_warning_image_size"
             android:layout_height="@dimen/empty_bookmarks_warning_image_size"
+            android:layout_gravity="center"
             android:src="@drawable/ic_bookmarks_24"
             android:tint="@color/category_button_text_color" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16"
             android:text="@string/empty_bookmark_warning_text"
             android:textColor="@color/category_button_text_color"
             android:textSize="@dimen/common_text_size"
@@ -65,7 +56,7 @@
         android:layout_marginTop="?actionBarSize"
         android:layout_marginBottom="@dimen/margin_4"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/news_fragment_recycler_item"
-        tools:visibility="invisible" />
+        tools:itemCount="2"
+        tools:listitem="@layout/news_fragment_recycler_item" />
 
 </FrameLayout>
