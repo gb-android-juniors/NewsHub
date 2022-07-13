@@ -23,7 +23,6 @@ import com.example.newsgb.utils.ui.AlertDialogFragment
 
 class MainActivity : AppCompatActivity() {
 
-
     private lateinit var binding: MainActivityBinding
     private var isNetworkAvailable: Boolean = true
     private val model: BaseViewModel<AppState>

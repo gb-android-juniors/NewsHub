@@ -8,6 +8,7 @@
     tools:context=".news.ui.NewsTabItemFragment">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -69,5 +70,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_warning_amber_96"/>
 
 </FrameLayout>
