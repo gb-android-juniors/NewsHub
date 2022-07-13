@@ -4,35 +4,21 @@ import androidx.room.Room
 import com.example.newsgb._core.data.api.ApiService
 import com.example.newsgb._core.data.db.BookmarkDataBase
 import com.example.newsgb._core.data.db.DbUtils.DB_NAME
-import com.example.newsgb.utils.Constants.Companion.BASE_URL
-import com.example.newsgb.news.ui.NewsViewModel
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import okhttp3.OkHttpClient
+import com.example.newsgb._core.ui.MainViewModel
+import com.example.newsgb._core.ui.store.NewsStore
 import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 val appModule = module {
 
-    viewModel {
-        NewsViewModel(newsRepo = get())
-    }
-    single { provideApiService() }
-    single {
-        Room.databaseBuilder(androidApplication(), BookmarkDataBase::class.java, DB_NAME).build()
-    }
+    single { ApiService.getInstance() }
+    single { Room.databaseBuilder(androidApplication(), BookmarkDataBase::class.java, DB_NAME).build() }
     single { get<BookmarkDataBase>().bookmarkDao() }
+
+    factory { NewsStore() }
+    viewModel { (store: NewsStore) -> MainViewModel(newsRepo = get(), store = store) }
 }
 
-private fun provideApiService(): ApiService {
-    return Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .client(OkHttpClient.Builder().build())
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
-        .build()
-        .create(ApiService::class.java)
-}
+
 

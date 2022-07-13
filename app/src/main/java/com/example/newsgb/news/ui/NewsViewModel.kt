@@ -2,38 +2,40 @@ package com.example.newsgb.news.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsgb._core.state.ViewState
+import com.example.newsgb._core.ui.model.AppState
+import com.example.newsgb._core.ui.model.ViewState
+import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.news.domain.NewsRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
     private val newsRepo: NewsRepository,
+    private val mapper: NewsDtoToUiMapper,
+    private val store: NewsStore
 ) : ViewModel() {
 
-    private val _viewState = MutableStateFlow<ViewState>(ViewState.DefaultState)
-    val viewState: StateFlow<ViewState?> = _viewState.asStateFlow()
-
-    var hotPageNews = 1
+    private val _viewState = MutableStateFlow<ViewState>(ViewState.Default)
+    val viewState: StateFlow<ViewState> = _viewState.asStateFlow()
 
     init {
-        getBreakingNews()
+        /**
+         * При инициализации подписываемся на обновления состояний NewsStore
+         * */
+        store.storeState.onEach { renderStoreState(it) }.launchIn(viewModelScope)
     }
 
-    private fun getBreakingNews() {
-        _viewState.value = ViewState.LoadingState
-        viewModelScope.launch(Dispatchers.IO) {
-            newsRepo.getBreakingNews(hotPageNews).run {
-                onSuccess {
-                    _viewState.value = ViewState.SuccessState(it)
-                }
-                onFailure {
-                    _viewState.value = ViewState.ErrorState(it.message)
-                }
-            }
+    /**
+     * метод обработки состояний NewsStore
+     * конвертируем состояния приложения в состояния экрана
+     * также в случае успеха конвертируем поулченные данные с помощью маппера
+     * */
+    private fun renderStoreState(storeState: AppState) {
+        when(storeState) {
+            AppState.Default -> _viewState.value = ViewState.Default
+            AppState.Loading -> _viewState.value = ViewState.Loading
+            is AppState.Success -> _viewState.value = ViewState.Success(data = mapper(storeState.data))
+            is AppState.Error -> _viewState.value = ViewState.Error(message = storeState.message)
         }
     }
 }

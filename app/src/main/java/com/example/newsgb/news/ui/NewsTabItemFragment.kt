@@ -1,5 +1,6 @@
 package com.example.newsgb.news.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,22 +9,57 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.newsgb.R
-import com.example.newsgb._core.data.db.entity.ArticleEntity
-import com.example.newsgb._core.state.ViewState
+import com.example.newsgb._core.ui.model.Article
+import com.example.newsgb._core.ui.model.ViewState
+import com.example.newsgb._core.ui.store.NewsStore
+import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.NewsFragmentTabItemBinding
+import com.example.newsgb.news.ui.adapter.NewsAdapter
+import com.example.newsgb.news.ui.adapter.RecyclerItemListener
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
-
+import org.koin.core.parameter.parametersOf
+import java.lang.IllegalArgumentException
 
 class NewsTabItemFragment : Fragment() {
+
+    /** переменная хранителя экземпляра NewsStore */
+    private var storeHolder: NewsStoreHolder? = null
+
+    /** экземпляр NewsStore, который получаем из MainActivity как хранителя этого экземпляра */
+    private val newsStore: NewsStore by lazy {
+        storeHolder?.newsStore ?: throw IllegalArgumentException()
+    }
+
+    /** во viewModel в качестве параметра передаем экземпляр NewsStore*/
+    private val viewModel by viewModel<NewsViewModel>() { parametersOf(newsStore)}
 
     private var _binding: NewsFragmentTabItemBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModel<NewsViewModel>()
-    private lateinit var newsAdapter: NewsAdapter
+    /** инициализируем слушатель нажатий на элементы списка
+     * onItemClick - колбэк нажатия на элемент списка
+     * onBookmarkCheck - колбэк нажатия на закладку на элеменете списка (пока не реализовано!)
+     * */
+    private val recyclerItemListener = object : RecyclerItemListener {
+        override fun onItemClick() {
+            //TODO("Not yet implemented")
+        }
+        override fun onBookmarkCheck() {
+            //TODO("Not yet implemented")
+        }
+    }
+    /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
+    private val newsAdapter: NewsAdapter = NewsAdapter(listener = recyclerItemListener)
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        /** инициализируем переменную хранителя экземпляра NewsStore */
+        storeHolder = context as NewsStoreHolder
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +71,8 @@ class NewsTabItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupAdapter()
-        checkViewState()
-        newsAdapter.setOnItemClickListener {
-            // TODO: display detailsFragment
-        }
+        initView()
+        initViewModel()
     }
 
     override fun onDestroyView() {
@@ -47,53 +80,77 @@ class NewsTabItemFragment : Fragment() {
         _binding = null
     }
 
-    private fun checkViewState() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.viewState.collect {
-                when (it) {
-                    is ViewState.SuccessState -> {
-                        createFirstNews(it.newsResponse.articles[0])
-                        it.newsResponse.articles.removeAt(0)
-                        newsAdapter.newsListDiffer.submitList(it.newsResponse.articles)
-                        hideProgressBar()
-                    }
-                    is ViewState.LoadingState -> {
-                        showProgressBar()
-                    }
-                    is ViewState.ErrorState -> {
-                        showToastMessage(it.message.toString())
-                        hideProgressBar()
-                    }
-                    else -> {}
-                }
+    override fun onDetach() {
+        super.onDetach()
+        storeHolder = null
+    }
+
+    private fun initView() = with(binding) {
+        mainRecycler.adapter = newsAdapter
+    }
+
+    private fun initViewModel() {
+        /**подписываемся на изменения состояний экрана */
+        viewModel.viewState.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    /**
+     * метод обработки состояний экрана
+     * */
+    private fun renderState(state: ViewState) {
+        when (state) {
+            is ViewState.Loading -> {
+                enableProgress(state = true)
+                enableError(state = false)
+                enableContent(state = false)
             }
+            is ViewState.Error -> {
+                enableProgress(state = false)
+                enableError(state = true)
+                enableContent(state = false)
+                showToastMessage(state.message.toString())
+            }
+            is ViewState.Success -> {
+                enableProgress(state = false)
+                enableError(state = false)
+                enableContent(state = true)
+                initContent(state.data)
+            }
+            else -> {}
         }
     }
 
-    private fun createFirstNews(article: ArticleEntity) {
+    /**
+     * метод инициализации контента на экране
+     * */
+    private fun initContent(data: List<Article>) {
+        createFirstNews(data.first())
+        newsAdapter.submitList(data.subList(1, data.size-1))
+    }
+
+    /**
+     * метод инициализации главной новости на экране
+     * */
+    private fun createFirstNews(article: Article) {
         binding.firstNewsHeader.text = article.title
-        binding.firstNewsSource.text = article.source.name
+        binding.firstNewsSource.text = article.sourceName
         Glide.with(binding.firstNewsImage)
-            .load(article.urlToImage)
+            .load(article.imageUrl)
             .placeholder(R.drawable.ic_newspaper_24)
             .error(R.drawable.ic_newspaper_24)
             .into(binding.firstNewsImage)
     }
 
-    private fun setupAdapter() {
-        newsAdapter = NewsAdapter()
-        binding.mainRecycler.apply {
-            adapter = newsAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-        }
+    private fun enableProgress(state: Boolean) {
+        binding.loader.isVisible = state
     }
 
-    private fun showProgressBar() {
-        binding.loader.isVisible = true
+    private fun enableContent(state: Boolean) {
+        binding.content.isVisible = state
     }
 
-    private fun hideProgressBar() {
-        binding.loader.isVisible = false
+    private fun enableError(state: Boolean) {
+        binding.error.isVisible = state
     }
 
     private fun showToastMessage(message: String) {

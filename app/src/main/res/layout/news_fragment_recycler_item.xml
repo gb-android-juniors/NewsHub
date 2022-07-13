@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp">
+    android:layout_height="90dp"
+    android:layout_margin="@dimen/margin_4">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,9 +14,10 @@
             android:id="@+id/news_header"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_half_margin"
+            android:layout_margin="@dimen/margin_8"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/news_resource_name"
+            android:ellipsize="end"
+            android:maxLines="3"
             app:layout_constraintEnd_toStartOf="@+id/news_image"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -26,8 +27,7 @@
             android:id="@+id/news_resource_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/default_half_margin"
-            android:layout_marginEnd="@dimen/default_half_margin"
+            android:layout_margin="@dimen/margin_8"
             android:textColor="@color/resource_name_color"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -36,8 +36,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/news_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="90dp"
+            android:layout_height="match_parent"
             android:alpha="0.8"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
