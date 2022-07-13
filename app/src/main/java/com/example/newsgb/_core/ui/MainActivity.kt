@@ -15,21 +15,27 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
 import com.example.newsgb.R
-import com.example.newsgb._core.data.AppState
+import com.example.newsgb._core.ui.store.NewsStore
+import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.MainActivityBinding
 import com.example.newsgb.news.ui.NewsTabItemFragment
 import com.example.newsgb.utils.network.OnlineLiveData
 import com.example.newsgb.utils.ui.AlertDialogFragment
+import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), NewsStoreHolder {
+
+    override val newsStore: NewsStore by inject()
+    private val viewModel: MainViewModel by viewModel() { parametersOf(newsStore)}
 
     private lateinit var binding: MainActivityBinding
     private var isNetworkAvailable: Boolean = true
-    private val model: BaseViewModel<AppState>
-        get() = TODO("заменить BaseViewModel на MainViewModel")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel.getBreakingNews()
         setSplashScreen()
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -42,26 +48,33 @@ class MainActivity : AppCompatActivity() {
         subscribeToNetworkChange(savedInstanceState)
     }
 
-    /** если интернет недоступен, уведомляем пользователя с помощью ImageView в активити и AlertDialog, иначе запускаем основной фрагмент */
+    /**
+     * если интернет недоступен, уведомляем пользователя с помощью ImageView в активити и AlertDialog,
+     * иначе запускаем основной фрагмент
+     * */
     private fun startNewsFragment(savedInstanceState: Bundle?) {
         if (!isNetworkAvailable && isDialogNull()) {
             showNoInternetConnectionInfo()
         } else if (isNetworkAvailable) {
             binding.networkLostImage.visibility = View.GONE
             binding.mainContainer.visibility = View.VISIBLE
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, NewsTabItemFragment.newInstance())
-                .commitNow()
-        }
+            if (savedInstanceState == null) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.main_container, NewsTabItemFragment.newInstance())
+                    .commitNow()
+            }
         }
     }
 
-    /** метод проверяет, что AlertDialog не отображается в данный момент */
+    /**
+     * метод проверяет, что AlertDialog не отображается в данный момент
+     **/
     private fun isDialogNull(): Boolean =
         supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) == null
 
-    /** Метод делает картинку отсутствия интернета видимой в макете и запускает AlertDialog */
+    /**
+     * Метод делает картинку отсутствия интернета видимой в макете и запускает AlertDialog
+     * */
     private fun showNoInternetConnectionInfo() {
         binding.networkLostImage.visibility = View.VISIBLE
         binding.mainContainer.visibility = View.GONE
@@ -86,7 +99,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /** Устанавливает дефолтный SplashScreen если версия андроид 12 и выше, и кастомный SplashScreen, если у пользователя более ранняя версия андроид */
+    /**
+     * Устанавливает дефолтный SplashScreen если версия андроид 12 и выше, и кастомный SplashScreen,
+     * если у пользователя более ранняя версия андроид
+     * */
     private fun setSplashScreen() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             setDefaultSplashScreen()
@@ -105,7 +121,9 @@ class MainActivity : AppCompatActivity() {
         setSplashScreenDuration()
     }
 
-    /** Прописываем анимацию */
+    /**
+     * Прописываем анимацию
+     * */
     @RequiresApi(Build.VERSION_CODES.S)
     private fun setSplashScreenHideAnimation() {
         splashScreen.setOnExitAnimationListener { splashScreenView ->
@@ -122,7 +140,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /** настройка времени отображения splash screen*/
+    /**
+     * настройка времени отображения splash screen
+     * */
     private fun setSplashScreenDuration() {
         var isHideSplashScreen = false
 

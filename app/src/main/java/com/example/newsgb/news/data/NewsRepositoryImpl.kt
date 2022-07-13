@@ -13,7 +13,6 @@ class NewsRepositoryImpl(
 ) : NewsRepository {
 
     override suspend fun getBreakingNews(page: Int): Result<ResponseDTO> {
-
         return try {
             val response = withContext(Dispatchers.IO) {
                 apiService.getBreakingNews(pageNumber = page)

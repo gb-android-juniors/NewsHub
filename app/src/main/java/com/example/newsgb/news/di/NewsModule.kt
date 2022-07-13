@@ -1,5 +1,6 @@
 package com.example.newsgb.news.di
 
+import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.news.data.NewsRepositoryImpl
 import com.example.newsgb.news.domain.NewsRepository
 import com.example.newsgb.news.ui.NewsDtoToUiMapper
@@ -11,5 +12,5 @@ val newsModule = module {
     single<NewsRepository> { NewsRepositoryImpl(apiService = get()) }
     factory { NewsDtoToUiMapper() }
 
-    viewModel { NewsViewModel(newsRepo = get(), mapper = get()) }
+    viewModel { (store: NewsStore) -> NewsViewModel(newsRepo = get(), mapper = get(), store = store) }
 }
