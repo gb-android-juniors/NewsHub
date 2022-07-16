@@ -6,17 +6,13 @@ import androidx.fragment.app.Fragment
 import com.example.newsgb.R
 import com.example.newsgb.bookmarks.ui.BookmarksFragment
 import com.example.newsgb.databinding.NavigationFragmentBinding
-import com.example.newsgb.news.ui.NewsTabItemFragment
+import com.example.newsgb.news.ui.NewsFragment
 import com.example.newsgb.settings.ui.SettingsFragment
 
 class NavigationFragment : Fragment() {
 
     private var _binding: NavigationFragmentBinding? = null
     private val binding get() = _binding!!
-
-    private val newsFragment = NewsTabItemFragment.newInstance()
-    private val bookmarksFragment = BookmarksFragment.newInstance()
-    private val settingsFragment = SettingsFragment.newInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,7 +24,7 @@ class NavigationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setFragmentInHostContainer(newsFragment)
+        setFragmentInHostContainer(NewsFragment.newInstance())
         setBottomNavigationListener()
     }
 
@@ -44,15 +40,15 @@ class NavigationFragment : Fragment() {
         binding.navView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_news -> {
-                    setFragmentInHostContainer(newsFragment)
+                    setFragmentInHostContainer(NewsFragment.newInstance())
                     true
                 }
                 R.id.navigation_bookmarks -> {
-                    setFragmentInHostContainer(bookmarksFragment)
+                    setFragmentInHostContainer(BookmarksFragment.newInstance())
                     true
                 }
                 R.id.navigation_settings -> {
-                    setFragmentInHostContainer(settingsFragment)
+                    setFragmentInHostContainer(SettingsFragment.newInstance())
                     true
                 }
                 else -> false
