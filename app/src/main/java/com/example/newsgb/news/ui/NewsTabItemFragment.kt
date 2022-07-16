@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.newsgb.R
@@ -15,6 +16,7 @@ import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
+import com.example.newsgb.article.ui.ArticleFragment
 import com.example.newsgb.databinding.NewsFragmentTabItemBinding
 import com.example.newsgb.news.ui.adapter.NewsAdapter
 import com.example.newsgb.news.ui.adapter.RecyclerItemListener
@@ -22,7 +24,6 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import java.lang.IllegalArgumentException
 
 class NewsTabItemFragment : Fragment() {
 
@@ -35,7 +36,7 @@ class NewsTabItemFragment : Fragment() {
     }
 
     /** во viewModel в качестве параметра передаем экземпляр NewsStore*/
-    private val viewModel by viewModel<NewsViewModel>() { parametersOf(newsStore)}
+    private val viewModel by viewModel<NewsViewModel>() { parametersOf(newsStore) }
 
     private var _binding: NewsFragmentTabItemBinding? = null
     private val binding get() = _binding!!
@@ -45,13 +46,15 @@ class NewsTabItemFragment : Fragment() {
      * onBookmarkCheck - колбэк нажатия на закладку на элеменете списка (пока не реализовано!)
      * */
     private val recyclerItemListener = object : RecyclerItemListener {
-        override fun onItemClick() {
-            //TODO("Not yet implemented")
+        override fun onItemClick(itemArticle: Article) {
+            showArticleFragment(ArticleFragment.newInstance(itemArticle.contentUrl))
         }
+
         override fun onBookmarkCheck() {
             //TODO("Not yet implemented")
         }
     }
+
     /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
     private val newsAdapter: NewsAdapter = NewsAdapter(listener = recyclerItemListener)
 
@@ -125,7 +128,7 @@ class NewsTabItemFragment : Fragment() {
      * */
     private fun initContent(data: List<Article>) {
         createFirstNews(data.first())
-        newsAdapter.submitList(data.subList(1, data.size-1))
+        newsAdapter.submitList(data.subList(1, data.size - 1))
     }
 
     /**
@@ -133,7 +136,11 @@ class NewsTabItemFragment : Fragment() {
      * */
     private fun createFirstNews(article: Article) {
         binding.firstNewsHeader.text = article.title
+        binding.firstNewsDescription.text = article.description
         binding.firstNewsSource.text = article.sourceName
+        binding.firstNewsImage.setOnClickListener {
+            showArticleFragment(ArticleFragment.newInstance(article.contentUrl))
+        }
         Glide.with(binding.firstNewsImage)
             .load(article.imageUrl)
             .placeholder(R.drawable.ic_newspaper_24)
@@ -151,6 +158,14 @@ class NewsTabItemFragment : Fragment() {
 
     private fun enableError(state: Boolean) {
         binding.error.isVisible = state
+    }
+
+    private fun showArticleFragment(fragment: Fragment) {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.main_container, fragment)
+            .setTransition(TRANSIT_FRAGMENT_FADE)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun showToastMessage(message: String) {

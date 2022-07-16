@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".article.ui.ArticleFragment">
+
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!--    <androidx.core.widget.NestedScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
+
+    <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:orientation="vertical">-->
+
+    <!--            <com.example.newsgb.utils.ui.EquilateralImageView-->
+    <!--                android:id="@+id/article_image"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginTop="@dimen/margin_8"-->
+    <!--                android:scaleType="centerCrop"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/publication_date"-->
+    <!--                tool:src="@drawable/example_image" />-->
+
+    <!--            <androidx.appcompat.widget.AppCompatImageView-->
+    <!--                android:id="@+id/add_or_remove_bookmark"-->
+    <!--                android:layout_width="30dp"-->
+    <!--                android:layout_height="30dp"-->
+    <!--                android:layout_margin="@dimen/margin_16"-->
+    <!--                android:src="@drawable/ic_bookmarks_24"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/article_header_text"-->
+    <!--                tool:tint="@color/bookmark_selected_color" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/article_header_text"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_margin="@dimen/margin_8"-->
+    <!--                android:textIsSelectable="true"-->
+    <!--                android:textSize="@dimen/header_text_size"-->
+    <!--                android:textStyle="bold"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toTopOf="parent"-->
+    <!--                tool:text="@string/example_header_text" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/article_source_name"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_margin="@dimen/margin_8"-->
+    <!--                android:textColor="@color/resource_name_color"-->
+    <!--                android:textIsSelectable="true"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/article_header_text"-->
+    <!--                tool:text="@string/example_resource_name_text" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/publication_date"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_margin="@dimen/margin_8"-->
+    <!--                android:text="@string/example_news_publication_date"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/article_source_name" />-->
+
+    <!--            <TextView-->
+    <!--                android:id="@+id/selected_news_description_text"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_marginHorizontal="@dimen/margin_8"-->
+    <!--                android:layout_marginVertical="@dimen/margin_24"-->
+    <!--                android:textIsSelectable="true"-->
+    <!--                android:textSize="@dimen/common_text_size"-->
+    <!--                app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                app:layout_constraintStart_toStartOf="parent"-->
+    <!--                app:layout_constraintTop_toBottomOf="@id/article_image"-->
+    <!--                tool:text="@string/example_body_text" />-->
+    <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+    <!--    </androidx.core.widget.NestedScrollView>-->
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+</FrameLayout>
