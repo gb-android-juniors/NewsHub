@@ -4,22 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="._core.ui.MainActivity">
 
-    <HorizontalScrollView
-        android:id="@+id/tab_scroll_layout"
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabIndicatorColor="@color/category_button_text_color"
+        app:tabMode="scrollable" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:tabIndicatorColor="@color/category_button_text_color" />
-    </HorizontalScrollView>
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_pager"
@@ -27,5 +24,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tab_scroll_layout" />
+        app:layout_constraintTop_toBottomOf="@id/tab_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
