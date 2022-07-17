@@ -25,11 +25,15 @@ class NewsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setViewPagerAndTabsNavigation()
+        setCustomTabs()
+    }
+
+    private fun setViewPagerAndTabsNavigation() {
         with(binding) {
             viewPager.adapter = ViewPagerAdapter(childFragmentManager, requireContext())
             tabLayout.setupWithViewPager(viewPager)
         }
-        setCustomTabs()
     }
 
     private fun setCustomTabs() {
