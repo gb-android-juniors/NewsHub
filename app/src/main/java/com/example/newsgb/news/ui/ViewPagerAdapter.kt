@@ -2,7 +2,7 @@ package com.example.newsgb.news.ui
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.newsgb.utils.Category
+import com.example.newsgb.utils.ui.Category
 
 class ViewPagerAdapter(fragment: NewsFragment) :
     FragmentStateAdapter(fragment) {

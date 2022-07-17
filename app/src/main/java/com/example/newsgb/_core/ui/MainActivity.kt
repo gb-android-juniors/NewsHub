@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
         isNetworkAvailable =
             (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected == true
         //запускаем главный фрагмент
-        startNewsFragment(savedInstanceState)
+        startMainScreen(savedInstanceState)
         //подписываемся на изменение наличия интернет-подключения
         subscribeToNetworkChange(savedInstanceState)
     }
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
      * если интернет недоступен, уведомляем пользователя с помощью ImageView в активити и AlertDialog,
      * иначе запускаем основной фрагмент
      * */
-    private fun startNewsFragment(savedInstanceState: Bundle?) {
+    private fun startMainScreen(savedInstanceState: Bundle?) {
         if (!isNetworkAvailable && isDialogNull()) {
             showNoInternetConnectionInfo()
         } else if (isNetworkAvailable) {
@@ -94,7 +94,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
     private fun subscribeToNetworkChange(savedInstanceState: Bundle?) {
         OnlineLiveData(this).observe(this@MainActivity) {
             isNetworkAvailable = it
-            startNewsFragment(savedInstanceState)
+            startMainScreen(savedInstanceState)
         }
     }
 

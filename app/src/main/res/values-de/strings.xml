@@ -2,7 +2,7 @@
 <resources>
 
     <!--    Category names-->
-    <string name="general_category_name_text">Allgemein</string>
+    <string name="main_category_name_text">Hauptsächlich</string>
     <string name="health_category_name_text">Die Gesundheit</string>
     <string name="sports_category_name_text">Sport</string>
     <string name="business_category_name_text">Geschäft</string>

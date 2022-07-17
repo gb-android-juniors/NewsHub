@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.newsgb.databinding.NewsFragmentBinding
-import com.example.newsgb.utils.Category
+import com.example.newsgb.utils.ui.Category
 import com.google.android.material.tabs.TabLayoutMediator
 
 class NewsFragment : Fragment() {
@@ -27,14 +27,12 @@ class NewsFragment : Fragment() {
         setViewPagerAndTabsNavigation()
     }
 
-    private fun setViewPagerAndTabsNavigation() {
-        with(binding) {
-            viewPager.adapter = ViewPagerAdapter(this@NewsFragment)
-            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-                tab.text = getString(Category.values()[position].categoryNameId)
-                tab.isSelected
-            }.attach()
-        }
+    private fun setViewPagerAndTabsNavigation() = with(binding) {
+        viewPager.adapter = ViewPagerAdapter(this@NewsFragment)
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = getString(Category.values()[position].nameResId)
+            tab.isSelected
+        }.attach()
     }
 
     companion object {
