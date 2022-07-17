@@ -1,4 +1,4 @@
-package com.example.newsgb.utils.ui
+package com.example.newsgb.utils.widget
 
 import android.content.Context
 import android.util.AttributeSet

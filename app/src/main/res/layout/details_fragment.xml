@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.example.newsgb.utils.ui.EquilateralImageView
+            <com.example.newsgb.utils.widget.EquilateralImageView
                 android:id="@+id/article_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

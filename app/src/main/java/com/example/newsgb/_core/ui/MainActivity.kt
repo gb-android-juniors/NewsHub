@@ -18,7 +18,6 @@ import com.example.newsgb.R
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.MainActivityBinding
-import com.example.newsgb.news.ui.NewsTabItemFragment
 import com.example.newsgb.utils.network.OnlineLiveData
 import com.example.newsgb.utils.ui.AlertDialogFragment
 import org.koin.android.ext.android.inject
@@ -28,7 +27,7 @@ import org.koin.core.parameter.parametersOf
 class MainActivity : AppCompatActivity(), NewsStoreHolder {
 
     override val newsStore: NewsStore by inject()
-    private val viewModel: MainViewModel by viewModel() { parametersOf(newsStore)}
+    private val viewModel: MainViewModel by viewModel() { parametersOf(newsStore) }
 
     private lateinit var binding: MainActivityBinding
     private var isNetworkAvailable: Boolean = true
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
         isNetworkAvailable =
             (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected == true
         //запускаем главный фрагмент
-        startNewsFragment(savedInstanceState)
+        startMainScreen(savedInstanceState)
         //подписываемся на изменение наличия интернет-подключения
         subscribeToNetworkChange(savedInstanceState)
     }
@@ -52,7 +51,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
      * если интернет недоступен, уведомляем пользователя с помощью ImageView в активити и AlertDialog,
      * иначе запускаем основной фрагмент
      * */
-    private fun startNewsFragment(savedInstanceState: Bundle?) {
+    private fun startMainScreen(savedInstanceState: Bundle?) {
         if (!isNetworkAvailable && isDialogNull()) {
             showNoInternetConnectionInfo()
         } else if (isNetworkAvailable) {
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
             binding.mainContainer.visibility = View.VISIBLE
             if (savedInstanceState == null) {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container, NewsTabItemFragment.newInstance())
+                    .replace(R.id.main_container, NavigationFragment.newInstance())
                     .commitNow()
             }
         }
@@ -95,7 +94,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
     private fun subscribeToNetworkChange(savedInstanceState: Bundle?) {
         OnlineLiveData(this).observe(this@MainActivity) {
             isNetworkAvailable = it
-            startNewsFragment(savedInstanceState)
+            startMainScreen(savedInstanceState)
         }
     }
 
