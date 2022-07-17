@@ -14,8 +14,9 @@ import retrofit2.http.Query
 interface ApiService {
 
     @GET(TOP_HEADLINES_ENDPOINT)
-    suspend fun getBreakingNews(
+    suspend fun getNewsList(
         @Query("country") countryCode: String = "ru",
+        @Query("category") category: String = "general",
         @Query("page") pageNumber: Int = 1,
         @Query("apiKey") apiKey: String = API_KEY
     ): ResponseDTO

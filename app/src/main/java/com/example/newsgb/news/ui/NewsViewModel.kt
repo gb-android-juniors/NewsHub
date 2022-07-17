@@ -2,17 +2,20 @@ package com.example.newsgb.news.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.model.AppState
 import com.example.newsgb._core.ui.model.ViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.news.domain.NewsRepository
+import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
     private val newsRepo: NewsRepository,
     private val mapper: NewsDtoToUiMapper,
-    private val store: NewsStore
+    private val store: NewsStore,
+    private val category: Category
 ) : ViewModel() {
 
     private val _viewState = MutableStateFlow<ViewState>(ViewState.Default)
@@ -37,5 +40,26 @@ class NewsViewModel(
             is AppState.Success -> _viewState.value = ViewState.Success(data = mapper(storeState.data))
             is AppState.Error -> _viewState.value = ViewState.Error(message = storeState.message)
         }
+    }
+
+    /**
+     * метод запроса первой страницы новостей по категории
+     * сохраняем полученные состояние и данные в NewsStore
+     * */
+    fun getNewsByCategory() {
+        store.dispatch(event = AppEvent.Refresh)
+        viewModelScope.launch {
+            newsRepo.getNewsByCategory(page = INITIAL_PAGE, countryCode = "ru", category = category.apiCode)
+                .onSuccess { response ->
+                    store.dispatch(AppEvent.DataReceived(data = response.articles))
+                }
+                .onFailure { ex ->
+                    store.dispatch(AppEvent.ErrorReceived(message = ex.message))
+                }
+        }
+    }
+
+    companion object {
+        private const val INITIAL_PAGE = 1
     }
 }

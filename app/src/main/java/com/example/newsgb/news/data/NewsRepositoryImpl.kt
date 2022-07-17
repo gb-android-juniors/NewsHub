@@ -15,7 +15,7 @@ class NewsRepositoryImpl(
     override suspend fun getBreakingNews(page: Int): Result<ResponseDTO> {
         return try {
             val response = withContext(Dispatchers.IO) {
-                apiService.getBreakingNews(pageNumber = page)
+                apiService.getNewsList(pageNumber = page)
             }
             when (response.status) {
                 STATUS_OK -> Result.success(value = response)
@@ -29,10 +29,23 @@ class NewsRepositoryImpl(
     }
 
     override suspend fun getNewsByCategory(
-        category: String,
+        page: Int,
         countryCode: String,
+        category: String
     ): Result<ResponseDTO> {
-        TODO("Not yet implemented")
+        return try {
+            val response = withContext(Dispatchers.IO) {
+                apiService.getNewsList(pageNumber = page, category = category)
+            }
+            when (response.status) {
+                STATUS_OK -> Result.success(value = response)
+                else -> Result.failure(exception = Throwable(message = "${response.errorCode}: ${response.errorMessage}"))
+            }
+        } catch (ex: HttpException) {
+            return Result.failure(exception = ex)
+        } catch (ex: IOException) {
+            return Result.failure(exception = ex)
+        }
     }
 
     companion object {

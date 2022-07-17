@@ -31,7 +31,6 @@ class NewsFragment : Fragment() {
         viewPager.adapter = ViewPagerAdapter(this@NewsFragment)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = getString(Category.values()[position].nameResId)
-            tab.isSelected
         }.attach()
     }
 
