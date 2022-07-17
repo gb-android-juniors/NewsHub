@@ -6,16 +6,34 @@ import com.example.newsgb._core.data.db.entity.ArticleEntity
 @Dao
 interface BookmarkDao {
 
-    /** Получить весь список закладок*/
+    /**
+     * Получить весь список закладок
+     **/
     @Query("SELECT * FROM bookmark_table")
-    suspend fun all(): List<ArticleEntity>
-    /** Получить конкретную закладку */
+    suspend fun getAll(): List<ArticleEntity>
+
+    /**
+     *  Получить конкретную закладку
+     **/
     @Query("SELECT * FROM bookmark_table WHERE id LIKE :id")
-    suspend fun getDataById(id: Int): ArticleEntity?
-    /** Сохранить новую закладку. onConflict = OnConflictStrategy.IGNORE означает, что дубликаты не будут сохраняться */
+    suspend fun getEntityById(id: Int): ArticleEntity?
+
+    /**
+     * Сохранить новую закладку.
+     * onConflict = OnConflictStrategy.IGNORE - дубликаты будут перезаписаны
+     **/
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(entity: ArticleEntity)
-    /** Удалить закладку */
+    suspend fun saveEntity(entity: ArticleEntity)
+
+    /**
+     * Удалить одну закладку
+     **/
     @Delete
-    suspend fun delete(entity: ArticleEntity)
+    suspend fun removeEntity(entity: ArticleEntity)
+
+    /**
+     * Удалить все из таблицы
+     **/
+    @Query("DELETE FROM bookmark_table")
+    suspend fun removeAll()
 }
