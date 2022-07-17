@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
-import com.example.newsgb.R
 import com.example.newsgb.databinding.NewsFragmentBinding
 import com.example.newsgb.utils.Category
+import com.google.android.material.tabs.TabLayoutMediator
 
 class NewsFragment : Fragment() {
 
@@ -26,27 +25,15 @@ class NewsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setViewPagerAndTabsNavigation()
-        setCustomTabs()
     }
 
     private fun setViewPagerAndTabsNavigation() {
         with(binding) {
-            viewPager.adapter = ViewPagerAdapter(childFragmentManager, requireContext())
-            tabLayout.setupWithViewPager(viewPager)
-        }
-    }
-
-    private fun setCustomTabs() {
-        val layoutInflater = LayoutInflater.from(requireContext())
-
-        for (category in Category.values()) {
-            binding.tabLayout.getTabAt(category.ordinal)?.customView =
-                layoutInflater.inflate(R.layout.activity_news_api_custom_tab, null).apply {
-                    val textTab = this.findViewById<AppCompatTextView>(R.id.tab_text)
-                    textTab.text = getString(category.categoryNameId)
-                    //Если будем использовать иконки для табов с категориями - настроить здесь ->
-                }
-
+            viewPager.adapter = ViewPagerAdapter(this@NewsFragment)
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                tab.text = getString(Category.values()[position].categoryNameId)
+                tab.isSelected
+            }.attach()
         }
     }
 
