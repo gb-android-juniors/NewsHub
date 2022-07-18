@@ -38,7 +38,6 @@
             android:id="@+id/news_image"
             android:layout_width="90dp"
             android:layout_height="match_parent"
-            android:alpha="0.8"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NewsGB">
         <activity
-            android:name="._core.ui.MainActivity"
+            android:name=".main.ui.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="._core.ui.CustomSplashScreenActivity"
+            android:name=".splach.ui.CustomSplashScreenActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
     </application>

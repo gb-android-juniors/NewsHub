@@ -1,4 +1,4 @@
-package com.example.newsgb.news.ui
+package com.example.newsgb._core.ui
 
 import com.example.newsgb._core.data.api.model.ArticleDTO
 import com.example.newsgb._core.ui.model.Article

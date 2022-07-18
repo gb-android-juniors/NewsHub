@@ -1,18 +1,18 @@
 package com.example.newsgb._core.ui.model
 
-import com.example.newsgb._core.data.api.model.ArticleDTO
-
 /** Класс состояний приложения
  *
- * Default - состояние не определено
- * Loading - состояние загрузки
- * Success - состояние наличия валидных данных
+ * Empty - состояние отсутствуия данных (первоначальное или когда пришел пустой список данных)
+ * Loading - состояние первоначальной загрузки
+ * MoreLoading - состояние дозагрузки данных
+ * Data - состояние наличия валидных данных
  * Error - состояние ошибки
  *
  * */
 sealed class AppState {
-    object Default : AppState()
+    object Empty : AppState()
     object Loading : AppState()
-    data class Success(val data: List<Article>) : AppState()
+    data class MoreLoading(val data: List<Article>) : AppState()
+    data class Data(val data: List<Article>) : AppState()
     data class Error(var message: String?) : AppState()
 }

@@ -17,14 +17,13 @@ import com.example.newsgb._core.ui.model.ViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.NewsFragmentTabItemBinding
-import com.example.newsgb.news.ui.adapter.NewsAdapter
+import com.example.newsgb.news.ui.adapter.NewsListAdapter
 import com.example.newsgb.news.ui.adapter.RecyclerItemListener
 import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
-import java.lang.IllegalArgumentException
 
 class NewsTabItemFragment : Fragment() {
 
@@ -61,7 +60,7 @@ class NewsTabItemFragment : Fragment() {
     }
 
     /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
-    private val newsAdapter: NewsAdapter = NewsAdapter(listener = recyclerItemListener)
+    private val newsListAdapter: NewsListAdapter = NewsListAdapter(listener = recyclerItemListener)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -99,7 +98,10 @@ class NewsTabItemFragment : Fragment() {
     }
 
     private fun initView() = with(binding) {
-        mainRecycler.adapter = newsAdapter
+        mainRecycler.adapter = newsListAdapter
+        firstNewsContent.setOnClickListener {
+            //TODO("Not yet implemented")
+        }
     }
 
     private fun initViewModel() {
@@ -116,21 +118,30 @@ class NewsTabItemFragment : Fragment() {
      * */
     private fun renderState(state: ViewState) {
         when (state) {
+            is ViewState.Empty -> {
+                enableEmptyState(state = true)
+                enableProgress(state = false)
+                enableError(state = false)
+                enableContent(state = false)
+            }
             is ViewState.Loading -> {
                 enableProgress(state = true)
+                enableEmptyState(state = false)
                 enableError(state = false)
                 enableContent(state = false)
             }
             is ViewState.Error -> {
-                enableProgress(state = false)
                 enableError(state = true)
+                enableEmptyState(state = false)
+                enableProgress(state = false)
                 enableContent(state = false)
                 showToastMessage(state.message.toString())
             }
-            is ViewState.Success -> {
+            is ViewState.Data -> {
+                enableContent(state = true)
+                enableEmptyState(state = false)
                 enableProgress(state = false)
                 enableError(state = false)
-                enableContent(state = state.data.isNotEmpty())
                 initContent(state.data)
             }
             else -> {}
@@ -141,14 +152,11 @@ class NewsTabItemFragment : Fragment() {
      * метод инициализации контента на экране
      * */
     private fun initContent(data: List<Article>) {
-        binding.noNewsText.isVisible = data.isEmpty()
-        if (data.isNotEmpty()) {
-            createFirstNews(data.first())
-            if (data.size > 1) {
-                newsAdapter.submitList(data.subList(1, data.size - 1))
-            } else {
-                newsAdapter.submitList(listOf())
-            }
+        createFirstNews(data.first())
+        if (data.size > 1) {
+            newsListAdapter.submitList(data.subList(1, data.size - 1))
+        } else {
+            newsListAdapter.submitList(listOf())
         }
     }
 
@@ -163,6 +171,10 @@ class NewsTabItemFragment : Fragment() {
             .placeholder(R.drawable.ic_newspaper_24)
             .error(R.drawable.ic_newspaper_24)
             .into(binding.firstNewsImage)
+    }
+
+    private fun enableEmptyState(state: Boolean) {
+        binding.noNewsText.isVisible = state
     }
 
     private fun enableProgress(state: Boolean) {

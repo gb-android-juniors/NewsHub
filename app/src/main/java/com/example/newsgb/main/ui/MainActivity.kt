@@ -1,5 +1,4 @@
-package com.example.newsgb._core.ui
-
+package com.example.newsgb.main.ui
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -18,6 +17,7 @@ import com.example.newsgb.R
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.MainActivityBinding
+import com.example.newsgb.splach.ui.CustomSplashScreenActivity
 import com.example.newsgb.utils.network.OnlineLiveData
 import com.example.newsgb.utils.ui.AlertDialogFragment
 import org.koin.android.ext.android.inject
@@ -34,13 +34,13 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getBreakingNews()
         setSplashScreen()
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //проверяем наличие интернет-подключения на старте
         isNetworkAvailable =
             (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected == true
+        viewModel.getInitialData()
         //запускаем главный фрагмент
         startMainScreen(savedInstanceState)
         //подписываемся на изменение наличия интернет-подключения

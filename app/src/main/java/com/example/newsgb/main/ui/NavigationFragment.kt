@@ -1,7 +1,9 @@
-package com.example.newsgb._core.ui
+package com.example.newsgb.main.ui
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.newsgb.R
 import com.example.newsgb.bookmarks.ui.BookmarksFragment

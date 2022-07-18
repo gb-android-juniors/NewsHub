@@ -1,25 +1,21 @@
-package com.example.newsgb.news.data
+package com.example.newsgb.main.data
 
 import com.example.newsgb._core.data.api.ApiService
 import com.example.newsgb._core.data.api.model.ResponseDTO
-import com.example.newsgb.news.domain.NewsRepository
+import com.example.newsgb.main.domain.MainRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
-class NewsRepositoryImpl(
+class MainRepositoryImpl(
     private val apiService: ApiService
-) : NewsRepository {
+) : MainRepository {
 
-    override suspend fun getNewsByCategory(
-        page: Int,
-        countryCode: String,
-        category: String
-    ): Result<ResponseDTO> {
+    override suspend fun getBreakingNews(page: Int): Result<ResponseDTO> {
         return try {
             val response = withContext(Dispatchers.IO) {
-                apiService.getNewsList(pageNumber = page, category = category)
+                apiService.getNewsList(pageNumber = page)
             }
             when (response.status) {
                 STATUS_OK -> Result.success(value = response)
