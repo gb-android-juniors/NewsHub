@@ -34,5 +34,6 @@
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">No favourite articles</string>
+    <string name="no_news">No news!</string>
 
 </resources>

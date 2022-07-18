@@ -27,5 +27,6 @@
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Нет избранных статей</string>
+    <string name="no_news">Нет новостей!</string>
 
 </resources>

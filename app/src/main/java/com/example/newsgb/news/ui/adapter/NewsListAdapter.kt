@@ -10,8 +10,8 @@ import com.example.newsgb.R
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.databinding.NewsFragmentRecyclerItemBinding
 
-class NewsAdapter(private val listener: RecyclerItemListener) :
-    RecyclerView.Adapter<NewsAdapter.NewsViewHolder>() {
+class NewsListAdapter(private val listener: RecyclerItemListener) :
+    RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>() {
 
     private val newsListDiffer = AsyncListDiffer(this, DIFF_CALLBACK)
 

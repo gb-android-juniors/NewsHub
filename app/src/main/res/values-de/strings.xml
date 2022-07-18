@@ -27,5 +27,6 @@
 
 <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Keine ausgewählten Artikel</string>
+    <string name="no_news">Keine Neuigkeiten!</string>
 
 </resources>

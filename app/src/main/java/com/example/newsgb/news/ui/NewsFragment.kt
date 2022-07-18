@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.example.newsgb.databinding.NewsFragmentBinding
+import com.example.newsgb.news.ui.adapter.ViewPagerAdapter
 import com.example.newsgb.utils.ui.Category
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -31,8 +33,16 @@ class NewsFragment : Fragment() {
         viewPager.adapter = ViewPagerAdapter(this@NewsFragment)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = getString(Category.values()[position].nameResId)
-            tab.isSelected
         }.attach()
+        disableViewPagerCache()
+    }
+
+    /** метод отключает кэширование фрагментов вьюпейджера */
+    private fun disableViewPagerCache() {
+        (binding.viewPager.getChildAt(0) as RecyclerView).apply {
+            layoutManager?.isItemPrefetchEnabled = false
+            setItemViewCacheSize(0)
+        }
     }
 
     companion object {

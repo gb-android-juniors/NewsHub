@@ -1,14 +1,16 @@
-package com.example.newsgb._core.ui
+package com.example.newsgb.main.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.newsgb._core.ui.NewsDtoToUiMapper
 import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.store.NewsStore
-import com.example.newsgb.news.domain.NewsRepository
+import com.example.newsgb.main.domain.MainRepository
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val newsRepo: NewsRepository,
+    private val mainRepo: MainRepository,
+    private val mapper: NewsDtoToUiMapper,
     private val store: NewsStore
 ) : ViewModel() {
 
@@ -16,12 +18,12 @@ class MainViewModel(
      * метод запроса первой страницы главных новостей
      * сохраняем полученные состояние и данные в NewsStore
      * */
-    fun getBreakingNews() {
+    fun getInitialData() {
         store.dispatch(event = AppEvent.Refresh)
         viewModelScope.launch {
-            newsRepo.getBreakingNews(page = INITIAL_PAGE)
+            mainRepo.getBreakingNews(page = INITIAL_PAGE)
                 .onSuccess { response ->
-                    store.dispatch(AppEvent.DataReceived(data = response.articles))
+                    store.dispatch(AppEvent.DataReceived(data = mapper(response.articles)))
                 }
                 .onFailure { ex ->
                     store.dispatch(AppEvent.ErrorReceived(message = ex.message))
