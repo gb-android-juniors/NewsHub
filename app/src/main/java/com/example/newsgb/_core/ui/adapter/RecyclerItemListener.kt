@@ -1,4 +1,4 @@
-package com.example.newsgb.news.ui.adapter
+package com.example.newsgb._core.ui.adapter
 
 interface RecyclerItemListener {
     fun onItemClick()

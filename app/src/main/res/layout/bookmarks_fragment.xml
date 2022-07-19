@@ -22,6 +22,14 @@
             android:textColor="@color/category_button_text_color"
             android:textSize="@dimen/header_text_size"
             android:textStyle="bold" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/clear_all_bookmarks"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_bookmarks_delete"
+            android:layout_gravity="end"
+            android:padding="@dimen/margin_8"/>
     </com.google.android.material.appbar.MaterialToolbar>
 
     <LinearLayout
@@ -32,6 +40,7 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/empty_bookmarks_image"
             android:layout_width="@dimen/empty_bookmarks_warning_image_size"
             android:layout_height="@dimen/empty_bookmarks_warning_image_size"
             android:layout_gravity="center"
@@ -47,6 +56,13 @@
             android:textSize="@dimen/common_text_size"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bookmarks_recycler"
