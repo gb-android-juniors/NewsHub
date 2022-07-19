@@ -27,22 +27,24 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         val article = newsListDiffer.currentList[position]
-        holder.bind(item = article)
+        holder.bind(itemArticle = article)
     }
 
     inner class NewsViewHolder(
         private val binding: NewsFragmentRecyclerItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Article) = with(binding) {
-            newsHeader.text = item.title
-            newsResourceName.text = item.sourceName
+        fun bind(itemArticle: Article) = with(binding) {
+            newsHeader.text = itemArticle.title
+            newsResourceName.text = itemArticle.sourceName
             Glide.with(newsImage.context)
-                .load(item.imageUrl)
+                .load(itemArticle.imageUrl)
                 .placeholder(R.drawable.ic_newspaper_24)
                 .error(R.drawable.ic_newspaper_24)
                 .into(newsImage)
-            itemView.setOnClickListener { listener.onItemClick() }
+            itemView.setOnClickListener {
+                listener.onItemClick(itemArticle)
+            }
         }
     }
 
