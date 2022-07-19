@@ -1,7 +1,5 @@
 package com.example.newsgb._core.ui.model
 
-import com.example.newsgb._core.data.api.model.ArticleDTO
-
 /** Класс событий от пользователя и источника данных
  *
  * Refresh - событие от пользователя на получение данных
@@ -11,6 +9,7 @@ import com.example.newsgb._core.data.api.model.ArticleDTO
  * */
 sealed class AppEvent {
     object Refresh: AppEvent()
-    data class DataReceived(val data: List<ArticleDTO>) : AppEvent()
+    object LoadMore: AppEvent()
+    data class DataReceived(val data: List<Article>) : AppEvent()
     data class ErrorReceived(val message: String?): AppEvent()
 }

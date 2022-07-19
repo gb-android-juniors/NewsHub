@@ -2,7 +2,7 @@
 <resources>
 
     <!--    Category names-->
-    <string name="general_category_name_text">Общие</string>
+    <string name="main_category_name_text">Главное</string>
     <string name="health_category_name_text">Здоровье</string>
     <string name="sports_category_name_text">Спорт</string>
     <string name="business_category_name_text">Бизнес</string>
@@ -27,5 +27,6 @@
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Нет избранных статей</string>
+    <string name="no_news">Нет новостей!</string>
 
 </resources>

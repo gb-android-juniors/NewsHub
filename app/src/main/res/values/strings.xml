@@ -9,7 +9,7 @@
     <string name="example_first_news_header_text" translatable="false">Владимир Путин вновь прибыл в пострадавшую от потопа Иркутскую область</string>
 
     <!--    Category names-->
-    <string name="general_category_name_text">General</string>
+    <string name="main_category_name_text">Main</string>
     <string name="health_category_name_text">Health</string>
     <string name="sports_category_name_text">Sports</string>
     <string name="business_category_name_text">Business</string>
@@ -34,5 +34,6 @@
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">No favourite articles</string>
+    <string name="no_news">No news!</string>
 
 </resources>
