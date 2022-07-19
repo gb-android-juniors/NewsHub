@@ -42,7 +42,7 @@ class BookmarksFragment : Fragment() {
      * onBookmarkCheck - колбэк нажатия на закладку на элеменете списка (пока не реализовано!)
      * */
     private val recyclerItemListener = object : RecyclerItemListener {
-        override fun onItemClick() {
+        override fun onItemClick(itemArticle: Article) {
             Toast.makeText(requireContext(), "CLICK", Toast.LENGTH_SHORT).show()
         }
 
