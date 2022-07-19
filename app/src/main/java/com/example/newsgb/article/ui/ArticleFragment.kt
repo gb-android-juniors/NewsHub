@@ -43,15 +43,7 @@ class ArticleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val url = arguments?.getString(URL)
-        binding.webView.apply {
-            webViewClient = WebViewClient()
-            settings.javaScriptEnabled = true
-            if (url != null) {
-                loadUrl(url)
-                binding.loader.isVisible = false
-            }
-        }
+        initWebView()
     }
 
     override fun onDestroyView() {
@@ -62,6 +54,18 @@ class ArticleFragment : Fragment() {
     override fun onDetach() {
         super.onDetach()
         storeHolder = null
+    }
+
+    private fun initWebView(){
+        val url = arguments?.getString(URL)
+        binding.webView.apply {
+            webViewClient = WebViewClient()
+            settings.javaScriptEnabled = true
+            if (url != null) {
+                loadUrl(url)
+                binding.loader.isVisible = false
+            }
+        }
     }
 
     companion object {

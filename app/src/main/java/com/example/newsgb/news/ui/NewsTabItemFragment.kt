@@ -18,6 +18,7 @@ import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.article.ui.ArticleFragment
 import com.example.newsgb.databinding.NewsFragmentTabItemBinding
+import com.example.newsgb.details.ui.DetailsFragment
 import com.example.newsgb.news.ui.adapter.NewsAdapter
 import com.example.newsgb.news.ui.adapter.RecyclerItemListener
 import kotlinx.coroutines.flow.launchIn
@@ -47,7 +48,7 @@ class NewsTabItemFragment : Fragment() {
      * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
-            showArticleFragment(ArticleFragment.newInstance(itemArticle.contentUrl))
+            showDetailsFragment(DetailsFragment.newInstance(article = itemArticle))
         }
 
         override fun onBookmarkCheck() {
@@ -139,7 +140,7 @@ class NewsTabItemFragment : Fragment() {
         binding.firstNewsDescription.text = article.description
         binding.firstNewsSource.text = article.sourceName
         binding.firstNewsImage.setOnClickListener {
-            showArticleFragment(ArticleFragment.newInstance(article.contentUrl))
+            showDetailsFragment(DetailsFragment.newInstance(article))
         }
         Glide.with(binding.firstNewsImage)
             .load(article.imageUrl)
@@ -160,7 +161,7 @@ class NewsTabItemFragment : Fragment() {
         binding.error.isVisible = state
     }
 
-    private fun showArticleFragment(fragment: Fragment) {
+    private fun showDetailsFragment(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
             .replace(R.id.main_container, fragment)
             .setTransition(TRANSIT_FRAGMENT_FADE)
