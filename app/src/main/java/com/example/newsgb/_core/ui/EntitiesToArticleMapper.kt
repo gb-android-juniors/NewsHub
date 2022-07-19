@@ -26,7 +26,7 @@ fun mapEntityToArticle(
         imageUrl = articleEntity.urlToImage,
         publishedDate = articleEntity.publishedDate,
         content = articleEntity.content.orEmpty(),
-        isChecked = articleEntity.isChecked
+        isChecked = true
     )
 }
 
@@ -43,8 +43,7 @@ fun mapArticleToEntity(
         urlToImage = article.imageUrl,
         publishedDate = article.publishedDate,
         content = article.content,
-        category = article.category,
-        isChecked = article.isChecked
+        category = article.category
     )
 }
 

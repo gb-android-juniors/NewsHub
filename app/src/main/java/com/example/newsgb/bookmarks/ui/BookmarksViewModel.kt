@@ -2,8 +2,9 @@ package com.example.newsgb.bookmarks.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsgb._core.ui.model.AppState
 import com.example.newsgb._core.ui.model.Article
+import com.example.newsgb._core.ui.model.ListViewState
+import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.bookmarks.domain.BookmarkRepository
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,20 +12,21 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class BookmarksViewModel(
-    private val bookmarkRepo: BookmarkRepository
+    private val bookmarkRepo: BookmarkRepository,
+    private val store: NewsStore
 ) : ViewModel() {
 
-    private val _stateFlow = MutableStateFlow<AppState>(AppState.Empty)
-    val stateFlow: StateFlow<AppState> = _stateFlow.asStateFlow()
+    private val _stateFlow = MutableStateFlow<ListViewState>(ListViewState.Empty)
+    val stateFlow: StateFlow<ListViewState> = _stateFlow.asStateFlow()
 
     fun renderData() {
-        _stateFlow.value = AppState.Loading
+        _stateFlow.value = ListViewState.Loading
         viewModelScope.launch {
             val bookmarksList = bookmarkRepo.getAllBookmarks()
             _stateFlow.value = if (bookmarksList.isEmpty()) {
-                AppState.Empty
+                ListViewState.Empty
             } else {
-                AppState.Data(bookmarksList)
+                ListViewState.Data(bookmarksList)
             }
         }
     }
@@ -39,7 +41,7 @@ class BookmarksViewModel(
     fun clearBookmarks() {
         viewModelScope.launch {
             bookmarkRepo.clearBookmarks()
-            _stateFlow.value = AppState.Empty
+            _stateFlow.value = ListViewState.Empty
         }
     }
 
@@ -53,7 +55,7 @@ class BookmarksViewModel(
 
 
     override fun onCleared() {
-        _stateFlow.value = AppState.Empty
+        _stateFlow.value = ListViewState.Empty
         super.onCleared()
     }
 }

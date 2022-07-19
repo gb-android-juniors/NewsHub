@@ -1,5 +1,6 @@
 package com.example.newsgb.bookmarks.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,20 +11,31 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.newsgb._core.ui.adapter.NewsListAdapter
 import com.example.newsgb._core.ui.adapter.RecyclerItemListener
-import com.example.newsgb._core.ui.model.AppState
 import com.example.newsgb._core.ui.model.Article
+import com.example.newsgb._core.ui.model.ListViewState
+import com.example.newsgb._core.ui.store.NewsStore
+import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.BookmarksFragmentBinding
 import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class BookmarksFragment : Fragment() {
 
     private var _binding: BookmarksFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModel<BookmarksViewModel>()
+    /** переменная хранителя экземпляра NewsStore */
+    private var storeHolder: NewsStoreHolder? = null
+
+    /** экземпляр NewsStore, который получаем из MainActivity как хранителя этого экземпляра */
+    private val newsStore: NewsStore by lazy {
+        storeHolder?.newsStore ?: throw IllegalArgumentException()
+    }
+
+    private val viewModel by viewModel<BookmarksViewModel> { parametersOf(newsStore)}
 
     /** инициализируем слушатель нажатий на элементы списка
      * onItemClick - колбэк нажатия на элемент списка
@@ -35,13 +47,19 @@ class BookmarksFragment : Fragment() {
         }
 
         override fun onBookmarkCheck() {
-            TODO("Not yet implemented")
+            //TODO("Not yet implemented")
         }
 
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        /** инициализируем переменную хранителя экземпляра NewsStore */
+        storeHolder = context as NewsStoreHolder
+    }
+
     /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
-    private val bookmarksListAdapter: NewsListAdapter by lazy { NewsListAdapter(listener = recyclerItemListener) }
+    private val bookmarksListAdapter: NewsListAdapter = NewsListAdapter(listener = recyclerItemListener)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,6 +85,11 @@ class BookmarksFragment : Fragment() {
         _binding = null
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        storeHolder = null
+    }
+
     private fun initData() {
         viewModel.renderData()
     }
@@ -75,7 +98,8 @@ class BookmarksFragment : Fragment() {
         binding.bookmarksRecycler.adapter = bookmarksListAdapter
         binding.clearAllBookmarks.setOnClickListener { viewModel.clearBookmarks() }
 
-        //TODO тестовый код, чтобы проверить добавление закладки в БД и их удаление
+        //TODO тестовый код, чтобы проверить добавление закладки в БД и их удаление.
+        // Удалить его после полной реализации фичи
         //начала тестового блока
         binding.emptyBookmarksImage.setOnClickListener {
             val testArticle = Article(
@@ -99,9 +123,6 @@ class BookmarksFragment : Fragment() {
     }
 
     private fun initViewModel() {
-        if (binding.bookmarksRecycler.adapter != null) {
-            throw IllegalStateException("The ViewModel should be initialised first")
-        }
         /**подписываемся на изменения состояний экрана */
         viewModel.stateFlow.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
@@ -109,19 +130,19 @@ class BookmarksFragment : Fragment() {
     /**
      * метод обработки состояний экрана
      * */
-    private fun renderState(appState: AppState) {
-        when (appState) {
-            is AppState.Data -> {
+    private fun renderState(listViewState: ListViewState) {
+        when (listViewState) {
+            is ListViewState.Data -> {
                 enableProgress(state = false)
                 enableContent(state = true)
-                setDataToAdapter(articleList = appState.data)
+                setDataToAdapter(articleList = listViewState.data)
             }
-            is AppState.Loading -> {
+            is ListViewState.Loading -> {
                 enableProgress(state = true)
                 enableEmptyState(state = false)
                 enableContent(state = false)
             }
-            is AppState.Empty -> {
+            is ListViewState.Empty -> {
                 enableProgress(state = false)
                 enableEmptyState(state = true)
                 enableContent(state = false)

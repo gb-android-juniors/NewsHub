@@ -17,6 +17,5 @@ data class ArticleEntity(
     @ColumnInfo(name = "image_url") val urlToImage: String?,
     @ColumnInfo(name = "published_date") val publishedDate: String,
     @ColumnInfo(name = "content") val content: String?,
-    @ColumnInfo(name = "category") val category: Category,
-    @ColumnInfo(name = "isChecked") val isChecked: Boolean
+    @ColumnInfo(name = "category") val category: Category
 )
