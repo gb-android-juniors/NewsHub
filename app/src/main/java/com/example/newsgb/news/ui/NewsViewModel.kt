@@ -17,13 +17,12 @@ class NewsViewModel(
     private val category: Category
 ) : ViewModel() {
 
-    private val _viewState = MutableStateFlow<ViewState>(ViewState.Empty)
-    val viewState: StateFlow<ViewState> = _viewState.asStateFlow()
+    /** переменная состояния экрана со списком новостей */
+    private val _viewState = MutableStateFlow<ListViewState>(ListViewState.Loading)
+    val viewState: StateFlow<ListViewState> = _viewState.asStateFlow()
 
     init {
-        /**
-         * При инициализации подписываемся на обновления состояний и команд от NewsStore
-         * */
+        /** При инициализации подписываемся на обновления состояний и команд от NewsStore */
         store.storeState.onEach { renderStoreState(it) }.launchIn(viewModelScope)
         store.storeEffect.onEach { renderAppEffect(it) }.launchIn(viewModelScope)
     }
@@ -34,10 +33,9 @@ class NewsViewModel(
      * */
     private fun renderStoreState(storeState: AppState) {
         when(storeState) {
-            AppState.Empty -> _viewState.value = ViewState.Empty
-            AppState.Loading, is AppState.MoreLoading -> _viewState.value = ViewState.Loading
+            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value = ListViewState.Loading
             is AppState.Data -> setSuccessState(data = storeState.data)
-            is AppState.Error -> _viewState.value = ViewState.Error(message = storeState.message)
+            is AppState.Error -> _viewState.value = ListViewState.Error(message = storeState.message)
         }
     }
 
@@ -61,9 +59,9 @@ class NewsViewModel(
     private fun setSuccessState(data: List<Article>) {
         val filteredData = data.filter { it.category == category }
         if (filteredData.isEmpty()) {
-            _viewState.value = ViewState.Empty
+            _viewState.value = ListViewState.Empty
         } else {
-            _viewState.value = ViewState.Data(data = filteredData)
+            _viewState.value = ListViewState.Data(data = filteredData)
         }
     }
 
@@ -79,7 +77,7 @@ class NewsViewModel(
             if (filteredData.isEmpty()) {
                 store.dispatch(event = AppEvent.LoadMore)
             } else {
-                _viewState.value = ViewState.Data(data = filteredData)
+                _viewState.value = ListViewState.Data(data = filteredData)
             }
         }
     }

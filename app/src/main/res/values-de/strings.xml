@@ -28,5 +28,7 @@
 <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Keine ausgewählten Artikel</string>
     <string name="no_news">Keine Neuigkeiten!</string>
+    <string name="more_details">Mehr Details…</string>
+    <string name="unknown_error">Unbekannter Fehler!</string>
 
 </resources>
