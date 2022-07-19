@@ -19,8 +19,8 @@ import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.article.ui.DetailsFragment
 import com.example.newsgb.databinding.NewsFragmentTabItemBinding
-import com.example.newsgb.news.ui.adapter.NewsListAdapter
-import com.example.newsgb.news.ui.adapter.RecyclerItemListener
+import com.example.newsgb._core.ui.adapter.NewsListAdapter
+import com.example.newsgb._core.ui.adapter.RecyclerItemListener
 import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -57,7 +57,7 @@ class NewsTabItemFragment : Fragment() {
         }
 
         override fun onBookmarkCheck() {
-            //TODO("Not yet implemented")
+            TODO("Not yet implemented")
         }
     }
 
