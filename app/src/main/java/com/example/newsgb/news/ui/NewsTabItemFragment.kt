@@ -14,14 +14,12 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.model.Article
-import com.example.newsgb._core.ui.model.ViewState
+import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
-import com.example.newsgb.article.ui.ArticleFragment
+import com.example.newsgb.article.ui.DetailsFragment
 import com.example.newsgb.databinding.NewsFragmentTabItemBinding
 import com.example.newsgb.news.ui.adapter.NewsListAdapter
-import com.example.newsgb.details.ui.DetailsFragment
-import com.example.newsgb.news.ui.adapter.NewsAdapter
 import com.example.newsgb.news.ui.adapter.RecyclerItemListener
 import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.launchIn
@@ -55,7 +53,7 @@ class NewsTabItemFragment : Fragment() {
      * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
-            showDetailsFragment(DetailsFragment.newInstance(article = itemArticle))
+            showDetailsFragment(fragment = DetailsFragment.newInstance(articleUrl = itemArticle.contentUrl))
         }
 
         override fun onBookmarkCheck() {
@@ -103,9 +101,6 @@ class NewsTabItemFragment : Fragment() {
 
     private fun initView() = with(binding) {
         mainRecycler.adapter = newsListAdapter
-        firstNewsContent.setOnClickListener {
-            //TODO("Not yet implemented")
-        }
     }
 
     private fun initViewModel() {
@@ -120,33 +115,33 @@ class NewsTabItemFragment : Fragment() {
     /**
      * метод обработки состояний экрана
      * */
-    private fun renderState(state: ViewState) {
+    private fun renderState(state: ListViewState) {
         when (state) {
-            is ViewState.Empty -> {
+            is ListViewState.Empty -> {
                 enableEmptyState(state = true)
                 enableProgress(state = false)
                 enableError(state = false)
                 enableContent(state = false)
             }
-            is ViewState.Loading -> {
+            is ListViewState.Loading -> {
                 enableProgress(state = true)
                 enableEmptyState(state = false)
                 enableError(state = false)
                 enableContent(state = false)
             }
-            is ViewState.Error -> {
+            is ListViewState.Error -> {
                 enableError(state = true)
                 enableEmptyState(state = false)
                 enableProgress(state = false)
                 enableContent(state = false)
-                showToastMessage(state.message.toString())
+                showToastMessage(state.message ?: getString(R.string.unknown_error))
             }
-            is ViewState.Data -> {
+            is ListViewState.Data -> {
                 enableContent(state = true)
                 enableEmptyState(state = false)
                 enableProgress(state = false)
                 enableError(state = false)
-                initContent(state.data)
+                initContent(data = state.data)
             }
             else -> {}
         }
@@ -170,8 +165,8 @@ class NewsTabItemFragment : Fragment() {
     private fun createFirstNews(article: Article) {
         binding.firstNewsHeader.text = article.title
         binding.firstNewsSource.text = article.sourceName
-        binding.firstNewsImage.setOnClickListener {
-            showDetailsFragment(DetailsFragment.newInstance(article))
+        binding.firstNewsContent.setOnClickListener {
+            showDetailsFragment(fragment = DetailsFragment.newInstance(articleUrl = article.contentUrl))
         }
         Glide.with(binding.firstNewsImage)
             .load(article.imageUrl)
@@ -197,7 +192,8 @@ class NewsTabItemFragment : Fragment() {
     }
 
     private fun showDetailsFragment(fragment: Fragment) {
-        parentFragmentManager.beginTransaction()
+        requireActivity().supportFragmentManager
+            .beginTransaction()
             .replace(R.id.main_container, fragment)
             .setTransition(TRANSIT_FRAGMENT_FADE)
             .addToBackStack(null)

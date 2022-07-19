@@ -88,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textStyle="bold"
-        android:visibility="gone"
+        android:visibility="invisible"
         android:textSize="@dimen/first_news_source_text_size"
         android:text="@string/no_news"
         tool:visibility="visible"/>

@@ -36,7 +36,6 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
 
         fun bind(itemArticle: Article) = with(binding) {
             newsHeader.text = itemArticle.title
-            newsDescription.text = itemArticle.description
             newsResourceName.text = itemArticle.sourceName
             Glide.with(newsImage.context)
                 .load(itemArticle.imageUrl)

@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
             if (savedInstanceState == null) {
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.main_container, NavigationFragment.newInstance())
-                    .commitNow()
+                    .commit()
             }
         }
     }

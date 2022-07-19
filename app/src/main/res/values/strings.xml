@@ -3,7 +3,7 @@
 
     <!--    Examples for tools-->
     <string name="example_header_text" translatable="false">Эксперты американского CBS назвали рост рубля вопреки санкциям потрясающим</string>
-    <string name="example_body_text" translatable="false">Рубль демонстрирует потрясающий рост и входит в список лучших мировых валют в этом году, несмотря на многочисленные антироссийские санкции Запада. Об этом заявили опрошенные американским телеканалом CBS эксперты. По словам специалистов, в обычной ситуации страна, сталкивающаяся с ограничительными мерами США и Евросоюза, теряет инвесторов и страдает от оттока капиталов, что, в свою очередь, приводит к падению национального платежного средства. Однако Россия предприняла невероятно энергичные шаги по предотвращению вывода денег за границу. В сочетании с резким ростом цен на топливо это увеличило спрос на рубль и укрепило его, отмечается в публикации.</string>
+    <string name="example_body_text" translatable="false">Рубль демонстрирует потрясающий рост и входит в список лучших мировых валют в этом году, несмотря на многочисленные антироссийские санкции Запада. Об этом заявили опрошенные американским телеканалом CBS эксперты.</string>
     <string name="example_resource_name_text" translatable="false">Комсомольская правда</string>
     <string name="example_news_publication_date" translatable="false">01.02.2022</string>
     <string name="example_first_news_header_text" translatable="false">Владимир Путин вновь прибыл в пострадавшую от потопа Иркутскую область</string>
@@ -35,5 +35,7 @@
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">No favourite articles</string>
     <string name="no_news">No news!</string>
+    <string name="more_details">More details…</string>
+    <string name="unknown_error">Unknown Error!</string>
 
 </resources>

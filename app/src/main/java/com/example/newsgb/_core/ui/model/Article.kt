@@ -14,5 +14,6 @@ data class Article(
     val contentUrl: String,
     val imageUrl: String?,
     val publishedDate: String,
-    val content: String
+    val content: String,
+    val isChecked: Boolean = false
 ) : Parcelable
