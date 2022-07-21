@@ -17,7 +17,7 @@ import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
-import com.example.newsgb.article.ui.DetailsFragment
+import com.example.newsgb.article.ui.ArticleDetailsFragment
 import com.example.newsgb.databinding.NewsFragmentTabItemBinding
 import com.example.newsgb._core.ui.adapter.NewsListAdapter
 import com.example.newsgb._core.ui.adapter.RecyclerItemListener
@@ -53,7 +53,7 @@ class NewsTabItemFragment : Fragment() {
      * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
-            showDetailsFragment(fragment = DetailsFragment.newInstance(articleUrl = itemArticle.contentUrl))
+            showDetailsFragment(fragment = ArticleDetailsFragment.newInstance(articleUrl = itemArticle.contentUrl))
         }
 
         override fun onBookmarkCheck() {
@@ -166,7 +166,7 @@ class NewsTabItemFragment : Fragment() {
         binding.firstNewsHeader.text = article.title
         binding.firstNewsSource.text = article.sourceName
         binding.firstNewsContent.setOnClickListener {
-            showDetailsFragment(fragment = DetailsFragment.newInstance(articleUrl = article.contentUrl))
+            showDetailsFragment(fragment = ArticleDetailsFragment.newInstance(articleUrl = article.contentUrl))
         }
         Glide.with(binding.firstNewsImage)
             .load(article.imageUrl)

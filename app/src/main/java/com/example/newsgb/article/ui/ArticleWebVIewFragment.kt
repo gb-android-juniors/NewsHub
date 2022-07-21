@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import com.example.newsgb.databinding.ArticleFragmentBinding
 import com.example.newsgb.utils.Constants.Companion.URL
 
-class ArticleFragment : Fragment() {
+class ArticleWebVIewFragment : Fragment() {
 
     private var _binding: ArticleFragmentBinding? = null
     private val binding get() = _binding!!
@@ -50,7 +50,7 @@ class ArticleFragment : Fragment() {
     companion object {
         @JvmStatic
         fun newInstance(url: String) =
-            ArticleFragment().apply {
+            ArticleWebVIewFragment().apply {
                 arguments = Bundle().apply {
                     putString(URL, url)
                 }
