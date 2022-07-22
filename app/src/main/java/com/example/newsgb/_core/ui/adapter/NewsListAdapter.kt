@@ -40,7 +40,7 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
             Glide.with(newsImage.context)
                 .load(itemArticle.imageUrl)
                 .placeholder(R.drawable.ic_newspaper_24)
-                .error(R.drawable.ic_newspaper_24)
+                .error(R.drawable.news)
                 .into(newsImage)
             itemView.setOnClickListener {
                 listener.onItemClick(itemArticle)
