@@ -4,7 +4,7 @@ import com.example.newsgb._core.ui.model.Article
 
 interface BookmarkRepository {
     suspend fun getAllBookmarks(): List<Article>
-    suspend fun getBookmarkById(id: Int): Article
+    suspend fun findArticleInBookmarks(article: Article): Boolean
     suspend fun saveBookmark(article: Article)
     suspend fun removeBookmark(article: Article)
     suspend fun clearBookmarks()

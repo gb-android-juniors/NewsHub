@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -111,11 +113,53 @@ class ArticleDetailsFragment : Fragment() {
         detailsButton.setOnClickListener {
             showArticleFragment(ArticleWebVIewFragment.newInstance(article.contentUrl))
         }
+        setBookmarkIconColor(bookmarkIcon, article.isChecked)
+        bookmarkIcon.setOnClickListener {
+            article.isChecked = !article.isChecked
+            onBookmarkClickListener(article)
+            setBookmarkIconColor(bookmarkIcon, article.isChecked)
+            }
+
         Glide.with(articleImage)
             .load(article.imageUrl)
             .placeholder(R.drawable.ic_newspaper_24)
             .error(R.drawable.ic_newspaper_24)
             .into(articleImage)
+    }
+
+    /**
+     * метод обработки нажатия на иконку с закладкой
+     * добавляет или удаляет статью из БД с закладками
+     */
+    private fun onBookmarkClickListener(article: Article) {
+        if (article.isChecked) {
+            viewModel.saveToDB(article)
+        } else {
+            viewModel.deleteBookmark(article)
+        }
+    }
+
+    /**
+     * устанавливаем цвет иконки закладки
+     */
+    private fun setBookmarkIconColor(bookmarkIcon: AppCompatImageView, isChecked: Boolean) {
+        if (isChecked) {
+            changeColor(bookmarkIcon, R.color.bookmark_selected_color)
+        } else {
+            changeColor(bookmarkIcon, R.color.bookmark_unselected_color)
+        }
+    }
+
+    /**
+     * метод изменения цвета иконки
+     */
+    private fun changeColor(bookmarkIcon: AppCompatImageView, tintColor: Int) {
+        bookmarkIcon.setColorFilter(
+            ContextCompat.getColor(
+                requireContext(),
+                tintColor
+            ), android.graphics.PorterDuff.Mode.SRC_IN
+        )
     }
 
     private fun enableProgress(state: Boolean) {
@@ -136,7 +180,7 @@ class ArticleDetailsFragment : Fragment() {
 
     private fun showArticleFragment(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.main_container, fragment)
+            .add(R.id.main_container, fragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .addToBackStack(null)
             .commit()

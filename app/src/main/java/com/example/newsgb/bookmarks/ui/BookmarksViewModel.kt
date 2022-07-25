@@ -7,15 +7,14 @@ import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.bookmarks.domain.BookmarkRepository
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 
 class BookmarksViewModel(
     private val bookmarkRepo: BookmarkRepository,
-    private val store: NewsStore
+    store: NewsStore
 ) : ViewModel() {
 
+    /** переменная состояния экрана со списком закладок */
     private val _stateFlow = MutableStateFlow<ListViewState>(ListViewState.Empty)
     val stateFlow: StateFlow<ListViewState> = _stateFlow.asStateFlow()
 
@@ -44,15 +43,6 @@ class BookmarksViewModel(
             _stateFlow.value = ListViewState.Empty
         }
     }
-
-
-    fun saveToDB(article: Article) {
-        viewModelScope.launch {
-            bookmarkRepo.saveBookmark(article)
-            renderData()
-        }
-    }
-
 
     override fun onCleared() {
         _stateFlow.value = ListViewState.Empty

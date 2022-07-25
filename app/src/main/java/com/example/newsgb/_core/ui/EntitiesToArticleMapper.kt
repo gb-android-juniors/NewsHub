@@ -34,7 +34,6 @@ fun mapArticleToEntity(
     article: Article
 ): ArticleEntity {
     return ArticleEntity(
-        id = null,
         sourceName = article.sourceName,
         author = article.author,
         title = article.title,
