@@ -31,7 +31,7 @@ class MainViewModel(
                             article.isChecked = true
                         }
                     }
-                    store.dispatch(AppEvent.DataReceived(data = articles))
+                    store.dispatch(AppEvent.DataReceived(data = articles + bookmarkRepo.getAllBookmarks()))
                 }
                 .onFailure { ex ->
                     store.dispatch(AppEvent.ErrorReceived(message = ex.message))
