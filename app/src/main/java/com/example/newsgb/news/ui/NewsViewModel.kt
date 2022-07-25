@@ -5,12 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsgb._core.ui.NewsDtoToUiMapper
 import com.example.newsgb._core.ui.model.*
 import com.example.newsgb._core.ui.store.NewsStore
+import com.example.newsgb.bookmarks.domain.BookmarkRepository
 import com.example.newsgb.news.domain.NewsRepository
 import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
+    private val bookmarkRepo: BookmarkRepository,
     private val newsRepo: NewsRepository,
     private val mapper: NewsDtoToUiMapper,
     private val store: NewsStore,
@@ -91,7 +93,13 @@ class NewsViewModel(
         viewModelScope.launch {
             newsRepo.getNewsByCategory(page = INITIAL_PAGE, countryCode = "ru", category = category.apiCode)
                 .onSuccess { response ->
-                    store.dispatch(AppEvent.DataReceived(data = mapper(newsList = response.articles, category = category)))
+                    val articles = mapper(response.articles, category = category)
+                    articles.map { article ->
+                        if (bookmarkRepo.findArticleInBookmarks(article)) {
+                            article.isChecked = true
+                        }
+                    }
+                    store.dispatch(AppEvent.DataReceived(data = articles))
                 }
                 .onFailure { ex ->
                     store.dispatch(AppEvent.ErrorReceived(message = ex.message))

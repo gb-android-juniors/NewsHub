@@ -12,6 +12,7 @@ val newsModule = module {
     single<NewsRepository> { NewsRepositoryImpl(apiService = get()) }
     viewModel { (store: NewsStore, category: Category) ->
         NewsViewModel(
+            bookmarkRepo = get(),
             newsRepo = get(),
             mapper = get(),
             store = store,
