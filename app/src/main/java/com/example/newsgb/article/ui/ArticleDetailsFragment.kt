@@ -20,6 +20,7 @@ import com.example.newsgb._core.ui.model.ItemViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.DetailsFragmentBinding
+import com.example.newsgb.utils.formatApiStringToDate
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -108,7 +109,7 @@ class ArticleDetailsFragment : Fragment() {
     private fun initContent(article: Article) = with(binding) {
         articleHeaderText.text = article.title
         articleSourceName.text = article.sourceName
-        publicationDate.text = article.publishedDate
+        publicationDate.text = article.publishedDate.formatApiStringToDate()
         descriptionText.text = article.description
         detailsButton.setOnClickListener {
             showArticleFragment(ArticleWebVIewFragment.newInstance(article.contentUrl))
