@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
+    android:layout_height="@dimen/news_recycler_item_height"
     android:layout_margin="@dimen/margin_4">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,6 +43,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tool:src="@drawable/example_image" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/news_item_bookmark_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_8"
+            android:src="@drawable/ic_bookmarks_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -47,8 +47,12 @@ class BookmarksFragment : Fragment() {
             showArticleDetailsFragment(fragment = ArticleDetailsFragment.newInstance(articleUrl = itemArticle.contentUrl))
         }
 
-        override fun onBookmarkCheck() {
-            //TODO("Not yet implemented")
+        override fun onBookmarkCheck(itemArticle: Article) {
+            if (itemArticle.isChecked) {
+                viewModel.saveToDB(itemArticle)
+            } else {
+                viewModel.deleteBookmark(itemArticle)
+            }
         }
 
     }

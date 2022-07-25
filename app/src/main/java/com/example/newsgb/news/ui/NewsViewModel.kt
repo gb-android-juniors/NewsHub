@@ -107,6 +107,24 @@ class NewsViewModel(
         }
     }
 
+    /**
+     * сохранение статьи в закладках (добавить в БД)
+     */
+    fun saveToDB(article: Article) {
+        viewModelScope.launch {
+            bookmarkRepo.saveBookmark(article)
+        }
+    }
+
+    /**
+     * удаление статьи из закладок (удалить из БД)
+     */
+    fun deleteBookmark(article: Article) {
+        viewModelScope.launch {
+            bookmarkRepo.removeBookmark(article)
+        }
+    }
+
     companion object {
         private const val INITIAL_PAGE = 1
     }

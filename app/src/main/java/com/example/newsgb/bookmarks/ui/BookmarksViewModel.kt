@@ -30,6 +30,13 @@ class BookmarksViewModel(
         }
     }
 
+    fun saveToDB(article: Article) {
+        viewModelScope.launch {
+            bookmarkRepo.saveBookmark(article)
+            renderData()
+        }
+    }
+
     fun deleteBookmark(article: Article) {
         viewModelScope.launch {
             bookmarkRepo.removeBookmark(article)
@@ -40,7 +47,7 @@ class BookmarksViewModel(
     fun clearBookmarks() {
         viewModelScope.launch {
             bookmarkRepo.clearBookmarks()
-            _stateFlow.value = ListViewState.Empty
+            renderData()
         }
     }
 

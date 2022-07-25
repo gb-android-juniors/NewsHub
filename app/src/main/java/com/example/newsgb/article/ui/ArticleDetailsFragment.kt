@@ -6,8 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -21,6 +19,7 @@ import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.DetailsFragmentBinding
 import com.example.newsgb.utils.formatApiStringToDate
+import com.example.newsgb.utils.setBookmarkIconColor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -114,11 +113,11 @@ class ArticleDetailsFragment : Fragment() {
         detailsButton.setOnClickListener {
             showArticleFragment(ArticleWebVIewFragment.newInstance(article.contentUrl))
         }
-        setBookmarkIconColor(bookmarkIcon, article.isChecked)
+        bookmarkIcon.setBookmarkIconColor(requireContext(), article.isChecked)
         bookmarkIcon.setOnClickListener {
             article.isChecked = !article.isChecked
             onBookmarkClickListener(article)
-            setBookmarkIconColor(bookmarkIcon, article.isChecked)
+            bookmarkIcon.setBookmarkIconColor(requireContext(), article.isChecked)
             }
 
         Glide.with(articleImage)
@@ -138,29 +137,6 @@ class ArticleDetailsFragment : Fragment() {
         } else {
             viewModel.deleteBookmark(article)
         }
-    }
-
-    /**
-     * устанавливаем цвет иконки закладки
-     */
-    private fun setBookmarkIconColor(bookmarkIcon: AppCompatImageView, isChecked: Boolean) {
-        if (isChecked) {
-            changeColor(bookmarkIcon, R.color.bookmark_selected_color)
-        } else {
-            changeColor(bookmarkIcon, R.color.bookmark_unselected_color)
-        }
-    }
-
-    /**
-     * метод изменения цвета иконки
-     */
-    private fun changeColor(bookmarkIcon: AppCompatImageView, tintColor: Int) {
-        bookmarkIcon.setColorFilter(
-            ContextCompat.getColor(
-                requireContext(),
-                tintColor
-            ), android.graphics.PorterDuff.Mode.SRC_IN
-        )
     }
 
     private fun enableProgress(state: Boolean) {

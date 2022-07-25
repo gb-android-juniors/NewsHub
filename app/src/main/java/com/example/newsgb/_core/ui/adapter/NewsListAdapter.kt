@@ -9,6 +9,7 @@ import com.bumptech.glide.Glide
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.databinding.NewsFragmentRecyclerItemBinding
+import com.example.newsgb.utils.setBookmarkIconColor
 
 class NewsListAdapter(private val listener: RecyclerItemListener) :
     RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>() {
@@ -37,6 +38,18 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
         fun bind(itemArticle: Article) = with(binding) {
             newsHeader.text = itemArticle.title
             newsResourceName.text = itemArticle.sourceName
+            newsItemBookmarkImage.setBookmarkIconColor(
+                context = itemView.context,
+                isChecked = itemArticle.isChecked
+            )
+            newsItemBookmarkImage.setOnClickListener {
+                itemArticle.isChecked = !itemArticle.isChecked
+                newsItemBookmarkImage.setBookmarkIconColor(
+                    context = itemView.context,
+                    isChecked = itemArticle.isChecked
+                )
+                listener.onBookmarkCheck(itemArticle)
+            }
             Glide.with(newsImage.context)
                 .load(itemArticle.imageUrl)
                 .placeholder(R.drawable.ic_newspaper_24)
