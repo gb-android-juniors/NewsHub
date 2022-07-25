@@ -16,4 +16,5 @@
     <dimen name="empty_bookmarks_warning_image_size">100dp</dimen>
     <dimen name="toolbar_elevation">2dp</dimen>
     <dimen name="size_18">18sp</dimen>
+    <dimen name="news_image_height">200dp</dimen>
 </resources>

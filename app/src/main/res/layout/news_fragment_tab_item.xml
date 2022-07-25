@@ -26,7 +26,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/first_news_image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="@dimen/news_image_height"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
