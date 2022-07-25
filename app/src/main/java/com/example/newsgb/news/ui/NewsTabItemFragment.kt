@@ -53,7 +53,7 @@ class NewsTabItemFragment : Fragment() {
      * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
-            showDetailsFragment(fragment = ArticleDetailsFragment.newInstance(articleUrl = itemArticle.contentUrl))
+            showArticleDetailsFragment(fragment = ArticleDetailsFragment.newInstance(articleUrl = itemArticle.contentUrl))
         }
 
         override fun onBookmarkCheck() {
@@ -166,7 +166,7 @@ class NewsTabItemFragment : Fragment() {
         binding.firstNewsHeader.text = article.title
         binding.firstNewsSource.text = article.sourceName
         binding.firstNewsContent.setOnClickListener {
-            showDetailsFragment(fragment = ArticleDetailsFragment.newInstance(articleUrl = article.contentUrl))
+            showArticleDetailsFragment(fragment = ArticleDetailsFragment.newInstance(articleUrl = article.contentUrl))
         }
         Glide.with(binding.firstNewsImage)
             .load(article.imageUrl)
@@ -191,12 +191,12 @@ class NewsTabItemFragment : Fragment() {
         binding.error.isVisible = state
     }
 
-    private fun showDetailsFragment(fragment: Fragment) {
+    private fun showArticleDetailsFragment(fragment: Fragment) {
         requireActivity().supportFragmentManager
             .beginTransaction()
-            .replace(R.id.main_container, fragment)
+            .add(R.id.main_container, fragment)
             .setTransition(TRANSIT_FRAGMENT_FADE)
-            .addToBackStack(null)
+            .addToBackStack(ARTICLE_DETAILS_FRAGMENT_FROM_NEWS_LIST)
             .commit()
     }
 
@@ -206,6 +206,7 @@ class NewsTabItemFragment : Fragment() {
 
     companion object {
         private const val ARG_CATEGORY = "arg_category"
+        private const val ARTICLE_DETAILS_FRAGMENT_FROM_NEWS_LIST = "ArticleDetailsFragmentFromNewsList"
 
         @JvmStatic
         fun newInstance(category: Category?): NewsTabItemFragment =
