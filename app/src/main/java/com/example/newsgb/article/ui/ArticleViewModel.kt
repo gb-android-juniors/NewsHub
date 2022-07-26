@@ -57,6 +57,7 @@ class ArticleViewModel(
     fun saveToDB(article: Article) {
         viewModelScope.launch {
             bookmarkRepo.saveBookmark(article)
+            _viewState.value = ItemViewState.Data(data = article)
         }
     }
 
@@ -66,6 +67,7 @@ class ArticleViewModel(
     fun deleteBookmark(article: Article) {
         viewModelScope.launch {
             bookmarkRepo.removeBookmark(article)
+            _viewState.value = ItemViewState.Data(data = article)
         }
     }
 }

@@ -100,8 +100,14 @@ class BookmarksFragment : Fragment() {
     }
 
     private fun initContentView() {
-        binding.bookmarksRecycler.adapter = bookmarksListAdapter
-        binding.clearAllBookmarks.setOnClickListener { viewModel.clearBookmarks() }
+        with(binding) {
+            bookmarksRecycler.adapter = bookmarksListAdapter
+            clearAllBookmarks.setOnClickListener { viewModel.clearBookmarks() }
+            swipeRefreshLayoutBookmarks.setOnRefreshListener {
+                initData()
+                swipeRefreshLayoutBookmarks.isRefreshing = false
+            }
+        }
     }
 
     private fun initViewModel() {

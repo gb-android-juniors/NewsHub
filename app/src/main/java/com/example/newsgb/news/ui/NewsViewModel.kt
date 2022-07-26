@@ -113,6 +113,7 @@ class NewsViewModel(
     fun saveToDB(article: Article) {
         viewModelScope.launch {
             bookmarkRepo.saveBookmark(article)
+            refreshDataBookmarks(article, true)
         }
     }
 
@@ -122,6 +123,20 @@ class NewsViewModel(
     fun deleteBookmark(article: Article) {
         viewModelScope.launch {
             bookmarkRepo.removeBookmark(article)
+            refreshDataBookmarks(article, false)
+        }
+    }
+
+    private fun refreshDataBookmarks(article: Article, isChecked: Boolean) {
+        val currentStoreState = store.storeState.value
+        if (currentStoreState is AppState.Data) {
+            val newArticles = currentStoreState.data
+            newArticles.map { oldArticle ->
+                if (oldArticle.contentUrl == article.contentUrl) {
+                    oldArticle.isChecked = isChecked
+                }
+            }
+            store.dispatch(AppEvent.DataReceived(data = newArticles))
         }
     }
 

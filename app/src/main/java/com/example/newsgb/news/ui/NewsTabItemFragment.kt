@@ -105,6 +105,11 @@ class NewsTabItemFragment : Fragment() {
 
     private fun initView() = with(binding) {
         mainRecycler.adapter = newsListAdapter
+        swipeRefreshLayoutNews.setOnRefreshListener {
+            //TODO прописать дозагрузку данных при свайпе вниз
+
+            swipeRefreshLayoutNews.isRefreshing = false
+        }
     }
 
     private fun initViewModel() {
