@@ -170,8 +170,7 @@ class NewsTabItemFragment : Fragment() {
         }
         Glide.with(binding.firstNewsImage)
             .load(article.imageUrl)
-            .placeholder(R.drawable.ic_newspaper_24)
-            .error(R.drawable.news)
+            .error(article.category.imgResId)
             .into(binding.firstNewsImage)
     }
 

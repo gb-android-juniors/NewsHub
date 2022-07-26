@@ -114,7 +114,7 @@ class DetailsFragment : Fragment() {
         Glide.with(articleImage)
             .load(article.imageUrl)
             .placeholder(R.drawable.ic_newspaper_24)
-            .error(R.drawable.news)
+            .error(R.drawable.general)
             .into(articleImage)
     }
 
