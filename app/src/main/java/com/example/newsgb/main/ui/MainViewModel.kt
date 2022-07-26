@@ -27,6 +27,8 @@ class MainViewModel(
                 .onSuccess { response ->
                     val articles = mapper(response.articles)
                     articles.map { article ->
+                        // думаю, лучше выгружать из бд сразу все статьи и сравнивать два списка.
+                        // Вот тут то и понадобится интерактор или юзкейс
                         if (bookmarkRepo.findArticleInBookmarks(article)) {
                             article.isChecked = true
                         }

@@ -52,6 +52,7 @@ dependencies {
 
     // widget
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     // di koin
     implementation 'io.insert-koin:koin-android:3.2.0'

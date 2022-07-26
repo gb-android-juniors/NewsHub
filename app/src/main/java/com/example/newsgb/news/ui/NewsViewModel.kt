@@ -95,6 +95,8 @@ class NewsViewModel(
                 .onSuccess { response ->
                     val articles = mapper(response.articles, category = category)
                     articles.map { article ->
+                        // думаю, лучше выгружать из бд сразу все статьи и сравнивать два списка.
+                        // Вот тут то и понадобится интерактор или юзкейс
                         if (bookmarkRepo.findArticleInBookmarks(article)) {
                             article.isChecked = true
                         }
@@ -127,6 +129,7 @@ class NewsViewModel(
         }
     }
 
+    // этим всем будет заниматься стор в случае успешного (onSuccess) добавления/удаления статей в списке закладок
     private fun refreshDataBookmarks(article: Article, isChecked: Boolean) {
         val currentStoreState = store.storeState.value
         if (currentStoreState is AppState.Data) {

@@ -51,6 +51,7 @@ class BookmarksViewModel(
         }
     }
 
+    // это не обязательно
     override fun onCleared() {
         _stateFlow.value = ListViewState.Empty
         super.onCleared()

@@ -57,6 +57,8 @@ class NewsTabItemFragment : Fragment() {
         }
 
         override fun onBookmarkCheck(itemArticle: Article) {
+            // всю логику по максимуму переносить в viewModel
+            // что-то типа viewModel.checkBookmark(itemArticle)
             if (itemArticle.isChecked) {
                 viewModel.saveToDB(itemArticle)
             } else {
@@ -105,11 +107,6 @@ class NewsTabItemFragment : Fragment() {
 
     private fun initView() = with(binding) {
         mainRecycler.adapter = newsListAdapter
-        swipeRefreshLayoutNews.setOnRefreshListener {
-            //TODO прописать дозагрузку данных при свайпе вниз
-
-            swipeRefreshLayoutNews.isRefreshing = false
-        }
     }
 
     private fun initViewModel() {

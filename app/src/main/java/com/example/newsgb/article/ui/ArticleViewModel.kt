@@ -55,6 +55,8 @@ class ArticleViewModel(
      * сохранение статьи в закладках (добавить в БД)
      */
     fun saveToDB(article: Article) {
+        // передавем в стор событие по добавлению закладки на обработку
+        // а непосредственно сохранение статьи в закладки выполним как только от стора придет соответствующая команда
         viewModelScope.launch {
             bookmarkRepo.saveBookmark(article)
             _viewState.value = ItemViewState.Data(data = article)
@@ -65,6 +67,8 @@ class ArticleViewModel(
      * удаление статьи из закладок (удалить из БД)
      */
     fun deleteBookmark(article: Article) {
+        // передавем в стор событие по удалению закладки на обработку
+        // а непосредственно удаление статьи из закладок выполним как только от стора придет соответствующая команда
         viewModelScope.launch {
             bookmarkRepo.removeBookmark(article)
             _viewState.value = ItemViewState.Data(data = article)

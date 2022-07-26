@@ -47,7 +47,10 @@ class BookmarksFragment : Fragment() {
             showArticleDetailsFragment(fragment = ArticleDetailsFragment.newInstance(articleUrl = itemArticle.contentUrl))
         }
 
+
         override fun onBookmarkCheck(itemArticle: Article) {
+            // минимизировать всякую логику во фрагменте, этим должна заниматься viewModel
+            // что-то типа viewModel.checkBookmark(itemArticle)
             if (itemArticle.isChecked) {
                 viewModel.saveToDB(itemArticle)
             } else {

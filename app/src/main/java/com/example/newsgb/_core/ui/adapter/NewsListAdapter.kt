@@ -2,6 +2,7 @@ package com.example.newsgb._core.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -38,11 +39,15 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
         fun bind(itemArticle: Article) = with(binding) {
             newsHeader.text = itemArticle.title
             newsResourceName.text = itemArticle.sourceName
+            // для смены цветов есть вариант попроще:
+            //newsItemBookmarkImage.setColorFilter(ContextCompat.getColor(itemView.context, R.color.bookmark_selected_color))
             newsItemBookmarkImage.setBookmarkIconColor(
                 context = itemView.context,
                 isChecked = itemArticle.isChecked
             )
             newsItemBookmarkImage.setOnClickListener {
+                //вся эта логика по смене Ui будет не нужна, дергаем только листенер
+                // элементы списка перерисуются автоматом после того как обновится стейт
                 itemArticle.isChecked = !itemArticle.isChecked
                 newsItemBookmarkImage.setBookmarkIconColor(
                     context = itemView.context,

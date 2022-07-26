@@ -6,6 +6,9 @@ import com.example.newsgb._core.ui.mapEntitiesListToArticlesList
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.bookmarks.domain.BookmarkRepository
 
+// думаю, в конструктор сразу можно передать bookmarkDB.bookmarkDao, эта зависимость уже прописана в appModule
+// работу с БД нужно организовать через IO поток (см. пример репозитория для получения данных с сервера)
+// возможно, данные получаемые с БД тоже нужно обернуть в Result
 class BookmarkRepositoryImpl(private var bookmarkDB: BookmarkDataBase): BookmarkRepository {
 
     override suspend fun getAllBookmarks(): List<Article> {

@@ -115,6 +115,8 @@ class ArticleDetailsFragment : Fragment() {
         }
         bookmarkIcon.setBookmarkIconColor(requireContext(), article.isChecked)
         bookmarkIcon.setOnClickListener {
+            // оставляем только отправку команды во viewModel, весь код по смене ui не нужен
+            // все перерисуется автоматом при обновлении состояния стора
             article.isChecked = !article.isChecked
             onBookmarkClickListener(article)
             bookmarkIcon.setBookmarkIconColor(requireContext(), article.isChecked)
@@ -132,6 +134,7 @@ class ArticleDetailsFragment : Fragment() {
      * добавляет или удаляет статью из БД с закладками
      */
     private fun onBookmarkClickListener(article: Article) {
+        // меньше логики во фрагменте, этим будет заниматься viewModel
         if (article.isChecked) {
             viewModel.saveToDB(article)
         } else {

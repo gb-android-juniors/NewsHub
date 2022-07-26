@@ -5,6 +5,7 @@ import com.example.newsgb._core.data.db.entity.ArticleEntity
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.utils.ui.Category
 
+// переделать extension-функции в полноценный класс по аналогии с NewsDtoToUiMapper
 
 fun mapEntitiesListToArticlesList(
     entitiesList: List<ArticleEntity>
