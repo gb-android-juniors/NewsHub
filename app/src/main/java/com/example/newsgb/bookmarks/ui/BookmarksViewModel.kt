@@ -2,6 +2,7 @@ package com.example.newsgb.bookmarks.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.newsgb._core.ui.mapEntitiesListToArticlesList
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb._core.ui.store.NewsStore
@@ -21,12 +22,18 @@ class BookmarksViewModel(
     fun renderData() {
         _stateFlow.value = ListViewState.Loading
         viewModelScope.launch {
-            val bookmarksList = bookmarkRepo.getAllBookmarks()
-            _stateFlow.value = if (bookmarksList.isEmpty()) {
-                ListViewState.Empty
-            } else {
-                ListViewState.Data(bookmarksList)
+            bookmarkRepo.getAllBookmarks()
+                .onSuccess { entityList ->
+                    val bookmarksList = mapEntitiesListToArticlesList(entityList)
+                    _stateFlow.value = if (bookmarksList.isEmpty()) {
+                        ListViewState.Empty }
+                    else {
+                            ListViewState.Data(bookmarksList)
+                }
             }
+                .onFailure { ex ->
+                    _stateFlow.value = ListViewState.Error(message = ex.message)
+                }
         }
     }
 

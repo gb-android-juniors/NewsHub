@@ -22,9 +22,9 @@ class MainRepositoryImpl(
                 else -> Result.failure(exception = Throwable(message = "${response.errorCode}: ${response.errorMessage}"))
             }
         } catch (ex: HttpException) {
-            return Result.failure(exception = ex)
+            Result.failure(exception = ex)
         } catch (ex: IOException) {
-            return Result.failure(exception = ex)
+            Result.failure(exception = ex)
         }
     }
 

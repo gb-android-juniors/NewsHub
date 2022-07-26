@@ -1,38 +1,61 @@
 package com.example.newsgb.bookmarks.data
 
 import com.example.newsgb._core.data.db.BookmarkDataBase
+import com.example.newsgb._core.data.db.entity.ArticleEntity
 import com.example.newsgb._core.ui.mapArticleToEntity
-import com.example.newsgb._core.ui.mapEntitiesListToArticlesList
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.bookmarks.domain.BookmarkRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-// думаю, в конструктор сразу можно передать bookmarkDB.bookmarkDao, эта зависимость уже прописана в appModule
-// работу с БД нужно организовать через IO поток (см. пример репозитория для получения данных с сервера)
-// возможно, данные получаемые с БД тоже нужно обернуть в Result
-class BookmarkRepositoryImpl(private var bookmarkDB: BookmarkDataBase): BookmarkRepository {
+class BookmarkRepositoryImpl(private val bookmarkDB: BookmarkDataBase): BookmarkRepository {
 
-    override suspend fun getAllBookmarks(): List<Article> {
-        val entitiesList = bookmarkDB.bookmarkDao().getAll()
-        return mapEntitiesListToArticlesList(entitiesList)
+    override suspend fun getAllBookmarks(): Result<List<ArticleEntity>> {
+        return try {
+            val entitiesList = withContext(Dispatchers.IO) {
+                bookmarkDB.bookmarkDao().getAll()
+            }
+            Result.success(value = entitiesList)
+        } catch (ex: Exception) {
+            Result.failure(exception = ex)
+        }
     }
 
-    override suspend fun findArticleInBookmarks(article: Article): Boolean {
-        val entity = bookmarkDB.bookmarkDao().getEntityByUrl(article.contentUrl)
-        return entity != null
+    override suspend fun findArticleInBookmarks(article: Article): Result<Boolean> {
+        return try {
+            val entity = bookmarkDB.bookmarkDao().getEntityByUrl(article.contentUrl)
+            Result.success(value = entity != null)
+        } catch (ex: Exception) {
+            Result.failure(exception = ex)
+        }
     }
 
-    override suspend fun saveBookmark(article: Article) {
-        val entity = mapArticleToEntity(article)
-        bookmarkDB.bookmarkDao().saveEntity(entity)
+    override suspend fun saveBookmark(article: Article): Result<Boolean> {
+        return try {
+            val entity = mapArticleToEntity(article)
+            bookmarkDB.bookmarkDao().saveEntity(entity)
+            Result.success(value = true)
+        } catch (ex: Exception) {
+            Result.failure(exception = ex)
+        }
     }
 
-    override suspend fun removeBookmark(article: Article) {
-        val entity = mapArticleToEntity(article)
-        bookmarkDB.bookmarkDao().removeEntity(entity)
+    override suspend fun removeBookmark(article: Article): Result<Boolean> {
+        return try {
+            val entity = mapArticleToEntity(article)
+            bookmarkDB.bookmarkDao().removeEntity(entity)
+            Result.success(value = true)
+        } catch (ex: Exception) {
+            Result.failure(exception = ex)
+        }
     }
 
-    override suspend fun clearBookmarks(){
-        bookmarkDB.bookmarkDao().removeAll()
+    override suspend fun clearBookmarks(): Result<Boolean> {
+        return try {
+            bookmarkDB.bookmarkDao().removeAll()
+            Result.success(value = true)
+        } catch (ex: Exception) {
+            Result.failure(exception = ex)
+        }
     }
-
 }

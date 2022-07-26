@@ -94,11 +94,12 @@ class NewsViewModel(
             newsRepo.getNewsByCategory(page = INITIAL_PAGE, countryCode = "ru", category = category.apiCode)
                 .onSuccess { response ->
                     val articles = mapper(response.articles, category = category)
+
                     articles.map { article ->
                         // думаю, лучше выгружать из бд сразу все статьи и сравнивать два списка.
                         // Вот тут то и понадобится интерактор или юзкейс
-                        if (bookmarkRepo.findArticleInBookmarks(article)) {
-                            article.isChecked = true
+                        bookmarkRepo.findArticleInBookmarks(article).onSuccess { isChecked ->
+                            article.isChecked = isChecked
                         }
                     }
                     store.dispatch(AppEvent.DataReceived(data = articles))
