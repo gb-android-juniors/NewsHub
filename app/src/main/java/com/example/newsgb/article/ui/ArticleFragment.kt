@@ -138,7 +138,7 @@ class ArticleFragment : Fragment() {
         publicationDate.text = article.publishedDate
         descriptionText.text = article.description
         detailsButton.setOnClickListener {
-            showArticleFragment(WebViewFragment.newInstance(article.contentUrl))
+            showFragment(WebViewFragment.newInstance(article.contentUrl))
         }
         Glide.with(articleImage)
             .load(article.imageUrl)
@@ -162,7 +162,7 @@ class ArticleFragment : Fragment() {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun showArticleFragment(fragment: Fragment) {
+    private fun showFragment(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
             .replace(R.id.main_container, fragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)

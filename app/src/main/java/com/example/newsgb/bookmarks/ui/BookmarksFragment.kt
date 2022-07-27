@@ -16,7 +16,7 @@ import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
-import com.example.newsgb.article.ui.ArticleDetailsFragment
+import com.example.newsgb.article.ui.ArticleFragment
 import com.example.newsgb.databinding.BookmarksFragmentBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -44,7 +44,7 @@ class BookmarksFragment : Fragment() {
      * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
-            showArticleDetailsFragment(fragment = ArticleDetailsFragment.newInstance(articleUrl = itemArticle.contentUrl))
+            showFragment(fragment = ArticleFragment.newInstance(articleUrl = itemArticle.contentUrl))
         }
 
 
@@ -161,7 +161,7 @@ class BookmarksFragment : Fragment() {
         binding.emptyBookmarksWarning.isVisible = state
     }
 
-    private fun showArticleDetailsFragment(fragment: Fragment) {
+    private fun showFragment(fragment: Fragment) {
         requireActivity().supportFragmentManager
             .beginTransaction()
             .add(R.id.main_container, fragment)
