@@ -37,6 +37,11 @@ class NewsFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private fun setViewPagerAndTabsNavigation() = with(binding) {
         viewPager.adapter = ViewPagerAdapter(this@NewsFragment)
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->

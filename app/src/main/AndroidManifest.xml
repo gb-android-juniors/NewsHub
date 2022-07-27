@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".splach.ui.CustomSplashScreenActivity"
+            android:name=".splash.ui.CustomSplashScreenActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
     </application>
