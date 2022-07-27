@@ -17,7 +17,7 @@ import com.example.newsgb.R
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.MainActivityBinding
-import com.example.newsgb.splach.ui.CustomSplashScreenActivity
+import com.example.newsgb.splash.ui.CustomSplashScreenActivity
 import com.example.newsgb.utils.network.OnlineLiveData
 import com.example.newsgb.utils.ui.AlertDialogFragment
 import org.koin.android.ext.android.inject
