@@ -2,7 +2,7 @@ package com.example.newsgb.bookmarks.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsgb._core.ui.mapEntitiesListToArticlesList
+import com.example.newsgb._core.ui.EntitiesToArticleMapper
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb._core.ui.store.NewsStore
@@ -24,7 +24,7 @@ class BookmarksViewModel(
         viewModelScope.launch {
             bookmarkRepo.getAllBookmarks()
                 .onSuccess { entityList ->
-                    val bookmarksList = mapEntitiesListToArticlesList(entityList)
+                    val bookmarksList = EntitiesToArticleMapper(entityList)
                     _stateFlow.value = if (bookmarksList.isEmpty()) {
                         ListViewState.Empty }
                     else {

@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 class MainViewModel(
     private val bookmarkRepo: BookmarkRepository,
     private val mainRepo: MainRepository,
-    private val mapper: NewsDtoToUiMapper,
     private val store: NewsStore
 ) : ViewModel() {
 
@@ -25,7 +24,7 @@ class MainViewModel(
         viewModelScope.launch {
             mainRepo.getBreakingNews(page = INITIAL_PAGE)
                 .onSuccess { response ->
-                    val articles = mapper(response.articles)
+                    val articles = NewsDtoToUiMapper(response.articles)
                     articles.map { article ->
                         // думаю, лучше выгружать из бд сразу все статьи и сравнивать два списка.
                         // Вот тут то и понадобится интерактор или юзкейс

@@ -14,7 +14,6 @@ import kotlinx.coroutines.launch
 class NewsViewModel(
     private val bookmarkRepo: BookmarkRepository,
     private val newsRepo: NewsRepository,
-    private val mapper: NewsDtoToUiMapper,
     private val store: NewsStore,
     private val category: Category
 ) : ViewModel() {
@@ -93,7 +92,7 @@ class NewsViewModel(
         viewModelScope.launch {
             newsRepo.getNewsByCategory(page = INITIAL_PAGE, countryCode = "ru", category = category.apiCode)
                 .onSuccess { response ->
-                    val articles = mapper(response.articles, category = category)
+                    val articles = NewsDtoToUiMapper(response.articles, category = category)
 
                     articles.map { article ->
                         // думаю, лучше выгружать из бд сразу все статьи и сравнивать два списка.

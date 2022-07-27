@@ -9,5 +9,5 @@ import org.koin.dsl.module
 
 val mainModule = module {
     single<MainRepository> { MainRepositoryImpl(apiService = get()) }
-    viewModel { (store: NewsStore) -> MainViewModel(bookmarkRepo = get(), mainRepo = get(), mapper = get(), store = store) }
+    viewModel { (store: NewsStore) -> MainViewModel(bookmarkRepo = get(), mainRepo = get(), store = store) }
 }

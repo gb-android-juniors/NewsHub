@@ -2,7 +2,7 @@ package com.example.newsgb.bookmarks.data
 
 import com.example.newsgb._core.data.db.BookmarkDataBase
 import com.example.newsgb._core.data.db.entity.ArticleEntity
-import com.example.newsgb._core.ui.mapArticleToEntity
+import com.example.newsgb._core.ui.ArticleToEntityMapper
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.bookmarks.domain.BookmarkRepository
 import kotlinx.coroutines.Dispatchers
@@ -32,7 +32,7 @@ class BookmarkRepositoryImpl(private val bookmarkDB: BookmarkDataBase): Bookmark
 
     override suspend fun saveBookmark(article: Article): Result<Boolean> {
         return try {
-            val entity = mapArticleToEntity(article)
+            val entity = ArticleToEntityMapper(article)
             bookmarkDB.bookmarkDao().saveEntity(entity)
             Result.success(value = true)
         } catch (ex: Exception) {
@@ -42,7 +42,7 @@ class BookmarkRepositoryImpl(private val bookmarkDB: BookmarkDataBase): Bookmark
 
     override suspend fun removeBookmark(article: Article): Result<Boolean> {
         return try {
-            val entity = mapArticleToEntity(article)
+            val entity = ArticleToEntityMapper(article)
             bookmarkDB.bookmarkDao().removeEntity(entity)
             Result.success(value = true)
         } catch (ex: Exception) {

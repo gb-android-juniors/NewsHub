@@ -14,7 +14,6 @@ val newsModule = module {
         NewsViewModel(
             bookmarkRepo = get(),
             newsRepo = get(),
-            mapper = get(),
             store = store,
             category = category
         )
