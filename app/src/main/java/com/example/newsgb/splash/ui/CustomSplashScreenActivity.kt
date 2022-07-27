@@ -1,4 +1,4 @@
-package com.example.newsgb.splach.ui
+package com.example.newsgb.splash.ui
 
 import android.animation.Animator
 import android.annotation.SuppressLint
