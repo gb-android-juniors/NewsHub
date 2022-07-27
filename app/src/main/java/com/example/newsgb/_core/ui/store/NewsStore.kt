@@ -81,6 +81,7 @@ class NewsStore : CoroutineScope by MainScope() {
                     else -> currentState
                 }
             }
+            // обработать событие по добавлению статьи в закладки
         }
         //если новое состояне отличается от текущего, то устанавливаем новое состояние
         if (newState != currentState) {

@@ -26,7 +26,15 @@ class NewsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+
+    private fun initView() = with(binding) {
         setViewPagerAndTabsNavigation()
+        swipeRefresh.setOnRefreshListener {
+            //TODO прописать дозагрузку данных при свайпе вниз
+            swipeRefresh.isRefreshing = false
+        }
     }
 
     override fun onDestroyView() {

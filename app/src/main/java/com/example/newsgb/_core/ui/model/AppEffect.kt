@@ -8,5 +8,6 @@ package com.example.newsgb._core.ui.model
  * */
 sealed class AppEffect {
     object LoadData : AppEffect()
+    // добавить команду для добавления удаления статьи из закладок
     data class Error(val message: String?) : AppEffect()
 }

@@ -5,18 +5,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
+import com.example.newsgb.R
 import com.example.newsgb._core.ui.adapter.NewsListAdapter
 import com.example.newsgb._core.ui.adapter.RecyclerItemListener
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
+import com.example.newsgb.article.ui.ArticleFragment
 import com.example.newsgb.databinding.BookmarksFragmentBinding
-import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -43,11 +44,18 @@ class BookmarksFragment : Fragment() {
      * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
-            Toast.makeText(requireContext(), "CLICK", Toast.LENGTH_SHORT).show()
+            showFragment(fragment = ArticleFragment.newInstance(articleUrl = itemArticle.contentUrl))
         }
 
-        override fun onBookmarkCheck() {
-            //TODO("Not yet implemented")
+
+        override fun onBookmarkCheck(itemArticle: Article) {
+            // минимизировать всякую логику во фрагменте, этим должна заниматься viewModel
+            // что-то типа viewModel.checkBookmark(itemArticle)
+            if (itemArticle.isChecked) {
+                viewModel.saveToDB(itemArticle)
+            } else {
+                viewModel.deleteBookmark(itemArticle)
+            }
         }
 
     }
@@ -95,31 +103,14 @@ class BookmarksFragment : Fragment() {
     }
 
     private fun initContentView() {
-        binding.bookmarksRecycler.adapter = bookmarksListAdapter
-        binding.clearAllBookmarks.setOnClickListener { viewModel.clearBookmarks() }
-
-        //TODO тестовый код, чтобы проверить добавление закладки в БД и их удаление.
-        // Удалить его после полной реализации фичи
-        //начала тестового блока
-        binding.emptyBookmarksImage.setOnClickListener {
-            val testArticle = Article(
-                category = Category.GENERAL,
-                sourceName = "BBC News",
-                author = "https://www.facebook.com/bbcnews",
-                title = "UK heatwave: Country may have hottest day",
-                description = "Met Office issues first red heat warning over extreme temperatures and danger to life in much of England.",
-                contentUrl = "https://www.bbc.com/news/uk-62201793",
-                imageUrl = "https://ichef.bbci.co.uk/news/1024/branded_news/14FE/production/_125947350_59e7b3b4-4959-4d53-9622-ba4109af496e.jpg",
-                publishedDate = "2022-07-18T08:21:28Z",
-                content = "By Owen Amos &amp; Adam Durbin BBC News\\r\\nMedia caption, Watch: The forecast for the UK's heatwave\\r\\nThe UK could have its hottest day on record this week, with temperatures forecast to hit up to ",
-                isChecked = false
-            )
-            val list = listOf(testArticle, testArticle, testArticle, testArticle)
-            for (article in list) {
-                viewModel.saveToDB(article)
+        with(binding) {
+            bookmarksRecycler.adapter = bookmarksListAdapter
+            clearAllBookmarks.setOnClickListener { viewModel.clearBookmarks() }
+            swipeRefreshLayoutBookmarks.setOnRefreshListener {
+                initData()
+                swipeRefreshLayoutBookmarks.isRefreshing = false
             }
         }
-        //конец тестового блока
     }
 
     private fun initViewModel() {
@@ -170,7 +161,18 @@ class BookmarksFragment : Fragment() {
         binding.emptyBookmarksWarning.isVisible = state
     }
 
+    private fun showFragment(fragment: Fragment) {
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .add(R.id.main_container, fragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .addToBackStack(ARTICLE_DETAILS_FRAGMENT_FROM_BOOKMARKS)
+            .commit()
+    }
+
     companion object {
+        private const val ARTICLE_DETAILS_FRAGMENT_FROM_BOOKMARKS = "ArticleDetailsFragmentFromBookmarks"
+
         fun newInstance() = BookmarksFragment()
     }
 }

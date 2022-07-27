@@ -10,6 +10,7 @@ package com.example.newsgb._core.ui.model
 sealed class AppEvent {
     object Refresh: AppEvent()
     object LoadMore: AppEvent()
+    // добавить событие, когда юзер помещает статью в закладки
     data class DataReceived(val data: List<Article>) : AppEvent()
     data class ErrorReceived(val message: String?): AppEvent()
 }

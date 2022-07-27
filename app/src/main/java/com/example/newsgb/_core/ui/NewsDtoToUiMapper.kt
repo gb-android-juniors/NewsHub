@@ -4,7 +4,7 @@ import com.example.newsgb._core.data.api.model.ArticleDTO
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.utils.ui.Category
 
-class NewsDtoToUiMapper {
+object NewsDtoToUiMapper {
     operator fun invoke(
         newsList: List<ArticleDTO>,
         category: Category = Category.GENERAL

@@ -5,14 +5,15 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsgb._core.ui.NewsDtoToUiMapper
 import com.example.newsgb._core.ui.model.*
 import com.example.newsgb._core.ui.store.NewsStore
+import com.example.newsgb.bookmarks.domain.BookmarkRepository
 import com.example.newsgb.news.domain.NewsRepository
 import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
+    private val bookmarkRepo: BookmarkRepository,
     private val newsRepo: NewsRepository,
-    private val mapper: NewsDtoToUiMapper,
     private val store: NewsStore,
     private val category: Category
 ) : ViewModel() {
@@ -91,11 +92,54 @@ class NewsViewModel(
         viewModelScope.launch {
             newsRepo.getNewsByCategory(page = INITIAL_PAGE, countryCode = "ru", category = category.apiCode)
                 .onSuccess { response ->
-                    store.dispatch(AppEvent.DataReceived(data = mapper(newsList = response.articles, category = category)))
+                    val articles = NewsDtoToUiMapper(response.articles, category = category)
+
+                    articles.map { article ->
+                        // думаю, лучше выгружать из бд сразу все статьи и сравнивать два списка.
+                        // Вот тут то и понадобится интерактор или юзкейс
+                        bookmarkRepo.findArticleInBookmarks(article).onSuccess { isChecked ->
+                            article.isChecked = isChecked
+                        }
+                    }
+                    store.dispatch(AppEvent.DataReceived(data = articles))
                 }
                 .onFailure { ex ->
                     store.dispatch(AppEvent.ErrorReceived(message = ex.message))
                 }
+        }
+    }
+
+    /**
+     * сохранение статьи в закладках (добавить в БД)
+     */
+    fun saveToDB(article: Article) {
+        viewModelScope.launch {
+            bookmarkRepo.saveBookmark(article)
+            refreshDataBookmarks(article, true)
+        }
+    }
+
+    /**
+     * удаление статьи из закладок (удалить из БД)
+     */
+    fun deleteBookmark(article: Article) {
+        viewModelScope.launch {
+            bookmarkRepo.removeBookmark(article)
+            refreshDataBookmarks(article, false)
+        }
+    }
+
+    // этим всем будет заниматься стор в случае успешного (onSuccess) добавления/удаления статей в списке закладок
+    private fun refreshDataBookmarks(article: Article, isChecked: Boolean) {
+        val currentStoreState = store.storeState.value
+        if (currentStoreState is AppState.Data) {
+            val newArticles = currentStoreState.data
+            newArticles.map { oldArticle ->
+                if (oldArticle.contentUrl == article.contentUrl) {
+                    oldArticle.isChecked = isChecked
+                }
+            }
+            store.dispatch(AppEvent.DataReceived(data = newArticles))
         }
     }
 

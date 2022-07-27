@@ -15,8 +15,8 @@ interface BookmarkDao {
     /**
      *  Получить конкретную закладку
      **/
-    @Query("SELECT * FROM bookmark_table WHERE id LIKE :id")
-    suspend fun getEntityById(id: Int): ArticleEntity?
+    @Query("SELECT * FROM bookmark_table WHERE content_url LIKE :contentUrl")
+    suspend fun getEntityByUrl(contentUrl: String): ArticleEntity?
 
     /**
      * Сохранить новую закладку.

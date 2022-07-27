@@ -6,9 +6,12 @@ import com.example.newsgb._core.ui.model.AppState
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ItemViewState
 import com.example.newsgb._core.ui.store.NewsStore
+import com.example.newsgb.bookmarks.domain.BookmarkRepository
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class ArticleViewModel(
+    private val bookmarkRepo: BookmarkRepository,
     store: NewsStore,
     private val articleUrl: String
     ) : ViewModel() {
@@ -45,6 +48,30 @@ class ArticleViewModel(
             _viewState.value = ItemViewState.Data(data = article)
         } catch (ex: Throwable) {
             _viewState.value = ItemViewState.Error(message = ex.message)
+        }
+    }
+
+    /**
+     * сохранение статьи в закладках (добавить в БД)
+     */
+    fun saveToDB(article: Article) {
+        // передавем в стор событие по добавлению закладки на обработку
+        // а непосредственно сохранение статьи в закладки выполним как только от стора придет соответствующая команда
+        viewModelScope.launch {
+            bookmarkRepo.saveBookmark(article)
+            _viewState.value = ItemViewState.Data(data = article)
+        }
+    }
+
+    /**
+     * удаление статьи из закладок (удалить из БД)
+     */
+    fun deleteBookmark(article: Article) {
+        // передавем в стор событие по удалению закладки на обработку
+        // а непосредственно удаление статьи из закладок выполним как только от стора придет соответствующая команда
+        viewModelScope.launch {
+            bookmarkRepo.removeBookmark(article)
+            _viewState.value = ItemViewState.Data(data = article)
         }
     }
 }

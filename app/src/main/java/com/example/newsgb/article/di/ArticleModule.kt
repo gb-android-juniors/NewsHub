@@ -7,6 +7,6 @@ import org.koin.dsl.module
 
 val articleModule = module {
     viewModel { (store: NewsStore, articleUrl: String) ->
-        ArticleViewModel(store = store, articleUrl = articleUrl)
+        ArticleViewModel(bookmarkRepo = get(), store = store, articleUrl = articleUrl)
     }
 }

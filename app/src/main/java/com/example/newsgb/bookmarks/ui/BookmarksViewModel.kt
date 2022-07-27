@@ -2,32 +2,45 @@ package com.example.newsgb.bookmarks.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.newsgb._core.ui.EntitiesToArticleMapper
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.bookmarks.domain.BookmarkRepository
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 
 class BookmarksViewModel(
     private val bookmarkRepo: BookmarkRepository,
-    private val store: NewsStore
+    store: NewsStore
 ) : ViewModel() {
 
+    /** переменная состояния экрана со списком закладок */
     private val _stateFlow = MutableStateFlow<ListViewState>(ListViewState.Empty)
     val stateFlow: StateFlow<ListViewState> = _stateFlow.asStateFlow()
 
     fun renderData() {
         _stateFlow.value = ListViewState.Loading
         viewModelScope.launch {
-            val bookmarksList = bookmarkRepo.getAllBookmarks()
-            _stateFlow.value = if (bookmarksList.isEmpty()) {
-                ListViewState.Empty
-            } else {
-                ListViewState.Data(bookmarksList)
+            bookmarkRepo.getAllBookmarks()
+                .onSuccess { entityList ->
+                    val bookmarksList = EntitiesToArticleMapper(entityList)
+                    _stateFlow.value = if (bookmarksList.isEmpty()) {
+                        ListViewState.Empty }
+                    else {
+                            ListViewState.Data(bookmarksList)
+                }
             }
+                .onFailure { ex ->
+                    _stateFlow.value = ListViewState.Error(message = ex.message)
+                }
+        }
+    }
+
+    fun saveToDB(article: Article) {
+        viewModelScope.launch {
+            bookmarkRepo.saveBookmark(article)
+            renderData()
         }
     }
 
@@ -41,19 +54,11 @@ class BookmarksViewModel(
     fun clearBookmarks() {
         viewModelScope.launch {
             bookmarkRepo.clearBookmarks()
-            _stateFlow.value = ListViewState.Empty
-        }
-    }
-
-
-    fun saveToDB(article: Article) {
-        viewModelScope.launch {
-            bookmarkRepo.saveBookmark(article)
             renderData()
         }
     }
 
-
+    // это не обязательно
     override fun onCleared() {
         _stateFlow.value = ListViewState.Empty
         super.onCleared()

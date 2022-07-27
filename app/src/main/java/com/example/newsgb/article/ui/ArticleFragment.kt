@@ -20,6 +20,8 @@ import com.example.newsgb._core.ui.model.ItemViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.DetailsFragmentBinding
+import com.example.newsgb.utils.formatApiStringToDate
+import com.example.newsgb.utils.setBookmarkIconColor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -135,15 +137,38 @@ class ArticleFragment : Fragment() {
     private fun initContent(article: Article) = with(binding) {
         articleHeaderText.text = article.title
         articleSourceName.text = article.sourceName
-        publicationDate.text = article.publishedDate
+        publicationDate.text = article.publishedDate.formatApiStringToDate()
         descriptionText.text = article.description
         detailsButton.setOnClickListener {
             showArticleFragment(WebViewFragment.newInstance(article.contentUrl))
         }
+        bookmarkIcon.setBookmarkIconColor(requireContext(), article.isChecked)
+        bookmarkIcon.setOnClickListener {
+            // оставляем только отправку команды во viewModel, весь код по смене ui не нужен
+            // все перерисуется автоматом при обновлении состояния стора
+            article.isChecked = !article.isChecked
+            onBookmarkClickListener(article)
+            bookmarkIcon.setBookmarkIconColor(requireContext(), article.isChecked)
+        }
+
         Glide.with(articleImage)
             .load(article.imageUrl)
-            .error(article.category.imgResId)
+            .placeholder(R.drawable.ic_newspaper_24)
+            .error(R.drawable.general)
             .into(articleImage)
+    }
+
+    /**
+     * метод обработки нажатия на иконку с закладкой
+     * добавляет или удаляет статью из БД с закладками
+     */
+    private fun onBookmarkClickListener(article: Article) {
+        // меньше логики во фрагменте, этим будет заниматься viewModel
+        if (article.isChecked) {
+            viewModel.saveToDB(article)
+        } else {
+            viewModel.deleteBookmark(article)
+        }
     }
 
     private fun enableProgress(state: Boolean) {
@@ -164,7 +189,7 @@ class ArticleFragment : Fragment() {
 
     private fun showArticleFragment(fragment: Fragment) {
         parentFragmentManager.beginTransaction()
-            .replace(R.id.main_container, fragment)
+            .add(R.id.main_container, fragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
             .addToBackStack(null)
             .commit()
