@@ -16,7 +16,6 @@
             android:id="@+id/details_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:elevation="@dimen/toolbar_elevation"
             app:navigationIconTint="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
