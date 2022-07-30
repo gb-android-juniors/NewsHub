@@ -69,6 +69,9 @@ class NewsStore : CoroutineScope by MainScope() {
                     is AppState.MoreLoading -> {
                         AppState.Data(data = currentState.data + event.data)
                     }
+                    is AppState.BookmarkCheckedData -> {
+                        AppState.Data(data = event.data)
+                    }
                     else -> currentState
                 }
             }
@@ -82,6 +85,18 @@ class NewsStore : CoroutineScope by MainScope() {
                 }
             }
             // обработать событие по добавлению статьи в закладки
+            is AppEvent.BookmarkChecked -> {
+                when (currentState) {
+                    is AppState.Data -> {
+                        launch { _storeEffect.emit(AppEffect.CheckBookmark(event.article)) }
+                        AppState.BookmarkCheckedData(data = currentState.data)
+                    }
+                    is AppState.BookmarkCheckedData -> {
+                        AppState.Data(data = currentState.data)
+                    }
+                    else -> currentState
+                }
+            }
         }
         //если новое состояне отличается от текущего, то устанавливаем новое состояние
         if (newState != currentState) {

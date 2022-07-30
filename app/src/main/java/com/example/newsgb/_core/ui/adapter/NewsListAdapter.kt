@@ -48,12 +48,13 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
             newsItemBookmarkImage.setOnClickListener {
                 //вся эта логика по смене Ui будет не нужна, дергаем только листенер
                 // элементы списка перерисуются автоматом после того как обновится стейт
-                itemArticle.isChecked = !itemArticle.isChecked
+//                itemArticle.isChecked = !itemArticle.isChecked
+
+                listener.onBookmarkCheck(itemArticle)
                 newsItemBookmarkImage.setBookmarkIconColor(
                     context = itemView.context,
                     isChecked = itemArticle.isChecked
                 )
-                listener.onBookmarkCheck(itemArticle)
             }
             Glide.with(newsImage.context)
                 .load(itemArticle.imageUrl)
@@ -68,7 +69,7 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Article>() {
             override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-                return oldItem.contentUrl == newItem.contentUrl
+                return oldItem.isTheSame(newItem)
             }
 
             override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {

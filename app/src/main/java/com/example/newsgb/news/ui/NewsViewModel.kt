@@ -2,18 +2,15 @@ package com.example.newsgb.news.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsgb._core.ui.NewsDtoToUiMapper
 import com.example.newsgb._core.ui.model.*
 import com.example.newsgb._core.ui.store.NewsStore
-import com.example.newsgb.bookmarks.domain.BookmarkRepository
-import com.example.newsgb.news.domain.NewsRepository
+import com.example.newsgb.news.domain.NewsUseCases
 import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
-    private val bookmarkRepo: BookmarkRepository,
-    private val newsRepo: NewsRepository,
+    private val useCases: NewsUseCases,
     private val store: NewsStore,
     private val category: Category
 ) : ViewModel() {
@@ -33,10 +30,13 @@ class NewsViewModel(
      * конвертируем состояния приложения в состояния экрана
      * */
     private fun renderStoreState(storeState: AppState) {
-        when(storeState) {
-            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value = ListViewState.Loading
+        when (storeState) {
+            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value =
+                ListViewState.Loading
             is AppState.Data -> setSuccessState(data = storeState.data)
-            is AppState.Error -> _viewState.value = ListViewState.Error(message = storeState.message)
+            is AppState.BookmarkCheckedData -> setRefreshState(data = storeState.data)
+            is AppState.Error -> _viewState.value =
+                ListViewState.Error(message = storeState.message)
         }
     }
 
@@ -49,6 +49,7 @@ class NewsViewModel(
     private fun renderAppEffect(effect: AppEffect) {
         when (effect) {
             AppEffect.LoadData -> getNewsByCategory()
+            is AppEffect.CheckBookmark -> checkBookmarkInCurrentData(bookmark = effect.dataItem)
             is AppEffect.Error -> {}
         }
     }
@@ -63,6 +64,17 @@ class NewsViewModel(
             _viewState.value = ListViewState.Empty
         } else {
             _viewState.value = ListViewState.Data(data = filteredData)
+        }
+    }
+
+
+
+    private fun setRefreshState(data: List<Article>) {
+        val filteredData = data.filter { it.category == category }
+        if (filteredData.isEmpty()) {
+            _viewState.value = ListViewState.Empty
+        } else {
+            _viewState.value = ListViewState.RefreshData(data = filteredData)
         }
     }
 
@@ -90,58 +102,47 @@ class NewsViewModel(
      * */
     private fun getNewsByCategory() {
         viewModelScope.launch {
-            newsRepo.getNewsByCategory(page = INITIAL_PAGE, countryCode = "ru", category = category.apiCode)
-                .onSuccess { response ->
-                    val articles = NewsDtoToUiMapper(response.articles, category = category)
+            val event = useCases.getNewsByCategory(initialPage = INITIAL_PAGE, countryCode = "ru", category = category)
+            store.dispatch(event = event)
+        }
+    }
 
-                    articles.map { article ->
-                        // думаю, лучше выгружать из бд сразу все статьи и сравнивать два списка.
-                        // Вот тут то и понадобится интерактор или юзкейс
-                        bookmarkRepo.findArticleInBookmarks(article).onSuccess { isChecked ->
-                            article.isChecked = isChecked
-                        }
-                    }
-                    store.dispatch(AppEvent.DataReceived(data = articles))
+    /**
+     * метод обработки нажатия на фложок закладки
+     */
+    fun bookmarkChecked(itemArticle: Article) {
+        viewModelScope.launch {
+            itemArticle.isChecked = !itemArticle.isChecked
+            val event = if (itemArticle.isChecked) {
+                saveBookmarkToDB(article = itemArticle)
+            } else {
+                deleteBookmarkFromDB(article = itemArticle)
+            }
+            store.dispatch(event = event)
+        }
+    }
+
+    private fun checkBookmarkInCurrentData(bookmark: Article) {
+        val currentStoreState = store.storeState.value
+        if (currentStoreState is AppState.Data) {
+            currentStoreState.data.map { article ->
+                if (article.isTheSame(bookmark)) {
+                    article.isChecked = bookmark.isChecked
                 }
-                .onFailure { ex ->
-                    store.dispatch(AppEvent.ErrorReceived(message = ex.message))
-                }
+            }
+            store.dispatch(AppEvent.DataReceived(currentStoreState.data))
         }
     }
 
     /**
      * сохранение статьи в закладках (добавить в БД)
      */
-    fun saveToDB(article: Article) {
-        viewModelScope.launch {
-            bookmarkRepo.saveBookmark(article)
-            refreshDataBookmarks(article, true)
-        }
-    }
+    private suspend fun saveBookmarkToDB(article: Article) : AppEvent = useCases.saveArticleToBookmarksDB(article)
 
     /**
      * удаление статьи из закладок (удалить из БД)
      */
-    fun deleteBookmark(article: Article) {
-        viewModelScope.launch {
-            bookmarkRepo.removeBookmark(article)
-            refreshDataBookmarks(article, false)
-        }
-    }
-
-    // этим всем будет заниматься стор в случае успешного (onSuccess) добавления/удаления статей в списке закладок
-    private fun refreshDataBookmarks(article: Article, isChecked: Boolean) {
-        val currentStoreState = store.storeState.value
-        if (currentStoreState is AppState.Data) {
-            val newArticles = currentStoreState.data
-            newArticles.map { oldArticle ->
-                if (oldArticle.contentUrl == article.contentUrl) {
-                    oldArticle.isChecked = isChecked
-                }
-            }
-            store.dispatch(AppEvent.DataReceived(data = newArticles))
-        }
-    }
+    private suspend fun deleteBookmarkFromDB(article: Article) : AppEvent = useCases.removeArticleFromBookmarksDB(article)
 
     companion object {
         private const val INITIAL_PAGE = 1
