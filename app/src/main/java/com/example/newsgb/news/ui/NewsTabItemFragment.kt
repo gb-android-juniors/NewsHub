@@ -57,13 +57,7 @@ class NewsTabItemFragment : Fragment() {
         }
 
         override fun onBookmarkCheck(itemArticle: Article) {
-            // всю логику по максимуму переносить в viewModel
-            // что-то типа viewModel.checkBookmark(itemArticle)
-            if (itemArticle.isChecked) {
-                viewModel.saveToDB(itemArticle)
-            } else {
-                viewModel.deleteBookmark(itemArticle)
-            }
+            viewModel.bookmarkChecked(itemArticle)
         }
     }
 
@@ -149,6 +143,13 @@ class NewsTabItemFragment : Fragment() {
                 enableError(state = false)
                 initContent(data = state.data)
             }
+            is ListViewState.RefreshData -> {
+                enableContent(state = true)
+                enableEmptyState(state = false)
+                enableProgress(state = false)
+                enableError(state = false)
+                initRecycleContent(data = state.data)
+            }
             else -> {}
         }
     }
@@ -158,6 +159,10 @@ class NewsTabItemFragment : Fragment() {
      * */
     private fun initContent(data: List<Article>) {
         createFirstNews(data.first())
+        initRecycleContent(data)
+    }
+
+    private fun initRecycleContent(data: List<Article>) {
         if (data.size > 1) {
             newsListAdapter.submitList(data.subList(1, data.size - 1))
         } else {
