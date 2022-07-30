@@ -57,7 +57,7 @@ class NewsTabItemFragment : Fragment() {
         }
 
         override fun onBookmarkCheck(itemArticle: Article) {
-            viewModel.bookmarkChecked(itemArticle)
+            viewModel.checkBookmark(article = itemArticle)
         }
     }
 

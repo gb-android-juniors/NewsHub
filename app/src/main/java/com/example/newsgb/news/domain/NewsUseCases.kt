@@ -80,4 +80,12 @@ class NewsUseCases(
             }
         return event!!
     }
+
+    suspend fun checkArticleInBookMarks(article: Article):Result<Boolean> {
+        return if (article.isChecked) {
+            bookmarkRepo.saveBookmark(article)
+        } else {
+            bookmarkRepo.removeBookmark(article)
+        }
+    }
 }

@@ -34,7 +34,7 @@ class NewsViewModel(
             AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value =
                 ListViewState.Loading
             is AppState.Data -> setSuccessState(data = storeState.data)
-            is AppState.BookmarkCheckedData -> setRefreshState(data = storeState.data)
+            is AppState.BookmarkChecking -> setRefreshState(data = storeState.data)
             is AppState.Error -> _viewState.value =
                 ListViewState.Error(message = storeState.message)
         }
@@ -49,7 +49,7 @@ class NewsViewModel(
     private fun renderAppEffect(effect: AppEffect) {
         when (effect) {
             AppEffect.LoadData -> getNewsByCategory()
-            is AppEffect.CheckBookmark -> checkBookmarkInCurrentData(bookmark = effect.dataItem)
+            is AppEffect.CheckBookmark -> checkBookmarkInDatabase(article = effect.dataItem)
             is AppEffect.Error -> {}
         }
     }
@@ -66,8 +66,6 @@ class NewsViewModel(
             _viewState.value = ListViewState.Data(data = filteredData)
         }
     }
-
-
 
     private fun setRefreshState(data: List<Article>) {
         val filteredData = data.filter { it.category == category }
@@ -96,6 +94,26 @@ class NewsViewModel(
     }
 
     /**
+     * метод обработки нажатия на фложок закладки
+     */
+    fun checkBookmark(article: Article) {
+        store.dispatch(event = AppEvent.BookmarkChecked(article = article))
+    }
+
+    private fun checkBookmarkInDatabase(article: Article) {
+        viewModelScope.launch {
+            val checkedArticle = article.copy(isChecked = !article.isChecked)
+            useCases.checkArticleInBookMarks(article = checkedArticle)
+                .onSuccess {
+                    store.dispatch(event = AppEvent.DataReceived(data = listOf(checkedArticle)))
+                }
+                .onFailure { failure ->
+                    store.dispatch(event = AppEvent.ErrorReceived(message = failure.message))
+                }
+        }
+    }
+
+    /**
      * метод запроса первой страницы новостей по категории.
      * В случае успеха конвертируем поулченные данные с помощью маппера и
      * передаем в качестве успешного события AppEvent.DataReceived в NewsStore
@@ -106,43 +124,6 @@ class NewsViewModel(
             store.dispatch(event = event)
         }
     }
-
-    /**
-     * метод обработки нажатия на фложок закладки
-     */
-    fun bookmarkChecked(itemArticle: Article) {
-        viewModelScope.launch {
-            itemArticle.isChecked = !itemArticle.isChecked
-            val event = if (itemArticle.isChecked) {
-                saveBookmarkToDB(article = itemArticle)
-            } else {
-                deleteBookmarkFromDB(article = itemArticle)
-            }
-            store.dispatch(event = event)
-        }
-    }
-
-    private fun checkBookmarkInCurrentData(bookmark: Article) {
-        val currentStoreState = store.storeState.value
-        if (currentStoreState is AppState.Data) {
-            currentStoreState.data.map { article ->
-                if (article.isTheSame(bookmark)) {
-                    article.isChecked = bookmark.isChecked
-                }
-            }
-            store.dispatch(AppEvent.DataReceived(currentStoreState.data))
-        }
-    }
-
-    /**
-     * сохранение статьи в закладках (добавить в БД)
-     */
-    private suspend fun saveBookmarkToDB(article: Article) : AppEvent = useCases.saveArticleToBookmarksDB(article)
-
-    /**
-     * удаление статьи из закладок (удалить из БД)
-     */
-    private suspend fun deleteBookmarkFromDB(article: Article) : AppEvent = useCases.removeArticleFromBookmarksDB(article)
 
     companion object {
         private const val INITIAL_PAGE = 1
