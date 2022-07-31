@@ -72,7 +72,7 @@ class NewsViewModel(
         if (filteredData.isEmpty()) {
             _viewState.value = ListViewState.Empty
         } else {
-            _viewState.value = ListViewState.RefreshData(data = filteredData)
+            _viewState.value = ListViewState.DataRefreshed(data = filteredData)
         }
     }
 
