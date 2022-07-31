@@ -12,8 +12,8 @@ package com.example.newsgb._core.ui.model
 sealed class ListViewState {
     object Empty : ListViewState()
     object Loading : ListViewState()
-    data class RefreshData(val data: List<Article>) : ListViewState()
     data class MoreLoading(val data: List<Article>) : ListViewState()
     data class Data(val data: List<Article>) : ListViewState()
+    data class DataRefreshed(val data: List<Article>) : ListViewState()
     data class Error(var message: String?) : ListViewState()
 }

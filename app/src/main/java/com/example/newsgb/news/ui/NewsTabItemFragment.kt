@@ -57,7 +57,7 @@ class NewsTabItemFragment : Fragment() {
         }
 
         override fun onBookmarkCheck(itemArticle: Article) {
-            viewModel.bookmarkChecked(itemArticle)
+            viewModel.checkBookmark(article = itemArticle)
         }
     }
 
@@ -143,7 +143,7 @@ class NewsTabItemFragment : Fragment() {
                 enableError(state = false)
                 initContent(data = state.data)
             }
-            is ListViewState.RefreshData -> {
+            is ListViewState.DataRefreshed -> {
                 enableContent(state = true)
                 enableEmptyState(state = false)
                 enableProgress(state = false)

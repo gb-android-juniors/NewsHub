@@ -41,7 +41,7 @@ class ArticleFragment : Fragment() {
         arguments?.getString(ARG_ARTICLE_URL, DEFAULT_URL) ?: DEFAULT_URL
     }
 
-    private val viewModel: ArticleViewModel by viewModel() { parametersOf(newsStore, articleUrl) }
+    private val viewModel: ArticleViewModel by viewModel { parametersOf(newsStore, articleUrl) }
 
     private var _binding: DetailsFragmentBinding? = null
     private val binding get() = _binding!!
@@ -142,13 +142,9 @@ class ArticleFragment : Fragment() {
         detailsButton.setOnClickListener {
             showArticleFragment(WebViewFragment.newInstance(article.contentUrl))
         }
-        bookmarkIcon.setBookmarkIconColor(requireContext(), article.isChecked)
-        bookmarkIcon.setOnClickListener {
-            // оставляем только отправку команды во viewModel, весь код по смене ui не нужен
-            // все перерисуется автоматом при обновлении состояния стора
-            article.isChecked = !article.isChecked
-            onBookmarkClickListener(article)
-            bookmarkIcon.setBookmarkIconColor(requireContext(), article.isChecked)
+        bookmarkIcon.apply {
+            setBookmarkIconColor(context = requireContext(), bookmarkImage = this, isChecked = article.isChecked)
+            setOnClickListener { onBookmarkClickListener(article) }
         }
 
         Glide.with(articleImage)

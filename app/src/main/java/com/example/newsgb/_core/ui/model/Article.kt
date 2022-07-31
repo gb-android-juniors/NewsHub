@@ -15,7 +15,7 @@ data class Article(
     val imageUrl: String?,
     val publishedDate: String,
     val content: String,
-    var isChecked: Boolean = false
+    val isChecked: Boolean = false
 ) : Parcelable {
 
     fun isTheSame(other: Article): Boolean = this.contentUrl == other.contentUrl

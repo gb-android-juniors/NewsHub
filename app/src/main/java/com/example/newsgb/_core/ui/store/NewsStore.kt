@@ -3,6 +3,7 @@ package com.example.newsgb._core.ui.store
 import com.example.newsgb._core.ui.model.AppEffect
 import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.model.AppState
+import com.example.newsgb._core.ui.model.Article
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.*
@@ -61,6 +62,10 @@ class NewsStore : CoroutineScope by MainScope() {
                         launch { _storeEffect.emit(AppEffect.Error(message = event.message)) }
                         AppState.Data(data = currentState.data)
                     }
+                    is AppState.BookmarkChecking -> {
+                        launch { _storeEffect.emit(AppEffect.Error(message = event.message)) }
+                        AppState.Data(data = currentState.data)
+                    }
                     is AppState.Refreshing -> {
                         launch { _storeEffect.emit(AppEffect.Error(message = event.message)) }
                         AppState.Data(data = currentState.data)
@@ -77,8 +82,9 @@ class NewsStore : CoroutineScope by MainScope() {
                     is AppState.MoreLoading -> {
                         AppState.Data(data = currentState.data + event.data)
                     }
-                    is AppState.BookmarkCheckedData -> {
-                        AppState.Data(data = event.data)
+                    is AppState.BookmarkChecking -> {
+                        val newData = checkBookmarkInCurrentData(bookmark = event.data[0], currentData = currentState.data)
+                        AppState.Data(data = newData)
                     }
                     else -> currentState
                 }
@@ -97,10 +103,7 @@ class NewsStore : CoroutineScope by MainScope() {
                 when (currentState) {
                     is AppState.Data -> {
                         launch { _storeEffect.emit(AppEffect.CheckBookmark(event.article)) }
-                        AppState.BookmarkCheckedData(data = currentState.data)
-                    }
-                    is AppState.BookmarkCheckedData -> {
-                        AppState.Data(data = currentState.data)
+                        AppState.BookmarkChecking(data = currentState.data)
                     }
                     else -> currentState
                 }
@@ -109,6 +112,19 @@ class NewsStore : CoroutineScope by MainScope() {
         //если новое состояне отличается от текущего, то устанавливаем новое состояние
         if (newState != currentState) {
             _storeState.value = newState
+        }
+    }
+
+    private fun checkBookmarkInCurrentData(
+        bookmark: Article,
+        currentData: List<Article>
+    ): List<Article> {
+        return currentData.map { article ->
+            if (article.isTheSame(bookmark)) {
+                article.copy(isChecked = bookmark.isChecked)
+            } else {
+                article
+            }
         }
     }
 }

@@ -33,7 +33,7 @@ class ArticleViewModel(
         when(storeState) {
             AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value = ItemViewState.Loading
             is AppState.Data -> setSuccessState(data = storeState.data)
-            is AppState.BookmarkCheckedData -> setSuccessState(data = storeState.data)
+            is AppState.BookmarkChecking -> setSuccessState(data = storeState.data)
             is AppState.Error -> _viewState.value = ItemViewState.Error(message = storeState.message)
         }
     }

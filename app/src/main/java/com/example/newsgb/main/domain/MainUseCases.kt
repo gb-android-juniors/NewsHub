@@ -3,7 +3,6 @@ package com.example.newsgb.main.domain
 import com.example.newsgb._core.ui.EntitiesToArticleMapper
 import com.example.newsgb._core.ui.NewsDtoToUiMapper
 import com.example.newsgb._core.ui.model.AppEvent
-import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.bookmarks.domain.BookmarkRepository
 
 class MainUseCases(
@@ -27,7 +26,7 @@ class MainUseCases(
                         val bookmarkArticles = EntitiesToArticleMapper(entities)
                         remoteArticles.map { article ->
                             bookmarkArticles.find { it.isTheSame(article) }
-                                ?.let { article.isChecked = true }
+                                ?.let { article.copy(isChecked = true) }
                         }
                         event = AppEvent.DataReceived(data = remoteArticles + bookmarkArticles)
                     }
