@@ -6,6 +6,7 @@ package com.example.newsgb._core.ui.model
  * Loading - состояние первоначальной загрузки
  * MoreLoading - состояние дозагрузки данных
  * Data - состояние наличия валидных данных
+ * DataRefreshed - состояние наличия обновленных данных
  * Error - состояние ошибки
  *
  * */

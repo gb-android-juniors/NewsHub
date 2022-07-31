@@ -44,6 +44,7 @@ class NewsViewModel(
      * метод обработки команд от NewsStore
      *
      * AppEffect.LoadData - команда на загрузку данных
+     * AppEffect.CheckBookmark - команда на добавление\удаление статьи из БД
      * AppEffect.Error - команда отображение ошибки при дозагрузке данных
      * */
     private fun renderAppEffect(effect: AppEffect) {
