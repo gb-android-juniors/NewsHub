@@ -101,6 +101,10 @@ class NewsTabItemFragment : Fragment() {
 
     private fun initView() = with(binding) {
         mainRecycler.adapter = newsListAdapter
+        swipeRefresh.setOnRefreshListener {
+            viewModel.refreshData()
+            swipeRefresh.isRefreshing = false
+        }
     }
 
     private fun initViewModel() {
@@ -129,6 +133,12 @@ class NewsTabItemFragment : Fragment() {
                 enableError(state = false)
                 enableContent(state = false)
             }
+            is ListViewState.Refreshing -> {
+                enableProgress(state = true)
+                enableEmptyState(state = false)
+                enableError(state = false)
+                enableContent(state = true)
+            }
             is ListViewState.Error -> {
                 enableError(state = true)
                 enableEmptyState(state = false)
@@ -143,13 +153,13 @@ class NewsTabItemFragment : Fragment() {
                 enableError(state = false)
                 initContent(data = state.data)
             }
-            is ListViewState.DataRefreshed -> {
+            /*is ListViewState.DataRefreshed -> {
                 enableContent(state = true)
                 enableEmptyState(state = false)
                 enableProgress(state = false)
                 enableError(state = false)
                 initRecycleContent(data = state.data)
-            }
+            }*/
             else -> {}
         }
     }
