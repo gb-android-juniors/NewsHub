@@ -37,7 +37,7 @@ class NewsUseCases(
                         val bookmarkArticles = EntitiesToArticleMapper(entities)
                         remoteArticles.map { article ->
                             bookmarkArticles.find { it.isTheSame(article) }
-                                ?.let { article.isChecked = true }
+                                ?.let { article.copy(isChecked = true )}
                         }
                         event = AppEvent.DataReceived(data = remoteArticles)
                     }
@@ -52,35 +52,8 @@ class NewsUseCases(
     }
 
     /**
-     * сохранение статьи в закладках (добавить в БД)
+     * добавление или удаление статьи из БД
      */
-    suspend fun saveArticleToBookmarksDB(article: Article): AppEvent {
-        var event: AppEvent? = null
-        bookmarkRepo.saveBookmark(article)
-            .onSuccess {
-                event = AppEvent.BookmarkChecked(article)
-            }
-            .onFailure { ex ->
-                event = AppEvent.ErrorReceived(message = ex.message)
-            }
-        return event!!
-    }
-
-    /**
-     * удаление статьи из закладок (удалить из БД)
-     */
-    suspend fun removeArticleFromBookmarksDB(article: Article): AppEvent {
-        var event: AppEvent? = null
-        bookmarkRepo.removeBookmark(article)
-            .onSuccess {
-                event = AppEvent.BookmarkChecked(article)
-            }
-            .onFailure { ex ->
-                event = AppEvent.ErrorReceived(message = ex.message)
-            }
-        return event!!
-    }
-
     suspend fun checkArticleInBookMarks(article: Article):Result<Boolean> {
         return if (article.isChecked) {
             bookmarkRepo.saveBookmark(article)
