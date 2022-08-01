@@ -1,32 +1,21 @@
 package com.example.newsgb.settings.ui
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.newsgb.R
 import com.example.newsgb.databinding.SettingsFragmentBinding
+import com.example.newsgb.utils.PrivateSharedPreferences
 
 
 class SettingsFragment : Fragment() {
 
     private var _binding: SettingsFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var prefs: SharedPreferences
-    private val APP_PREFERENCES_COUNTRY = "country"
-    private var countrySettings: String = ""
 
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        prefs = this.activity?.getSharedPreferences("Settings", Context.MODE_PRIVATE)!!
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,30 +27,39 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initViews()
+        initView()
     }
 
-    private fun initViews() {
-        val items = listOf("Russia", "Deutch", "England")
+    private fun initView() = with(binding) {
+        val items = resources.getStringArray((R.array.Countries))
         val adapter = ArrayAdapter(requireContext(), R.layout.country_list_item, items)
-        (binding.selectCountryMode.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        (selectCountryLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        selectCountryText.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, _, position, _ ->
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                selectCountryText.setText(selectedItem)
+                PrivateSharedPreferences(context!!).save(selectedItem)
+                Toast.makeText(requireContext(), "Selected: $selectedItem", Toast.LENGTH_SHORT)
+                    .show()
+            }
+
     }
 
-    override fun onPause() {
-        super.onPause()
-        val editor = prefs.edit()
-        editor.putString(APP_PREFERENCES_COUNTRY, countrySettings).apply()
-    }
 
     override fun onResume() {
         super.onResume()
-        if(prefs.contains(APP_PREFERENCES_COUNTRY)){
-            //TODO
-        }
+        val items = resources.getStringArray((R.array.Countries))
+        val adapter = ArrayAdapter(requireContext(), R.layout.country_list_item, items)
+        (binding.selectCountryLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        var country = ""
+        country = PrivateSharedPreferences(context!!).read()
+        binding.selectCountryText.setText(country)
+        Toast.makeText(requireContext(), "Selected: $country", Toast.LENGTH_SHORT).show()
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = SettingsFragment()
     }
+
 }

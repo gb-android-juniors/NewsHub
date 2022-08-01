@@ -1,8 +1,12 @@
 package com.example.newsgb.news.data
 
+import android.content.SharedPreferences
 import com.example.newsgb._core.data.api.ApiService
 import com.example.newsgb._core.data.api.model.ResponseDTO
 import com.example.newsgb.news.domain.NewsRepository
+import com.example.newsgb.utils.Constants
+import com.example.newsgb.utils.PrivateSharedPreferences
+import com.example.newsgb.utils.ui.setApiCode
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
@@ -12,6 +16,7 @@ class NewsRepositoryImpl(
     private val apiService: ApiService
 ) : NewsRepository {
 
+
     override suspend fun getNewsByCategory(
         page: Int,
         countryCode: String,
@@ -19,7 +24,8 @@ class NewsRepositoryImpl(
     ): Result<ResponseDTO> {
         return try {
             val response = withContext(Dispatchers.IO) {
-                apiService.getNewsList(pageNumber = page, category = category)
+                apiService.getNewsList(pageNumber = page, category = category/*, countryCode =
+                    setApiCode(PrivateSharedPreferences(context = this).read())*/)
             }
             when (response.status) {
                 STATUS_OK -> Result.success(value = response)

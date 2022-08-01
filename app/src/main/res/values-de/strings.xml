@@ -34,5 +34,13 @@
     <!--    Settings Fragment-->
     <string name="geolocation">Geolokalisierung</string>
     <string name="select_country">Wähle ein Land</string>
+    <string name="country_russia">Russland</string>
+    <string name="country_germany">Deutschland</string>
+    <string name="country_england">England</string>
+    <string-array name="Countries">
+        <item>England</item>
+        <item>Deutschland</item>
+        <item>Russland</item>
+    </string-array>
 
 </resources>
