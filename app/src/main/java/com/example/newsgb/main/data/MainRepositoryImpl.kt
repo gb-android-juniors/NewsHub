@@ -1,9 +1,10 @@
 package com.example.newsgb.main.data
 
+
+import com.example.newsgb.App
 import com.example.newsgb._core.data.api.ApiService
 import com.example.newsgb._core.data.api.model.ResponseDTO
 import com.example.newsgb.main.domain.MainRepository
-import com.example.newsgb.main.ui.MainActivity
 import com.example.newsgb.utils.PrivateSharedPreferences
 import com.example.newsgb.utils.ui.setApiCode
 import kotlinx.coroutines.Dispatchers
@@ -16,13 +17,11 @@ class MainRepositoryImpl(
 ) : MainRepository {
 
 
-
-
     override suspend fun getBreakingNews(page: Int): Result<ResponseDTO> {
         return try {
             val response = withContext(Dispatchers.IO) {
                 apiService.getNewsList(pageNumber = page, countryCode =
-                setApiCode(PrivateSharedPreferences(context = ).read()))
+                setApiCode(PrivateSharedPreferences(App.instance!!).read()))
             }
             when (response.status) {
                 STATUS_OK -> Result.success(value = response)
