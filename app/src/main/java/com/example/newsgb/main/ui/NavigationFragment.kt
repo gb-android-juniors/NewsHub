@@ -6,23 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.newsgb.R
+import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb.bookmarks.ui.BookmarksFragment
 import com.example.newsgb.databinding.NavigationFragmentBinding
 import com.example.newsgb.news.ui.NewsFragment
 import com.example.newsgb.settings.ui.SettingsFragment
 
-class NavigationFragment : Fragment() {
-
-    private var _binding: NavigationFragmentBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = NavigationFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+class NavigationFragment : BaseFragment<NavigationFragmentBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,4 +56,6 @@ class NavigationFragment : Fragment() {
         @JvmStatic
         fun newInstance() = NavigationFragment()
     }
+
+    override fun getViewBinding() = NavigationFragmentBinding.inflate(layoutInflater)
 }

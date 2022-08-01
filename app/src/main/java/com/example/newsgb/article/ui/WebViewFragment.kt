@@ -9,33 +9,16 @@ import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb.databinding.ArticleFragmentBinding
 import com.example.newsgb.utils.Constants.Companion.URL
 
-class WebViewFragment : Fragment() {
-
-    private var _binding: ArticleFragmentBinding? = null
-    private val binding get() = _binding!!
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = ArticleFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+class WebViewFragment : BaseFragment<ArticleFragmentBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMenu()
         initView()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     /** метод инициализации меню в апбаре экрана */
@@ -85,5 +68,7 @@ class WebViewFragment : Fragment() {
                 }
             }
     }
+
+    override fun getViewBinding() = ArticleFragmentBinding.inflate(layoutInflater)
 
 }

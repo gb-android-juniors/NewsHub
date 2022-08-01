@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.newsgb.R
+import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb._core.ui.store.NewsStore
@@ -27,7 +28,7 @@ import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class NewsTabItemFragment : Fragment() {
+class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
 
     /** вытягиваем из аргументов переданную категорию новостей */
     private val category: Category?
@@ -43,9 +44,6 @@ class NewsTabItemFragment : Fragment() {
 
     /** во viewModel в качестве параметров передаем экземпляр NewsStore и категорию новостей */
     private val viewModel by viewModel<NewsViewModel> { parametersOf(newsStore, category) }
-
-    private var _binding: NewsFragmentTabItemBinding? = null
-    private val binding get() = _binding!!
 
     /** инициализируем слушатель нажатий на элементы списка
      * onItemClick - колбэк нажатия на элемент списка
@@ -76,14 +74,6 @@ class NewsTabItemFragment : Fragment() {
         storeHolder = context as NewsStoreHolder
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = NewsFragmentTabItemBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -93,11 +83,6 @@ class NewsTabItemFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         initData()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onDetach() {
@@ -219,4 +204,6 @@ class NewsTabItemFragment : Fragment() {
                 arguments = bundleOf(ARG_CATEGORY to category)
             }
     }
+
+    override fun getViewBinding() = NewsFragmentTabItemBinding.inflate(layoutInflater)
 }

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.lifecycleScope
 import com.example.newsgb.R
+import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb._core.ui.adapter.NewsListAdapter
 import com.example.newsgb._core.ui.adapter.RecyclerItemListener
 import com.example.newsgb._core.ui.model.Article
@@ -23,10 +24,7 @@ import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class BookmarksFragment : Fragment() {
-
-    private var _binding: BookmarksFragmentBinding? = null
-    private val binding get() = _binding!!
+class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
 
     /** переменная хранителя экземпляра NewsStore */
     private var storeHolder: NewsStoreHolder? = null
@@ -69,14 +67,6 @@ class BookmarksFragment : Fragment() {
     /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
     private val bookmarksListAdapter: NewsListAdapter = NewsListAdapter(listener = recyclerItemListener)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = BookmarksFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
@@ -86,11 +76,6 @@ class BookmarksFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         initData()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onDetach() {
@@ -175,4 +160,6 @@ class BookmarksFragment : Fragment() {
 
         fun newInstance() = BookmarksFragment()
     }
+
+    override fun getViewBinding() = BookmarksFragmentBinding.inflate(layoutInflater)
 }
