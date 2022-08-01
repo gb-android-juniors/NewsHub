@@ -34,26 +34,20 @@ class SettingsFragment : Fragment() {
         val items = resources.getStringArray((R.array.Countries))
         val adapter = ArrayAdapter(requireContext(), R.layout.country_list_item, items)
         (selectCountryLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        selectCountryLayout.hint = PrivateSharedPreferences(context!!).read()
         selectCountryText.onItemClickListener =
             AdapterView.OnItemClickListener { parent, _, position, _ ->
                 val selectedItem = parent.getItemAtPosition(position).toString()
-                selectCountryText.setText(selectedItem)
                 PrivateSharedPreferences(context!!).save(selectedItem)
                 Toast.makeText(requireContext(), "Selected: $selectedItem", Toast.LENGTH_SHORT)
                     .show()
             }
-
     }
 
 
     override fun onResume() {
         super.onResume()
-        val items = resources.getStringArray((R.array.Countries))
-        val adapter = ArrayAdapter(requireContext(), R.layout.country_list_item, items)
-        (binding.selectCountryLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
-        var country = ""
-        country = PrivateSharedPreferences(context!!).read()
-        binding.selectCountryText.setText(country)
+        val country = PrivateSharedPreferences(context!!).read()
         Toast.makeText(requireContext(), "Selected: $country", Toast.LENGTH_SHORT).show()
     }
 
