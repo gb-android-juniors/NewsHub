@@ -63,7 +63,7 @@ class BookmarksViewModel(
     }
 
     private fun filterBookmarksFromStore(data: List<Article>) {
-        val filteredData = data.filter { it.isChecked }
+        val filteredData = data.filter { it.isChecked }.distinctBy { it.contentUrl }
         if (filteredData.isEmpty()) {
             _viewState.value = ListViewState.Empty
         } else {
@@ -72,7 +72,7 @@ class BookmarksViewModel(
     }
 
     private fun setRefreshState(data: List<Article>) {
-        val filteredData = data.filter { it.isChecked }
+        val filteredData = data.filter { it.isChecked }.distinctBy { it.contentUrl }
         if (filteredData.isEmpty()) {
             _viewState.value = ListViewState.Empty
         } else {
@@ -85,15 +85,15 @@ class BookmarksViewModel(
     }
 
     private fun deleteBookmarksFromDB() {
-            viewModelScope.launch {
-                useCases.clearBookmarks()
-                    .onSuccess {
-                        store.dispatch(event = AppEvent.DataReceived(listOf()))
-                    }
-                    .onFailure { failure ->
-                        store.dispatch(event = AppEvent.ErrorReceived(message = failure.message))
-                    }
-            }
+        viewModelScope.launch {
+            useCases.clearBookmarks()
+                .onSuccess {
+                    store.dispatch(event = AppEvent.DataReceived(listOf()))
+                }
+                .onFailure { failure ->
+                    store.dispatch(event = AppEvent.ErrorReceived(message = failure.message))
+                }
+        }
     }
 
     fun checkBookmark(article: Article) {

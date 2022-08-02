@@ -123,24 +123,22 @@ class NewsStore : CoroutineScope by MainScope() {
         }
     }
 
-    private fun clearBookmarksInCurrentData(data: List<Article>): List<Article> {
-        return data.filter { it.category != Category.BOOKMARKS }.also { filteredArticles ->
-            filteredArticles.map { article ->
-                article.copy(isChecked = false)
-            }
+    private fun clearBookmarksInCurrentData(data: List<Article>): List<Article> =
+        data.filter { it.category != Category.BOOKMARKS }.map { article ->
+            article.copy(isChecked = false)
         }
-    }
+
 
     private fun checkBookmarkInCurrentData(
         bookmark: Article,
         currentData: List<Article>
-    ): List<Article> {
-        return currentData.map { article ->
+    ): List<Article> =
+        currentData.map { article ->
             if (article.isTheSame(bookmark)) {
                 article.copy(isChecked = bookmark.isChecked)
             } else {
                 article
             }
         }
-    }
+
 }

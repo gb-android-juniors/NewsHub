@@ -35,11 +35,17 @@ class NewsUseCases(
                 bookmarkRepo.getAllBookmarks()
                     .onSuccess { entities ->
                         val bookmarkArticles = EntitiesToArticleMapper(entities)
-                        remoteArticles.map { article ->
-                            bookmarkArticles.find { it.isTheSame(article) }
-                                ?.let { article.copy(isChecked = true )}
+                        var filteredArticles = remoteArticles
+                        bookmarkArticles.forEach { bookmark ->
+                            filteredArticles = filteredArticles.map { article ->
+                                if (article.isTheSame(bookmark)) {
+                                    article.copy(isChecked = true)
+                                } else {
+                                    article
+                                }
+                            }
                         }
-                        event = AppEvent.DataReceived(data = remoteArticles)
+                        event = AppEvent.DataReceived(data = filteredArticles)
                     }
                     .onFailure { ex ->
                         event = AppEvent.ErrorReceived(message = ex.message)
@@ -52,7 +58,7 @@ class NewsUseCases(
     }
 
     /**
-     * добавление или удаление статьи из БД
+     * метод добавление или удаление статьи из БД
      */
     suspend fun checkArticleInBookMarks(article: Article):Result<Boolean> {
         return if (article.isChecked) {
