@@ -10,7 +10,7 @@ import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.databinding.NewsFragmentRecyclerItemBinding
 import com.example.newsgb.utils.setBookmarkIconColor
 
-class NewsListAdapter(private val listener: RecyclerItemListener) :
+class NewsListAdapter (private val listener: RecyclerItemListener) :
     RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>() {
 
     private val newsListDiffer = AsyncListDiffer(this, DIFF_CALLBACK)
@@ -38,7 +38,11 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
             newsHeader.text = itemArticle.title
             newsResourceName.text = itemArticle.sourceName
             newsItemBookmarkImage.apply {
-                setBookmarkIconColor(context = itemView.context, bookmarkImage = this, isChecked = itemArticle.isChecked)
+                setBookmarkIconColor(
+                    context = itemView.context,
+                    bookmarkImage = this,
+                    isChecked = itemArticle.isChecked
+                )
                 setOnClickListener { listener.onBookmarkCheck(itemArticle) }
             }
             Glide.with(newsImage.context)

@@ -15,6 +15,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.newsgb.R
+import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ItemViewState
 import com.example.newsgb._core.ui.store.NewsStore
@@ -27,7 +28,7 @@ import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class ArticleFragment : Fragment() {
+class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
     /** переменная хранителя экземпляра NewsStore */
     private var storeHolder: NewsStoreHolder? = null
 
@@ -43,33 +44,16 @@ class ArticleFragment : Fragment() {
 
     private val viewModel: ArticleViewModel by viewModel { parametersOf(newsStore, articleUrl) }
 
-    private var _binding: DetailsFragmentBinding? = null
-    private val binding get() = _binding!!
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         /** инициализируем переменную хранителя экземпляра NewsStore */
         storeHolder = context as NewsStoreHolder
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = DetailsFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMenu()
         initViewModel()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override fun onDetach() {
@@ -201,4 +185,6 @@ class ArticleFragment : Fragment() {
                 arguments = bundleOf(ARG_ARTICLE_URL to articleUrl)
             }
     }
+
+    override fun getViewBinding() = DetailsFragmentBinding.inflate(layoutInflater)
 }
