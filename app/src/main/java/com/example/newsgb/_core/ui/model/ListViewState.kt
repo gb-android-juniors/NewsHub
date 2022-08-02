@@ -15,6 +15,5 @@ sealed class ListViewState {
     object Refreshing : ListViewState()
     data class MoreLoading(val data: List<Article>) : ListViewState()
     data class Data(val data: List<Article>) : ListViewState()
-    data class DataRefreshed(val data: List<Article>) : ListViewState()
     data class Error(var message: String?) : ListViewState()
 }

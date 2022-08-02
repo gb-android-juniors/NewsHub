@@ -9,26 +9,32 @@ class MainUseCases(
     private val bookmarkRepo: BookmarkRepository,
     private val mainRepo: MainRepository
 ) {
+
+    /**
+     * итоговый список статей, содержащий статьи из закладок + статьи полученнные от API.
+     * Его будем возвращать в событии AppEvent.DataReceived.
+     */
     suspend fun getInitialData(initialPage: Int): AppEvent {
 
         var event: AppEvent? = null
-
-        /**
-         * итоговый список статей, содержащий статьи из закладок + статьи полученнные от API.
-         * Его будем возвращать в событии AppEvent.DataReceived.
-         */
-
         mainRepo.getBreakingNews(page = initialPage)
             .onSuccess { response ->
                 val remoteArticles = NewsDtoToUiMapper(response.articles)
                 bookmarkRepo.getAllBookmarks()
                     .onSuccess { entities ->
                         val bookmarkArticles = EntitiesToArticleMapper(entities)
-                        remoteArticles.map { article ->
-                            bookmarkArticles.find { it.isTheSame(article) }
-                                ?.let { article.copy(isChecked = true) }
+                        var filteredArticles = remoteArticles
+                        bookmarkArticles.forEach { bookmark ->
+                            filteredArticles = filteredArticles.map { article ->
+                                if (article.isTheSame(bookmark)) {
+                                    article.copy(isChecked = true)
+                                } else {
+                                    article
+                                }
+                            }
                         }
-                        event = AppEvent.DataReceived(data = remoteArticles + bookmarkArticles)
+                        val resultData = filteredArticles + bookmarkArticles
+                        event = AppEvent.DataReceived(data = resultData)
                     }
             }
             .onFailure { ex ->

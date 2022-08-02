@@ -30,5 +30,8 @@
     <string name="no_news">Keine Neuigkeiten!</string>
     <string name="more_details">Mehr Details…</string>
     <string name="unknown_error">Unbekannter Fehler!</string>
+    <string name="closing_warning">Möchten Sie wirklich alle Lesezeichen löschen?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
 
 </resources>

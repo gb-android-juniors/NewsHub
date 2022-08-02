@@ -13,14 +13,14 @@ import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.newsgb.R
+import com.example.newsgb._core.ui.adapter.NewsListAdapter
+import com.example.newsgb._core.ui.adapter.RecyclerItemListener
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.article.ui.ArticleFragment
 import com.example.newsgb.databinding.NewsFragmentTabItemBinding
-import com.example.newsgb._core.ui.adapter.NewsListAdapter
-import com.example.newsgb._core.ui.adapter.RecyclerItemListener
 import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -144,7 +144,7 @@ class NewsTabItemFragment : Fragment() {
                 enableEmptyState(state = false)
                 enableProgress(state = false)
                 enableContent(state = false)
-                showToastMessage(state.message ?: getString(R.string.unknown_error))
+                showToastMessage(message = state.message ?: getString(R.string.unknown_error))
             }
             is ListViewState.Data -> {
                 enableContent(state = true)
@@ -153,13 +153,6 @@ class NewsTabItemFragment : Fragment() {
                 enableError(state = false)
                 initContent(data = state.data)
             }
-            /*is ListViewState.DataRefreshed -> {
-                enableContent(state = true)
-                enableEmptyState(state = false)
-                enableProgress(state = false)
-                enableError(state = false)
-                initRecycleContent(data = state.data)
-            }*/
             else -> {}
         }
     }

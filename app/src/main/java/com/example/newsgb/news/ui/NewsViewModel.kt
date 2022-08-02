@@ -38,6 +38,7 @@ class NewsViewModel(
             is AppState.Data -> setSuccessState(data = storeState.data)
             is AppState.Error -> _viewState.value =
                 ListViewState.Error(message = storeState.message)
+            else -> {}
         }
     }
 
@@ -45,13 +46,14 @@ class NewsViewModel(
      * метод обработки команд от NewsStore
      *
      * AppEffect.LoadData - команда на загрузку данных
+     * AppEffect.CheckBookmark - команда на добавление\удаление статьи из БД
      * AppEffect.Error - команда отображение ошибки при дозагрузке данных
      * */
     private fun renderAppEffect(effect: AppEffect) {
         when (effect) {
             AppEffect.LoadData -> getNewsByCategory()
             is AppEffect.CheckBookmark -> checkBookmarkInDatabase(article = effect.dataItem)
-            is AppEffect.Error -> {}
+            else -> {}
         }
     }
 
@@ -92,7 +94,7 @@ class NewsViewModel(
 
     /** метод обработки нажатия на фложок закладки */
     fun checkBookmark(article: Article) {
-        store.dispatch(event = AppEvent.BookmarkChecked(article = article))
+        store.dispatch(event = AppEvent.BookmarkCheck(article = article))
     }
 
     private fun checkBookmarkInDatabase(article: Article) {
@@ -115,7 +117,11 @@ class NewsViewModel(
      * */
     private fun getNewsByCategory() {
         viewModelScope.launch {
-            val event = useCases.getNewsByCategory(initialPage = INITIAL_PAGE, countryCode = "ru", category = category)
+            val event = useCases.getNewsByCategory(
+                initialPage = INITIAL_PAGE,
+                countryCode = "ru",
+                category = category
+            )
             store.dispatch(event = event)
         }
     }

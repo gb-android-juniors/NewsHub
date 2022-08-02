@@ -130,6 +130,11 @@ class ArticleFragment : Fragment() {
                 enableError(state = false)
                 initContent(state.data)
             }
+            is ItemViewState.Refreshing -> {
+                enableProgress(state = true)
+                enableContent(state = true)
+                enableError(state = false)
+            }
             else -> {}
         }
     }
@@ -159,12 +164,7 @@ class ArticleFragment : Fragment() {
      * добавляет или удаляет статью из БД с закладками
      */
     private fun onBookmarkClickListener(article: Article) {
-        // меньше логики во фрагменте, этим будет заниматься viewModel
-        if (article.isChecked) {
-            viewModel.saveToDB(article)
-        } else {
-            viewModel.deleteBookmark(article)
-        }
+        viewModel.checkBookmark(article = article)
     }
 
     private fun enableProgress(state: Boolean) {

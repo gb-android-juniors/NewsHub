@@ -4,6 +4,7 @@ import com.example.newsgb._core.ui.model.AppEffect
 import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.model.AppState
 import com.example.newsgb._core.ui.model.Article
+import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.*
@@ -83,7 +84,14 @@ class NewsStore : CoroutineScope by MainScope() {
                         AppState.Data(data = currentState.data + event.data)
                     }
                     is AppState.BookmarkChecking -> {
-                        val newData = checkBookmarkInCurrentData(bookmark = event.data[0], currentData = currentState.data)
+                        val newData = checkBookmarkInCurrentData(
+                            bookmark = event.data[0],
+                            currentData = currentState.data
+                        )
+                        AppState.Data(data = newData)
+                    }
+                    is AppState.BookmarksClearing -> {
+                        val newData = clearBookmarksInCurrentData(data = currentState.data)
                         AppState.Data(data = newData)
                     }
                     else -> currentState
@@ -98,12 +106,20 @@ class NewsStore : CoroutineScope by MainScope() {
                     else -> currentState
                 }
             }
-            // обработать событие по добавлению статьи в закладки
-            is AppEvent.BookmarkChecked -> {
+            is AppEvent.BookmarkCheck -> {
                 when (currentState) {
                     is AppState.Data -> {
                         launch { _storeEffect.emit(AppEffect.CheckBookmark(event.article)) }
                         AppState.BookmarkChecking(data = currentState.data)
+                    }
+                    else -> currentState
+                }
+            }
+            is AppEvent.BookmarksClear -> {
+                when (currentState) {
+                    is AppState.Data -> {
+                        launch { _storeEffect.emit(AppEffect.ClearBookmarks) }
+                        AppState.BookmarksClearing(data = currentState.data)
                     }
                     else -> currentState
                 }
@@ -115,16 +131,22 @@ class NewsStore : CoroutineScope by MainScope() {
         }
     }
 
+    private fun clearBookmarksInCurrentData(data: List<Article>): List<Article> =
+        data.filter { it.category != Category.BOOKMARKS }.map { article ->
+            article.copy(isChecked = false)
+        }
+
+
     private fun checkBookmarkInCurrentData(
         bookmark: Article,
         currentData: List<Article>
-    ): List<Article> {
-        return currentData.map { article ->
+    ): List<Article> =
+        currentData.map { article ->
             if (article.isTheSame(bookmark)) {
                 article.copy(isChecked = bookmark.isChecked)
             } else {
                 article
             }
         }
-    }
+
 }
