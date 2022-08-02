@@ -5,27 +5,19 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import com.example.newsgb.R
 
+/**
+ * Метод для форматирования строки с датой, приходящей из API
+ */
 fun String.formatApiStringToDate(): String = this.replace(("[a-zA-Z]").toRegex(), " ")
 
 /**
- * устанавливаем цвет иконки закладки
+ * Метод для установки цвета для флажка закладки
  */
-fun AppCompatImageView.setBookmarkIconColor(context: Context, isChecked: Boolean) {
-    if (isChecked) {
-        changeColor(this, R.color.bookmark_selected_color, context)
+fun setBookmarkIconColor(context: Context, bookmarkImage: AppCompatImageView, isChecked: Boolean) {
+    val tintColor = if (isChecked) {
+        R.color.bookmark_selected_color
     } else {
-        changeColor(this, R.color.bookmark_unselected_color, context)
+        R.color.bookmark_unselected_color
     }
-}
-
-/**
- * метод изменения цвета иконки
- */
-private fun changeColor(bookmarkIcon: AppCompatImageView, tintColor: Int, context: Context) {
-    bookmarkIcon.setColorFilter(
-        ContextCompat.getColor(
-            context,
-            tintColor
-        ), android.graphics.PorterDuff.Mode.SRC_IN
-    )
+    bookmarkImage.setColorFilter(ContextCompat.getColor(context, tintColor), android.graphics.PorterDuff.Mode.SRC_IN)
 }

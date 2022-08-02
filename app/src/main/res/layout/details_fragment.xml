@@ -14,9 +14,9 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/details_toolbar"
-            app:navigationIconTint="@color/white"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIconTint="@color/white" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -103,8 +103,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_8"
                 android:text="@string/more_details"
-                android:textSize="@dimen/size_18"
                 android:textAllCaps="false"
+                android:textSize="@dimen/size_18"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/description_text" />
 

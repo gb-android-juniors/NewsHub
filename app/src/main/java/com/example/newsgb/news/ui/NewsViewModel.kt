@@ -2,18 +2,15 @@ package com.example.newsgb.news.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsgb._core.ui.NewsDtoToUiMapper
 import com.example.newsgb._core.ui.model.*
 import com.example.newsgb._core.ui.store.NewsStore
-import com.example.newsgb.bookmarks.domain.BookmarkRepository
-import com.example.newsgb.news.domain.NewsRepository
+import com.example.newsgb.news.domain.NewsUseCases
 import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
-    private val bookmarkRepo: BookmarkRepository,
-    private val newsRepo: NewsRepository,
+    private val useCases: NewsUseCases,
     private val store: NewsStore,
     private val category: Category
 ) : ViewModel() {
@@ -33,10 +30,14 @@ class NewsViewModel(
      * конвертируем состояния приложения в состояния экрана
      * */
     private fun renderStoreState(storeState: AppState) {
-        when(storeState) {
-            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value = ListViewState.Loading
+        when (storeState) {
+            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value =
+                ListViewState.Loading
+            is AppState.Refreshing, is AppState.BookmarkChecking -> _viewState.value =
+                ListViewState.Refreshing
             is AppState.Data -> setSuccessState(data = storeState.data)
-            is AppState.Error -> _viewState.value = ListViewState.Error(message = storeState.message)
+            is AppState.Error -> _viewState.value =
+                ListViewState.Error(message = storeState.message)
         }
     }
 
@@ -49,6 +50,7 @@ class NewsViewModel(
     private fun renderAppEffect(effect: AppEffect) {
         when (effect) {
             AppEffect.LoadData -> getNewsByCategory()
+            is AppEffect.CheckBookmark -> checkBookmarkInDatabase(article = effect.dataItem)
             is AppEffect.Error -> {}
         }
     }
@@ -83,6 +85,29 @@ class NewsViewModel(
         }
     }
 
+    /** метод обновления списков статей для всех категорий */
+    fun refreshData() {
+        store.dispatch(event = AppEvent.Refresh)
+    }
+
+    /** метод обработки нажатия на фложок закладки */
+    fun checkBookmark(article: Article) {
+        store.dispatch(event = AppEvent.BookmarkChecked(article = article))
+    }
+
+    private fun checkBookmarkInDatabase(article: Article) {
+        viewModelScope.launch {
+            val checkedArticle = article.copy(isChecked = !article.isChecked)
+            useCases.checkArticleInBookMarks(article = checkedArticle)
+                .onSuccess {
+                    store.dispatch(event = AppEvent.DataReceived(data = listOf(checkedArticle)))
+                }
+                .onFailure { failure ->
+                    store.dispatch(event = AppEvent.ErrorReceived(message = failure.message))
+                }
+        }
+    }
+
     /**
      * метод запроса первой страницы новостей по категории.
      * В случае успеха конвертируем поулченные данные с помощью маппера и
@@ -90,56 +115,8 @@ class NewsViewModel(
      * */
     private fun getNewsByCategory() {
         viewModelScope.launch {
-            newsRepo.getNewsByCategory(page = INITIAL_PAGE, countryCode = "ru", category = category.apiCode)
-                .onSuccess { response ->
-                    val articles = NewsDtoToUiMapper(response.articles, category = category)
-
-                    articles.map { article ->
-                        // думаю, лучше выгружать из бд сразу все статьи и сравнивать два списка.
-                        // Вот тут то и понадобится интерактор или юзкейс
-                        bookmarkRepo.findArticleInBookmarks(article).onSuccess { isChecked ->
-                            article.isChecked = isChecked
-                        }
-                    }
-                    store.dispatch(AppEvent.DataReceived(data = articles))
-                }
-                .onFailure { ex ->
-                    store.dispatch(AppEvent.ErrorReceived(message = ex.message))
-                }
-        }
-    }
-
-    /**
-     * сохранение статьи в закладках (добавить в БД)
-     */
-    fun saveToDB(article: Article) {
-        viewModelScope.launch {
-            bookmarkRepo.saveBookmark(article)
-            refreshDataBookmarks(article, true)
-        }
-    }
-
-    /**
-     * удаление статьи из закладок (удалить из БД)
-     */
-    fun deleteBookmark(article: Article) {
-        viewModelScope.launch {
-            bookmarkRepo.removeBookmark(article)
-            refreshDataBookmarks(article, false)
-        }
-    }
-
-    // этим всем будет заниматься стор в случае успешного (onSuccess) добавления/удаления статей в списке закладок
-    private fun refreshDataBookmarks(article: Article, isChecked: Boolean) {
-        val currentStoreState = store.storeState.value
-        if (currentStoreState is AppState.Data) {
-            val newArticles = currentStoreState.data
-            newArticles.map { oldArticle ->
-                if (oldArticle.contentUrl == article.contentUrl) {
-                    oldArticle.isChecked = isChecked
-                }
-            }
-            store.dispatch(AppEvent.DataReceived(data = newArticles))
+            val event = useCases.getNewsByCategory(initialPage = INITIAL_PAGE, countryCode = "ru", category = category)
+            store.dispatch(event = event)
         }
     }
 

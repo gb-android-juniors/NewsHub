@@ -57,13 +57,7 @@ class NewsTabItemFragment : Fragment() {
         }
 
         override fun onBookmarkCheck(itemArticle: Article) {
-            // всю логику по максимуму переносить в viewModel
-            // что-то типа viewModel.checkBookmark(itemArticle)
-            if (itemArticle.isChecked) {
-                viewModel.saveToDB(itemArticle)
-            } else {
-                viewModel.deleteBookmark(itemArticle)
-            }
+            viewModel.checkBookmark(article = itemArticle)
         }
     }
 
@@ -107,6 +101,10 @@ class NewsTabItemFragment : Fragment() {
 
     private fun initView() = with(binding) {
         mainRecycler.adapter = newsListAdapter
+        swipeRefresh.setOnRefreshListener {
+            viewModel.refreshData()
+            swipeRefresh.isRefreshing = false
+        }
     }
 
     private fun initViewModel() {
@@ -135,6 +133,12 @@ class NewsTabItemFragment : Fragment() {
                 enableError(state = false)
                 enableContent(state = false)
             }
+            is ListViewState.Refreshing -> {
+                enableProgress(state = true)
+                enableEmptyState(state = false)
+                enableError(state = false)
+                enableContent(state = true)
+            }
             is ListViewState.Error -> {
                 enableError(state = true)
                 enableEmptyState(state = false)
@@ -149,6 +153,13 @@ class NewsTabItemFragment : Fragment() {
                 enableError(state = false)
                 initContent(data = state.data)
             }
+            /*is ListViewState.DataRefreshed -> {
+                enableContent(state = true)
+                enableEmptyState(state = false)
+                enableProgress(state = false)
+                enableError(state = false)
+                initRecycleContent(data = state.data)
+            }*/
             else -> {}
         }
     }
@@ -158,6 +169,10 @@ class NewsTabItemFragment : Fragment() {
      * */
     private fun initContent(data: List<Article>) {
         createFirstNews(data.first())
+        initRecycleContent(data)
+    }
+
+    private fun initRecycleContent(data: List<Article>) {
         if (data.size > 1) {
             newsListAdapter.submitList(data.subList(1, data.size - 1))
         } else {
