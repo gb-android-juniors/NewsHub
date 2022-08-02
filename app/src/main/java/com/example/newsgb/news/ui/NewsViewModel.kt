@@ -32,6 +32,10 @@ class NewsViewModel(
     private fun renderStoreState(storeState: AppState) {
         when (storeState) {
             AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value = ListViewState.Loading
+            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value =
+                ListViewState.Loading
+            is AppState.Refreshing, is AppState.BookmarkChecking -> _viewState.value =
+                ListViewState.Refreshing
             is AppState.Data -> setSuccessState(data = storeState.data)
             is AppState.BookmarkChecking -> setRefreshState(data = storeState.data)
             is AppState.BookmarksClearing -> setRefreshState(data = storeState.data)
@@ -68,15 +72,6 @@ class NewsViewModel(
         }
     }
 
-    private fun setRefreshState(data: List<Article>) {
-        val filteredData = data.filter { it.category == category }
-        if (filteredData.isEmpty()) {
-            _viewState.value = ListViewState.Empty
-        } else {
-            _viewState.value = ListViewState.DataRefreshed(data = filteredData)
-        }
-    }
-
     /**
      * метод получения списка новостей по категории.
      * Проверяем, если данные уже загружены ранее и хранятся в стор, берем их от туда отфильтровав по категории.
@@ -94,9 +89,12 @@ class NewsViewModel(
         }
     }
 
-    /**
-     * метод обработки нажатия на фложок закладки
-     */
+    /** метод обновления списков статей для всех категорий */
+    fun refreshData() {
+        store.dispatch(event = AppEvent.Refresh)
+    }
+
+    /** метод обработки нажатия на фложок закладки */
     fun checkBookmark(article: Article) {
         store.dispatch(event = AppEvent.BookmarkChecked(article = article))
     }
