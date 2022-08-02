@@ -28,7 +28,8 @@ class MainUseCases(
                             bookmarkArticles.find { it.isTheSame(article) }
                                 ?.let { article.copy(isChecked = true) }
                         }
-                        event = AppEvent.DataReceived(data = remoteArticles + bookmarkArticles)
+                        val resultData = remoteArticles + bookmarkArticles
+                        event = AppEvent.DataReceived(data = resultData)
                     }
             }
             .onFailure { ex ->

@@ -31,10 +31,10 @@ class NewsViewModel(
      * */
     private fun renderStoreState(storeState: AppState) {
         when (storeState) {
-            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value =
-                ListViewState.Loading
+            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value = ListViewState.Loading
             is AppState.Data -> setSuccessState(data = storeState.data)
             is AppState.BookmarkChecking -> setRefreshState(data = storeState.data)
+            is AppState.BookmarksClearing -> setRefreshState(data = storeState.data)
             is AppState.Error -> _viewState.value =
                 ListViewState.Error(message = storeState.message)
         }
@@ -51,7 +51,7 @@ class NewsViewModel(
         when (effect) {
             AppEffect.LoadData -> getNewsByCategory()
             is AppEffect.CheckBookmark -> checkBookmarkInDatabase(article = effect.dataItem)
-            is AppEffect.Error -> {}
+            else -> {}
         }
     }
 
@@ -121,7 +121,11 @@ class NewsViewModel(
      * */
     private fun getNewsByCategory() {
         viewModelScope.launch {
-            val event = useCases.getNewsByCategory(initialPage = INITIAL_PAGE, countryCode = "ru", category = category)
+            val event = useCases.getNewsByCategory(
+                initialPage = INITIAL_PAGE,
+                countryCode = "ru",
+                category = category
+            )
             store.dispatch(event = event)
         }
     }

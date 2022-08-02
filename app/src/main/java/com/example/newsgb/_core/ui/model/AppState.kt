@@ -13,6 +13,7 @@ package com.example.newsgb._core.ui.model
 sealed class AppState {
     object Empty : AppState()
     object Loading : AppState()
+    data class BookmarksClearing(val data: List<Article>) : AppState()
     data class MoreLoading(val data: List<Article>) : AppState()
     data class BookmarkChecking(val data: List<Article>) : AppState()
     data class Data(val data: List<Article>) : AppState()

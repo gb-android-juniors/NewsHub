@@ -134,7 +134,7 @@ class NewsTabItemFragment : Fragment() {
                 enableEmptyState(state = false)
                 enableProgress(state = false)
                 enableContent(state = false)
-                showToastMessage(state.message ?: getString(R.string.unknown_error))
+                showToastMessage(message = state.message ?: getString(R.string.unknown_error))
             }
             is ListViewState.Data -> {
                 enableContent(state = true)

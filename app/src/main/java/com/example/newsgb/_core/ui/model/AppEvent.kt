@@ -12,6 +12,7 @@ package com.example.newsgb._core.ui.model
 sealed class AppEvent {
     object Refresh: AppEvent()
     object LoadMore: AppEvent()
+    object ClearBookmarksChecked: AppEvent()
     data class BookmarkChecked(val article: Article) : AppEvent()
     data class DataReceived(val data: List<Article>) : AppEvent()
     data class ErrorReceived(val message: String?): AppEvent()

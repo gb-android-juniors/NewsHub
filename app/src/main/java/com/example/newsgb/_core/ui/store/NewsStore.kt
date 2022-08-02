@@ -4,6 +4,7 @@ import com.example.newsgb._core.ui.model.AppEffect
 import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.model.AppState
 import com.example.newsgb._core.ui.model.Article
+import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.*
@@ -75,7 +76,14 @@ class NewsStore : CoroutineScope by MainScope() {
                         AppState.Data(data = currentState.data + event.data)
                     }
                     is AppState.BookmarkChecking -> {
-                        val newData = checkBookmarkInCurrentData(bookmark = event.data[0], currentData = currentState.data)
+                        val newData = checkBookmarkInCurrentData(
+                            bookmark = event.data[0],
+                            currentData = currentState.data
+                        )
+                        AppState.Data(data = newData)
+                    }
+                    is AppState.BookmarksClearing -> {
+                        val newData = clearBookmarksInCurrentData(data = currentState.data)
                         AppState.Data(data = newData)
                     }
                     else -> currentState
@@ -90,7 +98,6 @@ class NewsStore : CoroutineScope by MainScope() {
                     else -> currentState
                 }
             }
-            // обработать событие по добавлению статьи в закладки
             is AppEvent.BookmarkChecked -> {
                 when (currentState) {
                     is AppState.Data -> {
@@ -100,10 +107,27 @@ class NewsStore : CoroutineScope by MainScope() {
                     else -> currentState
                 }
             }
+            is AppEvent.ClearBookmarksChecked -> {
+                when (currentState) {
+                    is AppState.Data -> {
+                        launch { _storeEffect.emit(AppEffect.ClearBookmarks) }
+                        AppState.BookmarksClearing(data = currentState.data)
+                    }
+                    else -> currentState
+                }
+            }
         }
         //если новое состояне отличается от текущего, то устанавливаем новое состояние
         if (newState != currentState) {
             _storeState.value = newState
+        }
+    }
+
+    private fun clearBookmarksInCurrentData(data: List<Article>): List<Article> {
+        return data.filter { it.category != Category.BOOKMARKS }.also { filteredArticles ->
+            filteredArticles.map { article ->
+                article.copy(isChecked = false)
+            }
         }
     }
 

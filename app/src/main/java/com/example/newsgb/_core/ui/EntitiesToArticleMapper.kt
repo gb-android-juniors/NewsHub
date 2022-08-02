@@ -3,6 +3,7 @@ package com.example.newsgb._core.ui
 
 import com.example.newsgb._core.data.db.entity.ArticleEntity
 import com.example.newsgb._core.ui.model.Article
+import com.example.newsgb.utils.ui.Category
 
 object EntitiesToArticleMapper {
     operator fun invoke(
@@ -17,7 +18,7 @@ object EntitiesToArticleMapper {
         articleEntity: ArticleEntity
     ): Article {
         return Article(
-            category = articleEntity.category,
+            category = Category.BOOKMARKS,
             sourceName = articleEntity.sourceName,
             author = articleEntity.author.orEmpty(),
             title = articleEntity.title,
