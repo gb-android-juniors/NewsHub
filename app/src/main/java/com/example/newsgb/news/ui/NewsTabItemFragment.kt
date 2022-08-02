@@ -14,14 +14,14 @@ import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
+import com.example.newsgb._core.ui.adapter.NewsListAdapter
+import com.example.newsgb._core.ui.adapter.RecyclerItemListener
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.article.ui.ArticleFragment
 import com.example.newsgb.databinding.NewsFragmentTabItemBinding
-import com.example.newsgb._core.ui.adapter.NewsListAdapter
-import com.example.newsgb._core.ui.adapter.RecyclerItemListener
 import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -55,13 +55,7 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
         }
 
         override fun onBookmarkCheck(itemArticle: Article) {
-            // всю логику по максимуму переносить в viewModel
-            // что-то типа viewModel.checkBookmark(itemArticle)
-            if (itemArticle.isChecked) {
-                viewModel.saveToDB(itemArticle)
-            } else {
-                viewModel.deleteBookmark(itemArticle)
-            }
+            viewModel.checkBookmark(article = itemArticle)
         }
     }
 
@@ -92,6 +86,10 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
 
     private fun initView() = with(binding) {
         mainRecycler.adapter = newsListAdapter
+        swipeRefresh.setOnRefreshListener {
+            viewModel.refreshData()
+            swipeRefresh.isRefreshing = false
+        }
     }
 
     private fun initViewModel() {
@@ -120,12 +118,18 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
                 enableError(state = false)
                 enableContent(state = false)
             }
+            is ListViewState.Refreshing -> {
+                enableProgress(state = true)
+                enableEmptyState(state = false)
+                enableError(state = false)
+                enableContent(state = true)
+            }
             is ListViewState.Error -> {
                 enableError(state = true)
                 enableEmptyState(state = false)
                 enableProgress(state = false)
                 enableContent(state = false)
-                showToastMessage(state.message ?: getString(R.string.unknown_error))
+                showToastMessage(message = state.message ?: getString(R.string.unknown_error))
             }
             is ListViewState.Data -> {
                 enableContent(state = true)
@@ -143,6 +147,10 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
      * */
     private fun initContent(data: List<Article>) {
         createFirstNews(data.first())
+        initRecycleContent(data)
+    }
+
+    private fun initRecycleContent(data: List<Article>) {
         if (data.size > 1) {
             newsListAdapter.submitList(data.subList(1, data.size - 1))
         } else {

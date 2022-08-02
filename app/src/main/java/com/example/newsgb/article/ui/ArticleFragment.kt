@@ -42,7 +42,7 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
         arguments?.getString(ARG_ARTICLE_URL, DEFAULT_URL) ?: DEFAULT_URL
     }
 
-    private val viewModel: ArticleViewModel by viewModel() { parametersOf(newsStore, articleUrl) }
+    private val viewModel: ArticleViewModel by viewModel { parametersOf(newsStore, articleUrl) }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -114,6 +114,11 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
                 enableError(state = false)
                 initContent(state.data)
             }
+            is ItemViewState.Refreshing -> {
+                enableProgress(state = true)
+                enableContent(state = true)
+                enableError(state = false)
+            }
             else -> {}
         }
     }
@@ -126,13 +131,9 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
         detailsButton.setOnClickListener {
             showArticleFragment(WebViewFragment.newInstance(article.contentUrl))
         }
-        bookmarkIcon.setBookmarkIconColor(requireContext(), article.isChecked)
-        bookmarkIcon.setOnClickListener {
-            // оставляем только отправку команды во viewModel, весь код по смене ui не нужен
-            // все перерисуется автоматом при обновлении состояния стора
-            article.isChecked = !article.isChecked
-            onBookmarkClickListener(article)
-            bookmarkIcon.setBookmarkIconColor(requireContext(), article.isChecked)
+        bookmarkIcon.apply {
+            setBookmarkIconColor(context = requireContext(), bookmarkImage = this, isChecked = article.isChecked)
+            setOnClickListener { onBookmarkClickListener(article) }
         }
 
         Glide.with(articleImage)
@@ -147,12 +148,7 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
      * добавляет или удаляет статью из БД с закладками
      */
     private fun onBookmarkClickListener(article: Article) {
-        // меньше логики во фрагменте, этим будет заниматься viewModel
-        if (article.isChecked) {
-            viewModel.saveToDB(article)
-        } else {
-            viewModel.deleteBookmark(article)
-        }
+        viewModel.checkBookmark(article = article)
     }
 
     private fun enableProgress(state: Boolean) {

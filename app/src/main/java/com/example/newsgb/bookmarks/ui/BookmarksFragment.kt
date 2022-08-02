@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -34,7 +36,7 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
         storeHolder?.newsStore ?: throw IllegalArgumentException()
     }
 
-    private val viewModel by viewModel<BookmarksViewModel> { parametersOf(newsStore)}
+    private val viewModel by viewModel<BookmarksViewModel> { parametersOf(newsStore) }
 
     /** инициализируем слушатель нажатий на элементы списка
      * onItemClick - колбэк нажатия на элемент списка
@@ -45,17 +47,9 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
             showFragment(fragment = ArticleFragment.newInstance(articleUrl = itemArticle.contentUrl))
         }
 
-
         override fun onBookmarkCheck(itemArticle: Article) {
-            // минимизировать всякую логику во фрагменте, этим должна заниматься viewModel
-            // что-то типа viewModel.checkBookmark(itemArticle)
-            if (itemArticle.isChecked) {
-                viewModel.saveToDB(itemArticle)
-            } else {
-                viewModel.deleteBookmark(itemArticle)
-            }
+            viewModel.checkBookmark(article = itemArticle)
         }
-
     }
 
     override fun onAttach(context: Context) {
@@ -65,7 +59,8 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
     }
 
     /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
-    private val bookmarksListAdapter: NewsListAdapter = NewsListAdapter(listener = recyclerItemListener)
+    private val bookmarksListAdapter: NewsListAdapter =
+        NewsListAdapter(listener = recyclerItemListener)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -84,13 +79,13 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
     }
 
     private fun initData() {
-        viewModel.renderData()
+        viewModel.getData()
     }
 
     private fun initContentView() {
         with(binding) {
             bookmarksRecycler.adapter = bookmarksListAdapter
-            clearAllBookmarks.setOnClickListener { viewModel.clearBookmarks() }
+            clearAllBookmarks.setOnClickListener { showWarningDialog() }
             swipeRefreshLayoutBookmarks.setOnRefreshListener {
                 initData()
                 swipeRefreshLayoutBookmarks.isRefreshing = false
@@ -100,18 +95,19 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
 
     private fun initViewModel() {
         /**подписываемся на изменения состояний экрана */
-        viewModel.stateFlow.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewModel.viewState.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
     /**
      * метод обработки состояний экрана
      * */
-    private fun renderState(listViewState: ListViewState) {
-        when (listViewState) {
+    private fun renderState(state: ListViewState) {
+        when (state) {
             is ListViewState.Data -> {
                 enableProgress(state = false)
                 enableContent(state = true)
-                setDataToAdapter(articleList = listViewState.data)
+                enableEmptyState(state = false)
+                setDataToAdapter(data = state.data)
             }
             is ListViewState.Loading -> {
                 enableProgress(state = true)
@@ -123,6 +119,18 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
                 enableEmptyState(state = true)
                 enableContent(state = false)
             }
+            is ListViewState.Error -> {
+                enableEmptyState(state = false)
+                enableProgress(state = false)
+                enableContent(state = false)
+                showToastMessage(message = state.message ?: getString(R.string.unknown_error))
+            }
+
+            is ListViewState.Refreshing -> {
+                enableProgress(state = true)
+                enableContent(state = true)
+                enableEmptyState(state = false)
+            }
             else -> {}
         }
     }
@@ -130,8 +138,8 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
     /**
      * метод инициализации списка закладок на экране
      * */
-    private fun setDataToAdapter(articleList: List<Article>) {
-        bookmarksListAdapter.submitList(articleList)
+    private fun setDataToAdapter(data: List<Article>) {
+        bookmarksListAdapter.submitList(data)
     }
 
     private fun enableContent(state: Boolean) {
@@ -155,8 +163,22 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
             .commit()
     }
 
+    private fun showToastMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showWarningDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.closing_warning)
+            .setPositiveButton(R.string.yes) { _, _ -> viewModel.clearBookmarks() }
+            .setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
+            .create()
+            .show()
+    }
+
     companion object {
-        private const val ARTICLE_DETAILS_FRAGMENT_FROM_BOOKMARKS = "ArticleDetailsFragmentFromBookmarks"
+        private const val ARTICLE_DETAILS_FRAGMENT_FROM_BOOKMARKS =
+            "ArticleDetailsFragmentFromBookmarks"
 
         fun newInstance() = BookmarksFragment()
     }

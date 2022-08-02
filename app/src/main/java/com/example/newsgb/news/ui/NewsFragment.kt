@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb.databinding.NewsFragmentBinding
 import com.example.newsgb._core.ui.adapter.ViewPagerAdapter
+import com.example.newsgb.databinding.NewsFragmentBinding
 import com.example.newsgb.utils.ui.Category
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -19,12 +20,8 @@ class NewsFragment : BaseFragment<NewsFragmentBinding>() {
         initView()
     }
 
-    private fun initView() = with(binding) {
+    private fun initView() {
         setViewPagerAndTabsNavigation()
-        swipeRefresh.setOnRefreshListener {
-            //TODO прописать дозагрузку данных при свайпе вниз
-            swipeRefresh.isRefreshing = false
-        }
     }
 
     private fun setViewPagerAndTabsNavigation() = with(binding) {

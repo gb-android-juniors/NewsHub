@@ -7,30 +7,36 @@
     android:background="@color/app_background_color"
     tools:context=".bookmarks.ui.BookmarksFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:elevation="@dimen/toolbar_elevation"
-        android:orientation="horizontal">
+        android:layout_height="?actionBarSize">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/margin_4"
-            android:gravity="center"
-            android:text="@string/bookmarks"
-            android:textColor="@color/category_button_text_color"
-            android:textSize="@dimen/header_text_size"
-            android:textStyle="bold" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/clear_all_bookmarks"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="end"
-            android:padding="@dimen/margin_8"
-            android:src="@drawable/ic_bookmarks_delete" />
-    </com.google.android.material.appbar.MaterialToolbar>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/margin_4"
+                android:gravity="center"
+                android:text="@string/bookmarks"
+                android:textColor="@color/white"
+                android:textSize="@dimen/header_text_size"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/clear_all_bookmarks"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end"
+                android:padding="@dimen/margin_8"
+                android:src="@drawable/ic_bookmarks_delete"
+                android:tint="@color/white" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <LinearLayout
         android:id="@+id/empty_bookmarks_warning"
