@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.example.newsgb.databinding.NewsFragmentBinding
 import com.example.newsgb._core.ui.adapter.ViewPagerAdapter
+import com.example.newsgb.databinding.NewsFragmentBinding
 import com.example.newsgb.utils.ui.Category
 import com.google.android.material.tabs.TabLayoutMediator
 

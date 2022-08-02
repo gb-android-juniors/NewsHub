@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsgb._core.ui.model.*
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.bookmarks.domain.BookmarksUseCases
-import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class BookmarksViewModel(
     private val useCases: BookmarksUseCases,
@@ -32,11 +32,11 @@ class BookmarksViewModel(
             AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value =
                 ListViewState.Loading
             is AppState.Data -> filterBookmarksFromStore(data = storeState.data)
-            is AppState.BookmarkChecking -> setRefreshState(data = storeState.data)
-            is AppState.BookmarksClearing -> _viewState.value =
-                ListViewState.Empty
+            is AppState.BookmarkChecking, is AppState.BookmarksClearing  -> _viewState.value =
+                ListViewState.Refreshing
             is AppState.Error -> _viewState.value =
                 ListViewState.Error(message = storeState.message)
+            else -> {}
         }
     }
 
@@ -71,17 +71,8 @@ class BookmarksViewModel(
         }
     }
 
-    private fun setRefreshState(data: List<Article>) {
-        val filteredData = data.filter { it.isChecked }.distinctBy { it.contentUrl }
-        if (filteredData.isEmpty()) {
-            _viewState.value = ListViewState.Empty
-        } else {
-            _viewState.value = ListViewState.DataRefreshed(data = filteredData)
-        }
-    }
-
     fun clearBookmarks() {
-        store.dispatch(event = AppEvent.ClearBookmarksChecked)
+        store.dispatch(event = AppEvent.BookmarksClear)
     }
 
     private fun deleteBookmarksFromDB() {
@@ -97,7 +88,7 @@ class BookmarksViewModel(
     }
 
     fun checkBookmark(article: Article) {
-        store.dispatch(event = AppEvent.BookmarkChecked(article = article))
+        store.dispatch(event = AppEvent.BookmarkCheck(article = article))
     }
 
     private fun checkBookmarkInDatabase(article: Article) {

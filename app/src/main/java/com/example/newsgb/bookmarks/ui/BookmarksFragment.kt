@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -99,7 +100,7 @@ class BookmarksFragment : Fragment() {
     private fun initContentView() {
         with(binding) {
             bookmarksRecycler.adapter = bookmarksListAdapter
-            clearAllBookmarks.setOnClickListener { viewModel.clearBookmarks() }
+            clearAllBookmarks.setOnClickListener { showWarningDialog() }
             swipeRefreshLayoutBookmarks.setOnRefreshListener {
                 initData()
                 swipeRefreshLayoutBookmarks.isRefreshing = false
@@ -140,10 +141,10 @@ class BookmarksFragment : Fragment() {
                 showToastMessage(message = state.message ?: getString(R.string.unknown_error))
             }
 
-            is ListViewState.DataRefreshed -> {
+            is ListViewState.Refreshing -> {
+                enableProgress(state = true)
                 enableContent(state = true)
                 enableEmptyState(state = false)
-                enableProgress(state = false)
             }
             else -> {}
         }
@@ -179,6 +180,15 @@ class BookmarksFragment : Fragment() {
 
     private fun showToastMessage(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showWarningDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.closing_warning)
+            .setPositiveButton(R.string.yes) { _, _ -> viewModel.clearBookmarks() }
+            .setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
+            .create()
+            .show()
     }
 
     companion object {

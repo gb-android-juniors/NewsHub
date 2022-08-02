@@ -31,16 +31,14 @@ class NewsViewModel(
      * */
     private fun renderStoreState(storeState: AppState) {
         when (storeState) {
-            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value = ListViewState.Loading
             AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value =
                 ListViewState.Loading
             is AppState.Refreshing, is AppState.BookmarkChecking -> _viewState.value =
                 ListViewState.Refreshing
             is AppState.Data -> setSuccessState(data = storeState.data)
-            is AppState.BookmarkChecking -> setRefreshState(data = storeState.data)
-            is AppState.BookmarksClearing -> setRefreshState(data = storeState.data)
             is AppState.Error -> _viewState.value =
                 ListViewState.Error(message = storeState.message)
+            else -> {}
         }
     }
 
@@ -96,7 +94,7 @@ class NewsViewModel(
 
     /** метод обработки нажатия на фложок закладки */
     fun checkBookmark(article: Article) {
-        store.dispatch(event = AppEvent.BookmarkChecked(article = article))
+        store.dispatch(event = AppEvent.BookmarkCheck(article = article))
     }
 
     private fun checkBookmarkInDatabase(article: Article) {

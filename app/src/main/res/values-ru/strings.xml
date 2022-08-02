@@ -30,5 +30,8 @@
     <string name="no_news">Нет новостей!</string>
     <string name="more_details">Подробнее…</string>
     <string name="unknown_error">Неизвестная ошибка!</string>
+    <string name="closing_warning">Вы уверены, что хотите удалить все закладки?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 
 </resources>

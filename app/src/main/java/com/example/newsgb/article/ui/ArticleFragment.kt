@@ -130,6 +130,11 @@ class ArticleFragment : Fragment() {
                 enableError(state = false)
                 initContent(state.data)
             }
+            is ItemViewState.Refreshing -> {
+                enableProgress(state = true)
+                enableContent(state = true)
+                enableError(state = false)
+            }
             else -> {}
         }
     }

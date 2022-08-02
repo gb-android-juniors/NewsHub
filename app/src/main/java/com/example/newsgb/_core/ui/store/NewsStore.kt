@@ -106,7 +106,7 @@ class NewsStore : CoroutineScope by MainScope() {
                     else -> currentState
                 }
             }
-            is AppEvent.BookmarkChecked -> {
+            is AppEvent.BookmarkCheck -> {
                 when (currentState) {
                     is AppState.Data -> {
                         launch { _storeEffect.emit(AppEffect.CheckBookmark(event.article)) }
@@ -115,7 +115,7 @@ class NewsStore : CoroutineScope by MainScope() {
                     else -> currentState
                 }
             }
-            is AppEvent.ClearBookmarksChecked -> {
+            is AppEvent.BookmarksClear -> {
                 when (currentState) {
                     is AppState.Data -> {
                         launch { _storeEffect.emit(AppEffect.ClearBookmarks) }

@@ -6,7 +6,6 @@ package com.example.newsgb._core.ui.model
  * Loading - состояние первоначальной загрузки
  * MoreLoading - состояние дозагрузки данных
  * Data - состояние наличия валидных данных
- * DataRefreshed - состояние наличия обновленных данных
  * Error - состояние ошибки
  *
  * */
@@ -16,6 +15,5 @@ sealed class ListViewState {
     object Refreshing : ListViewState()
     data class MoreLoading(val data: List<Article>) : ListViewState()
     data class Data(val data: List<Article>) : ListViewState()
-    data class DataRefreshed(val data: List<Article>) : ListViewState()
     data class Error(var message: String?) : ListViewState()
 }

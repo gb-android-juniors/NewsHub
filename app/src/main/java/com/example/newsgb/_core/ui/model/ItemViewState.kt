@@ -12,6 +12,7 @@ package com.example.newsgb._core.ui.model
 sealed class ItemViewState {
     object Empty : ItemViewState()
     object Loading : ItemViewState()
+    object Refreshing : ItemViewState()
     data class Data(val data: Article) : ItemViewState()
     data class DataRefreshed(val data: Article) : ItemViewState()
     data class Error(var message: String?) : ItemViewState()

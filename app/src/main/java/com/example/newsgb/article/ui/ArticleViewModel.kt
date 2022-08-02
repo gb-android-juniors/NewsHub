@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsgb._core.ui.model.*
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.article.domain.ArticleUseCases
-import com.example.newsgb.bookmarks.domain.BookmarkRepository
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -34,8 +33,9 @@ class ArticleViewModel(
         when(storeState) {
             AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value = ItemViewState.Loading
             is AppState.Data -> setSuccessState(data = storeState.data)
-            is AppState.BookmarkChecking -> setRefreshState(data = storeState.data)
+            is AppState.BookmarkChecking -> _viewState.value = ItemViewState.Refreshing
             is AppState.Error -> _viewState.value = ItemViewState.Error(message = storeState.message)
+            else -> {}
         }
     }
 
@@ -67,20 +67,11 @@ class ArticleViewModel(
         }
     }
 
-    private fun setRefreshState(data: List<Article>) {
-        try {
-            val article = data.first { it.contentUrl == articleUrl }
-            _viewState.value = ItemViewState.DataRefreshed(data = article)
-        } catch (ex: Throwable) {
-            _viewState.value = ItemViewState.Error(message = ex.message)
-        }
-    }
-
     /**
      * метод обработки нажатия на фложок закладки
      */
     fun checkBookmark(article: Article) {
-        store.dispatch(event = AppEvent.BookmarkChecked(article = article))
+        store.dispatch(event = AppEvent.BookmarkCheck(article = article))
     }
 
     private fun checkBookmarkInDatabase(article: Article) {
