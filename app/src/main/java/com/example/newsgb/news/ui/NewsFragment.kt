@@ -1,13 +1,9 @@
 package com.example.newsgb.news.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.newsgb._core.ui.BaseFragment
-import com.example.newsgb.databinding.NewsFragmentBinding
 import com.example.newsgb._core.ui.adapter.ViewPagerAdapter
 import com.example.newsgb.databinding.NewsFragmentBinding
 import com.example.newsgb.utils.ui.Category
