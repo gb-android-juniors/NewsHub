@@ -12,10 +12,10 @@ class MainRepositoryImpl(
     private val apiService: ApiService
 ) : MainRepository {
 
-    override suspend fun getBreakingNews(page: Int): Result<ResponseDTO> {
+    override suspend fun getBreakingNews(page: Int, apiKey: String): Result<ResponseDTO> {
         return try {
             val response = withContext(Dispatchers.IO) {
-                apiService.getNewsList(pageNumber = page)
+                apiService.getNewsList(pageNumber = page, apiKey = apiKey)
             }
             when (response.status) {
                 STATUS_OK -> Result.success(value = response)

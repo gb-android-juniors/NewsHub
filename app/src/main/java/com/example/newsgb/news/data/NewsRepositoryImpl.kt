@@ -15,11 +15,12 @@ class NewsRepositoryImpl(
     override suspend fun getNewsByCategory(
         page: Int,
         countryCode: String,
-        category: String
+        category: String,
+        token: String
     ): Result<ResponseDTO> {
         return try {
             val response = withContext(Dispatchers.IO) {
-                apiService.getNewsList(pageNumber = page, category = category)
+                apiService.getNewsList(pageNumber = page, category = category, apiKey = token)
             }
             when (response.status) {
                 STATUS_OK -> Result.success(value = response)
