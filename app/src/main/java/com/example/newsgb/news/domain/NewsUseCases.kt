@@ -1,5 +1,6 @@
 package com.example.newsgb.news.domain
 
+import com.example.newsgb._core.data.api.model.ApiKeys
 import com.example.newsgb._core.ui.EntitiesToArticleMapper
 import com.example.newsgb._core.ui.NewsDtoToUiMapper
 import com.example.newsgb._core.ui.model.AppEvent
@@ -21,13 +22,42 @@ class NewsUseCases(
         countryCode: String = "ru",
         category: Category
     ): AppEvent {
+        var tokenIndex = 0
+        var token = ApiKeys.values()[tokenIndex].token
 
+        var event: AppEvent = getRequestToApi(
+            initialPage = initialPage,
+            countryCode = countryCode,
+            category = category,
+            token = token
+        )
+        while (event is AppEvent.ErrorReceived && event.message.equals("HTTP 429 ")) {
+            if (++tokenIndex < ApiKeys.values().size) {
+                token = ApiKeys.values()[tokenIndex].token
+                event = getRequestToApi(
+                    initialPage = initialPage,
+                    countryCode = countryCode,
+                    category = category,
+                    token = token
+                )
+            } else break
+        }
+        return event
+    }
+
+    private suspend fun getRequestToApi(
+        initialPage: Int,
+        countryCode: String = "ru",
+        category: Category,
+        token: String
+    ): AppEvent {
         var event: AppEvent? = null
 
         newsRepo.getNewsByCategory(
             page = initialPage,
             countryCode = countryCode,
-            category = category.apiCode
+            category = category.apiCode,
+            token = token
         )
             .onSuccess { response ->
                 val remoteArticles =
@@ -60,7 +90,7 @@ class NewsUseCases(
     /**
      * метод добавление или удаление статьи из БД
      */
-    suspend fun checkArticleInBookMarks(article: Article):Result<Boolean> {
+    suspend fun checkArticleInBookMarks(article: Article): Result<Boolean> {
         return if (article.isChecked) {
             bookmarkRepo.saveBookmark(article)
         } else {
