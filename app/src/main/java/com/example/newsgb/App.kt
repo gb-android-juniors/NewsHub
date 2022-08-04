@@ -13,9 +13,10 @@ import org.koin.core.logger.Level
 
 class App : Application() {
 
-    override fun onCreate() {
+     override fun onCreate() {
         super.onCreate()
         initKoin()
+        instance = this
     }
 
     private fun initKoin() {
@@ -24,5 +25,11 @@ class App : Application() {
             androidContext(this@App)
             modules(appModule, mainModule, newsModule, articleModule, bookmarkModule)
         }
+    }
+
+    companion object {
+        var instance: App? = null
+            private set
+        var countryCode: String = ""
     }
 }

@@ -13,13 +13,16 @@ import android.view.animation.AnticipateInterpolator
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.animation.doOnEnd
+import com.example.newsgb.App
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.MainActivityBinding
 import com.example.newsgb.splash.ui.CustomSplashScreenActivity
+import com.example.newsgb.utils.PrivateSharedPreferences
 import com.example.newsgb.utils.network.OnlineLiveData
 import com.example.newsgb.utils.ui.AlertDialogFragment
+import com.example.newsgb.utils.ui.Countries
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
@@ -40,11 +43,20 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
         //проверяем наличие интернет-подключения на старте
         isNetworkAvailable =
             (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected == true
+        getCountryCodeFromPreferences()
         viewModel.getInitialData()
         //запускаем главный фрагмент
         startMainScreen(savedInstanceState)
         //подписываемся на изменение наличия интернет-подключения
         subscribeToNetworkChange(savedInstanceState)
+    }
+
+    /**
+     * метод который устанавливает код страны для запроса, сохраненный в SharedPreferences или по умолчанию
+     */
+    private fun getCountryCodeFromPreferences() {
+        val position = PrivateSharedPreferences(this).read()
+        App.countryCode = Countries.values()[position].countryCode
     }
 
     /**

@@ -27,5 +27,4 @@ abstract class BaseFragment<viewBinding: ViewBinding> : Fragment() {
     }
 
     abstract fun getViewBinding(): viewBinding
-
 }
