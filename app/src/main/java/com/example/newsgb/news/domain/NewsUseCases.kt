@@ -1,8 +1,8 @@
 package com.example.newsgb.news.domain
 
 import com.example.newsgb._core.data.api.model.ApiKeys
-import com.example.newsgb._core.ui.EntitiesToArticleMapper
-import com.example.newsgb._core.ui.NewsDtoToUiMapper
+import com.example.newsgb._core.ui.mapper.EntitiesToArticleMapper
+import com.example.newsgb._core.ui.mapper.NewsDtoToUiMapper
 import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.bookmarks.domain.BookmarkRepository
@@ -14,81 +14,55 @@ class NewsUseCases(
 ) {
     /**
      * метод запроса первой страницы новостей по категории.
-     * В случае успеха конвертируем поулченные данные с помощью маппера и
-     * передаем в качестве успешного события AppEvent.DataReceived в NewsStore
-     * */
+     **/
     suspend fun getNewsByCategory(
         initialPage: Int,
         countryCode: String = "ru",
-        category: Category
-    ): AppEvent {
+        category: Category,
+        isRefreshing: Boolean
+    ): Result<List<Article>> {
         var tokenIndex = 0
         var token = ApiKeys.values()[tokenIndex].token
 
-        var event: AppEvent = getRequestToApi(
-            initialPage = initialPage,
-            countryCode = countryCode,
-            category = category,
-            token = token
-        )
-        while (event is AppEvent.ErrorReceived && event.message.equals("HTTP 429 ")) {
-            if (++tokenIndex < ApiKeys.values().size) {
-                token = ApiKeys.values()[tokenIndex].token
-                event = getRequestToApi(
-                    initialPage = initialPage,
-                    countryCode = countryCode,
-                    category = category,
-                    token = token
-                )
-            } else break
-        }
-        return event
-    }
-
-    private suspend fun getRequestToApi(
-        initialPage: Int,
-        countryCode: String = "ru",
-        category: Category,
-        token: String
-    ): AppEvent {
-        var event: AppEvent? = null
-
-        newsRepo.getNewsByCategory(
+        var result = newsRepo.getNewsByCategory(
             page = initialPage,
             countryCode = countryCode,
             category = category.apiCode,
             token = token
         )
-            .onSuccess { response ->
-                val remoteArticles =
-                    NewsDtoToUiMapper(newsList = response.articles, category = category)
-                bookmarkRepo.getAllBookmarks()
-                    .onSuccess { entities ->
-                        val bookmarkArticles = EntitiesToArticleMapper(entities)
-                        var filteredArticles = remoteArticles
-                        bookmarkArticles.forEach { bookmark ->
-                            filteredArticles = filteredArticles.map { article ->
-                                if (article.isTheSame(bookmark)) {
-                                    article.copy(isChecked = true)
-                                } else {
-                                    article
-                                }
-                            }
+        while (result.isFailure && result.exceptionOrNull()?.message == "HTTP 429 ") {
+            if (++tokenIndex < ApiKeys.values().size) {
+                token = ApiKeys.values()[tokenIndex].token
+                result = newsRepo.getNewsByCategory(
+                    page = initialPage,
+                    countryCode = countryCode,
+                    category = category.apiCode,
+                    token = token
+                )
+            } else break
+        }
+
+        return result.map { response ->
+            var remoteArticles = NewsDtoToUiMapper(response.articles, category = category).toMutableList()
+            bookmarkRepo.getAllBookmarks().onSuccess { entities ->
+                val bookmarkArticles = EntitiesToArticleMapper(entities)
+                bookmarkArticles.forEach { bookmark ->
+                    remoteArticles = remoteArticles.map { article ->
+                        if (article.isTheSame(bookmark)) {
+                            article.copy(isChecked = true)
+                        } else {
+                            article
                         }
-                        event = AppEvent.DataReceived(data = filteredArticles)
-                    }
-                    .onFailure { ex ->
-                        event = AppEvent.ErrorReceived(message = ex.message)
-                    }
+                    }.toMutableList()
+                }
+                if (isRefreshing) remoteArticles += bookmarkArticles
             }
-            .onFailure { ex ->
-                event = AppEvent.ErrorReceived(message = ex.message)
-            }
-        return event!!
+            remoteArticles
+        }
     }
 
     /**
-     * метод добавление или удаление статьи из БД
+     * метод добавления или удаления статьи из БД
      */
     suspend fun checkArticleInBookMarks(article: Article): Result<Boolean> {
         return if (article.isChecked) {
