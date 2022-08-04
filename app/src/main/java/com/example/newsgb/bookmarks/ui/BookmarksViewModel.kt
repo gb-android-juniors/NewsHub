@@ -63,7 +63,10 @@ class BookmarksViewModel(
     }
 
     private fun filterBookmarksFromStore(data: List<Article>) {
-        val filteredData = data.filter { it.isChecked }.distinctBy { it.contentUrl }
+        val filteredData = data
+            .filter { it.isChecked }
+            .distinctBy { it.contentUrl }
+            .sortedBy { it.publishedDate }
         if (filteredData.isEmpty()) {
             _viewState.value = ListViewState.Empty
         } else {

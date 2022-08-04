@@ -1,4 +1,4 @@
-package com.example.newsgb._core.ui
+package com.example.newsgb._core.ui.mapper
 
 
 import com.example.newsgb._core.data.db.entity.ArticleEntity

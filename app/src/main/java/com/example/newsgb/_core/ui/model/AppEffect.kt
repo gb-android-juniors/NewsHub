@@ -8,7 +8,7 @@ package com.example.newsgb._core.ui.model
  *
  * */
 sealed class AppEffect {
-    object LoadData : AppEffect()
+    data class LoadData(val isRefreshing: Boolean) : AppEffect()
     object ClearBookmarks : AppEffect()
     data class CheckBookmark(val dataItem: Article) : AppEffect()
     data class Error(val message: String?) : AppEffect()

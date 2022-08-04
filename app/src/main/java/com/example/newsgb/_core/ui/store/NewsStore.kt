@@ -46,11 +46,11 @@ class NewsStore : CoroutineScope by MainScope() {
             is AppEvent.Refresh -> {
                 when (currentState) {
                     is AppState.Empty, is AppState.Error -> {
-                        launch { _storeEffect.emit(AppEffect.LoadData) }
+                        launch { _storeEffect.emit(AppEffect.LoadData(isRefreshing = true)) }
                         AppState.Loading
                     }
                     is AppState.Data -> {
-                        launch { _storeEffect.emit(AppEffect.LoadData) }
+                        launch { _storeEffect.emit(AppEffect.LoadData(isRefreshing = true)) }
                         AppState.Refreshing(data = currentState.data)
                     }
                     else -> currentState
@@ -100,7 +100,7 @@ class NewsStore : CoroutineScope by MainScope() {
             is AppEvent.LoadMore -> {
                 when (currentState) {
                     is AppState.Data -> {
-                        launch { _storeEffect.emit(AppEffect.LoadData) }
+                        launch { _storeEffect.emit(AppEffect.LoadData(isRefreshing = false)) }
                         AppState.MoreLoading(data = currentState.data)
                     }
                     else -> currentState

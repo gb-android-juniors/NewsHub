@@ -2,7 +2,7 @@ package com.example.newsgb.bookmarks.data
 
 import com.example.newsgb._core.data.db.BookmarkDataBase
 import com.example.newsgb._core.data.db.entity.ArticleEntity
-import com.example.newsgb._core.ui.ArticleToEntityMapper
+import com.example.newsgb._core.ui.mapper.ArticleToEntityMapper
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.bookmarks.domain.BookmarkRepository
 import kotlinx.coroutines.Dispatchers
