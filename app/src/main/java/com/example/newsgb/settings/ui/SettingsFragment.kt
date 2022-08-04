@@ -1,5 +1,7 @@
 package com.example.newsgb.settings.ui
 
+import com.example.newsgb._core.ui.BaseFragment
+import com.example.newsgb.databinding.SettingsFragmentBinding
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +13,7 @@ import com.example.newsgb.databinding.SettingsFragmentBinding
 import com.example.newsgb.utils.PrivateSharedPreferences
 
 
-class SettingsFragment : Fragment() {
+class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
 
     private var _binding: SettingsFragmentBinding? = null
     private val binding get() = _binding!!
@@ -56,4 +58,5 @@ class SettingsFragment : Fragment() {
         fun newInstance() = SettingsFragment()
     }
 
+    override fun getViewBinding() = SettingsFragmentBinding.inflate(layoutInflater)
 }

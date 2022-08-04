@@ -1,11 +1,12 @@
 package com.example.newsgb.bookmarks.domain
 
+import com.example.newsgb._core.data.db.entity.ArticleEntity
 import com.example.newsgb._core.ui.model.Article
 
 interface BookmarkRepository {
-    suspend fun getAllBookmarks(): List<Article>
-    suspend fun getBookmarkById(id: Int): Article
-    suspend fun saveBookmark(article: Article)
-    suspend fun removeBookmark(article: Article)
-    suspend fun clearBookmarks()
+    suspend fun getAllBookmarks(): Result<List<ArticleEntity>>
+    suspend fun findArticleInBookmarks(article: Article): Result<Boolean>
+    suspend fun saveBookmark(article: Article): Result<Boolean>
+    suspend fun removeBookmark(article: Article): Result<Boolean>
+    suspend fun clearBookmarks(): Result<Boolean>
 }

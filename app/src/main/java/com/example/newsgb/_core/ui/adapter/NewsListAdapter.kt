@@ -6,11 +6,11 @@ import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.newsgb.R
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.databinding.NewsFragmentRecyclerItemBinding
+import com.example.newsgb.utils.setBookmarkIconColor
 
-class NewsListAdapter(private val listener: RecyclerItemListener) :
+class NewsListAdapter (private val listener: RecyclerItemListener) :
     RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>() {
 
     private val newsListDiffer = AsyncListDiffer(this, DIFF_CALLBACK)
@@ -37,10 +37,17 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
         fun bind(itemArticle: Article) = with(binding) {
             newsHeader.text = itemArticle.title
             newsResourceName.text = itemArticle.sourceName
+            newsItemBookmarkImage.apply {
+                setBookmarkIconColor(
+                    context = itemView.context,
+                    bookmarkImage = this,
+                    isChecked = itemArticle.isChecked
+                )
+                setOnClickListener { listener.onBookmarkCheck(itemArticle) }
+            }
             Glide.with(newsImage.context)
                 .load(itemArticle.imageUrl)
-                .placeholder(R.drawable.ic_newspaper_24)
-                .error(R.drawable.ic_newspaper_24)
+                .error(itemArticle.category.imgResId)
                 .into(newsImage)
             itemView.setOnClickListener {
                 listener.onItemClick(itemArticle)
@@ -51,7 +58,7 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Article>() {
             override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-                return oldItem.contentUrl == newItem.contentUrl
+                return oldItem.isTheSame(newItem)
             }
 
             override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {

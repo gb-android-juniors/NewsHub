@@ -37,6 +37,9 @@
     <string name="no_news">No news!</string>
     <string name="more_details">More details…</string>
     <string name="unknown_error">Unknown Error!</string>
+    <string name="closing_warning">Are you sure you want to delete all bookmarks?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <!--    Settings Fragment-->
     <string name="geolocation">Geolocation</string>

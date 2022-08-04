@@ -2,17 +2,15 @@ package com.example.newsgb.news.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsgb._core.ui.NewsDtoToUiMapper
 import com.example.newsgb._core.ui.model.*
 import com.example.newsgb._core.ui.store.NewsStore
-import com.example.newsgb.news.domain.NewsRepository
+import com.example.newsgb.news.domain.NewsUseCases
 import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class NewsViewModel(
-    private val newsRepo: NewsRepository,
-    private val mapper: NewsDtoToUiMapper,
+    private val useCases: NewsUseCases,
     private val store: NewsStore,
     private val category: Category
 ) : ViewModel() {
@@ -32,10 +30,15 @@ class NewsViewModel(
      * конвертируем состояния приложения в состояния экрана
      * */
     private fun renderStoreState(storeState: AppState) {
-        when(storeState) {
-            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value = ListViewState.Loading
+        when (storeState) {
+            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value =
+                ListViewState.Loading
+            is AppState.Refreshing, is AppState.BookmarkChecking -> _viewState.value =
+                ListViewState.Refreshing
             is AppState.Data -> setSuccessState(data = storeState.data)
-            is AppState.Error -> _viewState.value = ListViewState.Error(message = storeState.message)
+            is AppState.Error -> _viewState.value =
+                ListViewState.Error(message = storeState.message)
+            else -> {}
         }
     }
 
@@ -43,12 +46,14 @@ class NewsViewModel(
      * метод обработки команд от NewsStore
      *
      * AppEffect.LoadData - команда на загрузку данных
+     * AppEffect.CheckBookmark - команда на добавление\удаление статьи из БД
      * AppEffect.Error - команда отображение ошибки при дозагрузке данных
      * */
     private fun renderAppEffect(effect: AppEffect) {
         when (effect) {
             AppEffect.LoadData -> getNewsByCategory()
-            is AppEffect.Error -> {}
+            is AppEffect.CheckBookmark -> checkBookmarkInDatabase(article = effect.dataItem)
+            else -> {}
         }
     }
 
@@ -82,6 +87,29 @@ class NewsViewModel(
         }
     }
 
+    /** метод обновления списков статей для всех категорий */
+    fun refreshData() {
+        store.dispatch(event = AppEvent.Refresh)
+    }
+
+    /** метод обработки нажатия на фложок закладки */
+    fun checkBookmark(article: Article) {
+        store.dispatch(event = AppEvent.BookmarkCheck(article = article))
+    }
+
+    private fun checkBookmarkInDatabase(article: Article) {
+        viewModelScope.launch {
+            val checkedArticle = article.copy(isChecked = !article.isChecked)
+            useCases.checkArticleInBookMarks(article = checkedArticle)
+                .onSuccess {
+                    store.dispatch(event = AppEvent.DataReceived(data = listOf(checkedArticle)))
+                }
+                .onFailure { failure ->
+                    store.dispatch(event = AppEvent.ErrorReceived(message = failure.message))
+                }
+        }
+    }
+
     /**
      * метод запроса первой страницы новостей по категории.
      * В случае успеха конвертируем поулченные данные с помощью маппера и
@@ -89,13 +117,12 @@ class NewsViewModel(
      * */
     private fun getNewsByCategory() {
         viewModelScope.launch {
-            newsRepo.getNewsByCategory(page = INITIAL_PAGE, countryCode = "ru", category = category.apiCode)
-                .onSuccess { response ->
-                    store.dispatch(AppEvent.DataReceived(data = mapper(newsList = response.articles, category = category)))
-                }
-                .onFailure { ex ->
-                    store.dispatch(AppEvent.ErrorReceived(message = ex.message))
-                }
+            val event = useCases.getNewsByCategory(
+                initialPage = INITIAL_PAGE,
+                countryCode = "ru",
+                category = category
+            )
+            store.dispatch(event = event)
         }
     }
 

@@ -2,60 +2,105 @@ package com.example.newsgb.bookmarks.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.newsgb._core.ui.model.Article
-import com.example.newsgb._core.ui.model.ListViewState
+import com.example.newsgb._core.ui.model.*
 import com.example.newsgb._core.ui.store.NewsStore
-import com.example.newsgb.bookmarks.domain.BookmarkRepository
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.example.newsgb.bookmarks.domain.BookmarksUseCases
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class BookmarksViewModel(
-    private val bookmarkRepo: BookmarkRepository,
+    private val useCases: BookmarksUseCases,
     private val store: NewsStore
 ) : ViewModel() {
 
-    private val _stateFlow = MutableStateFlow<ListViewState>(ListViewState.Empty)
-    val stateFlow: StateFlow<ListViewState> = _stateFlow.asStateFlow()
+    /** переменная состояния экрана со списком закладок */
+    private val _viewState = MutableStateFlow<ListViewState>(ListViewState.Empty)
+    val viewState: StateFlow<ListViewState> = _viewState.asStateFlow()
 
-    fun renderData() {
-        _stateFlow.value = ListViewState.Loading
-        viewModelScope.launch {
-            val bookmarksList = bookmarkRepo.getAllBookmarks()
-            _stateFlow.value = if (bookmarksList.isEmpty()) {
-                ListViewState.Empty
-            } else {
-                ListViewState.Data(bookmarksList)
-            }
+    init {
+        /** При инициализации подписываемся на обновления состояний и команд от NewsStore */
+        store.storeState.onEach { renderStoreState(it) }.launchIn(viewModelScope)
+        store.storeEffect.onEach { renderAppEffect(it) }.launchIn(viewModelScope)
+    }
+
+    /**
+     * метод обработки состояний NewsStore
+     * конвертируем состояния приложения в состояния экрана
+     * */
+    private fun renderStoreState(storeState: AppState) {
+        when (storeState) {
+            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value =
+                ListViewState.Loading
+            is AppState.Data -> filterBookmarksFromStore(data = storeState.data)
+            is AppState.BookmarkChecking, is AppState.BookmarksClearing  -> _viewState.value =
+                ListViewState.Refreshing
+            is AppState.Error -> _viewState.value =
+                ListViewState.Error(message = storeState.message)
+            else -> {}
         }
     }
 
-    fun deleteBookmark(article: Article) {
-        viewModelScope.launch {
-            bookmarkRepo.removeBookmark(article)
-            renderData()
+    /**
+     * метод обработки команд от NewsStore
+     *
+     * AppEffect.LoadData - команда на загрузку данных
+     * AppEffect.CheckBookmark - команда на добавление\удаление статьи из БД
+     * AppEffect.Error - команда отображение ошибки при дозагрузке данных
+     * */
+    private fun renderAppEffect(effect: AppEffect) {
+        when (effect) {
+            AppEffect.ClearBookmarks -> deleteBookmarksFromDB()
+            is AppEffect.CheckBookmark -> checkBookmarkInDatabase(article = effect.dataItem)
+            else -> {}
+        }
+    }
+
+    fun getData() {
+        val currentStoreState = store.storeState.value
+        if (currentStoreState is AppState.Data) {
+            filterBookmarksFromStore(data = currentStoreState.data)
+        }
+    }
+
+    private fun filterBookmarksFromStore(data: List<Article>) {
+        val filteredData = data.filter { it.isChecked }.distinctBy { it.contentUrl }
+        if (filteredData.isEmpty()) {
+            _viewState.value = ListViewState.Empty
+        } else {
+            _viewState.value = ListViewState.Data(data = filteredData)
         }
     }
 
     fun clearBookmarks() {
+        store.dispatch(event = AppEvent.BookmarksClear)
+    }
+
+    private fun deleteBookmarksFromDB() {
         viewModelScope.launch {
-            bookmarkRepo.clearBookmarks()
-            _stateFlow.value = ListViewState.Empty
+            useCases.clearBookmarks()
+                .onSuccess {
+                    store.dispatch(event = AppEvent.DataReceived(listOf()))
+                }
+                .onFailure { failure ->
+                    store.dispatch(event = AppEvent.ErrorReceived(message = failure.message))
+                }
         }
     }
 
-
-    fun saveToDB(article: Article) {
-        viewModelScope.launch {
-            bookmarkRepo.saveBookmark(article)
-            renderData()
-        }
+    fun checkBookmark(article: Article) {
+        store.dispatch(event = AppEvent.BookmarkCheck(article = article))
     }
 
-
-    override fun onCleared() {
-        _stateFlow.value = ListViewState.Empty
-        super.onCleared()
+    private fun checkBookmarkInDatabase(article: Article) {
+        viewModelScope.launch {
+            val checkedArticle = article.copy(isChecked = !article.isChecked)
+            useCases.checkArticleInBookMarks(article = checkedArticle)
+                .onSuccess {
+                    store.dispatch(event = AppEvent.DataReceived(data = listOf(checkedArticle)))
+                }
+                .onFailure { failure ->
+                    store.dispatch(event = AppEvent.ErrorReceived(message = failure.message))
+                }
+        }
     }
 }
