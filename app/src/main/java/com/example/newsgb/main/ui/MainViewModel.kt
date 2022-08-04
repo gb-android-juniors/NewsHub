@@ -19,8 +19,9 @@ class MainViewModel(
     fun getInitialData() {
         store.dispatch(event = AppEvent.Refresh)
         viewModelScope.launch {
-            val event = useCases.getInitialData(INITIAL_PAGE)
-            store.dispatch(event)
+            useCases.getInitialData(INITIAL_PAGE)
+                .onSuccess { store.dispatch(AppEvent.DataReceived(data = it)) }
+                .onFailure { store.dispatch(AppEvent.ErrorReceived(message = it.message)) }
         }
     }
 

@@ -51,7 +51,7 @@ class NewsViewModel(
      * */
     private fun renderAppEffect(effect: AppEffect) {
         when (effect) {
-            AppEffect.LoadData -> getNewsByCategory()
+            is AppEffect.LoadData -> getNewsByCategory(isRefreshing = effect.isRefreshing)
             is AppEffect.CheckBookmark -> checkBookmarkInDatabase(article = effect.dataItem)
             else -> {}
         }
@@ -115,14 +115,16 @@ class NewsViewModel(
      * В случае успеха конвертируем поулченные данные с помощью маппера и
      * передаем в качестве успешного события AppEvent.DataReceived в NewsStore
      * */
-    private fun getNewsByCategory() {
+    private fun getNewsByCategory(isRefreshing: Boolean) {
         viewModelScope.launch {
-            val event = useCases.getNewsByCategory(
+            useCases.getNewsByCategory(
                 initialPage = INITIAL_PAGE,
                 countryCode = "ru",
-                category = category
+                category = category,
+                isRefreshing = isRefreshing
             )
-            store.dispatch(event = event)
+                .onSuccess { store.dispatch(AppEvent.DataReceived(data = it)) }
+                .onFailure { store.dispatch(AppEvent.ErrorReceived(message = it.message)) }
         }
     }
 
