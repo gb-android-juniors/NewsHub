@@ -19,7 +19,7 @@ class MainViewModel(
     fun getInitialData() {
         store.dispatch(event = AppEvent.Refresh)
         viewModelScope.launch {
-            val event = useCases.getInitialData(INITIAL_PAGE)
+            val event = useCases.getInitialData(initialPage = INITIAL_PAGE)
             store.dispatch(event)
         }
     }

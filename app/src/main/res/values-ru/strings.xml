@@ -35,15 +35,10 @@
     <string name="no">Нет</string>
 
     <!--    Settings Fragment-->
-    <string name="geolocation">Геолокация</string>
     <string name="select_country">Выберите страну</string>
     <string name="country_russia">Россия</string>
     <string name="country_germany">Германия</string>
     <string name="country_england">Англия</string>
-    <string-array name="Countries">
-        <item>Англия</item>
-        <item>Германия</item>
-        <item>Россия</item>
-    </string-array>
+    <string name="country_australia">Австралия</string>
 
 </resources>

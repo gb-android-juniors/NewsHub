@@ -39,17 +39,4 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.switchmaterial.SwitchMaterial
-        android:id="@+id/geolocation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="@dimen/margin_8"
-        android:layout_marginTop="@dimen/margin_24"
-        android:checked="true"
-        android:orientation="vertical"
-        android:text="@string/geolocation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_country_layout" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

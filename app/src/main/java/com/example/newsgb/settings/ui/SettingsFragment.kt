@@ -1,31 +1,18 @@
 package com.example.newsgb.settings.ui
 
+import android.os.Bundle
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import com.example.newsgb.App
+import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb.databinding.SettingsFragmentBinding
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.*
-import androidx.fragment.app.Fragment
-import com.example.newsgb.R
-import com.example.newsgb.databinding.SettingsFragmentBinding
 import com.example.newsgb.utils.PrivateSharedPreferences
-
+import com.example.newsgb.utils.ui.Countries
 
 class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
-
-    private var _binding: SettingsFragmentBinding? = null
-    private val binding get() = _binding!!
-
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = SettingsFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,24 +20,25 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     }
 
     private fun initView() = with(binding) {
-        val items = resources.getStringArray((R.array.Countries))
-        val adapter = ArrayAdapter(requireContext(), R.layout.country_list_item, items)
+        val adapter =
+            ArrayAdapter(requireContext(), R.layout.country_list_item, getCountriesNames())
         (selectCountryLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
-        selectCountryLayout.hint = PrivateSharedPreferences(context!!).read()
+
+        selectCountryLayout.hint = getCountryName()
         selectCountryText.onItemClickListener =
-            AdapterView.OnItemClickListener { parent, _, position, _ ->
-                val selectedItem = parent.getItemAtPosition(position).toString()
-                PrivateSharedPreferences(context!!).save(selectedItem)
-                Toast.makeText(requireContext(), "Selected: $selectedItem", Toast.LENGTH_SHORT)
-                    .show()
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                PrivateSharedPreferences(requireContext()).save(position)
+                App.countryCode = Countries.values()[position].countryCode
             }
     }
 
+    private fun getCountryName(): String {
+        val position = PrivateSharedPreferences(requireContext()).read()
+        return getString(Countries.values()[position].nameResId)
+    }
 
-    override fun onResume() {
-        super.onResume()
-        val country = PrivateSharedPreferences(context!!).read()
-        Toast.makeText(requireContext(), "Selected: $country", Toast.LENGTH_SHORT).show()
+    private fun getCountriesNames(): List<String> = Countries.values().map { country ->
+        getString(country.nameResId)
     }
 
     companion object {

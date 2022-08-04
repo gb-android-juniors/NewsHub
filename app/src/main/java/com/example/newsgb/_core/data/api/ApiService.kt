@@ -1,5 +1,6 @@
 package com.example.newsgb._core.data.api
 
+import com.example.newsgb.App
 import com.example.newsgb._core.data.api.model.ResponseDTO
 import com.example.newsgb.utils.Constants
 import com.example.newsgb.utils.Constants.Companion.API_KEY
@@ -15,8 +16,8 @@ interface ApiService {
 
     @GET(TOP_HEADLINES_ENDPOINT)
     suspend fun getNewsList(
-        @Query("country") countryCode: String = "ru",
-        @Query("category") category: String = "general",
+        @Query("country") countryCode: String = App.countryCode,
+        @Query("category") category: String = DEFAULT_CATEGORY,
         @Query("page") pageNumber: Int = 1,
         @Query("apiKey") apiKey: String = API_KEY
     ): ResponseDTO
@@ -31,6 +32,8 @@ interface ApiService {
                 .build()
                 .create(ApiService::class.java)
         }
+
+        private const val DEFAULT_CATEGORY = "general"
     }
 }
 

@@ -4,22 +4,12 @@ import android.content.Context
 
 class PrivateSharedPreferences(context: Context) {
 
-    private val file = Constants.APP_PREFERENCES_COUNTRY
-    private val key = "COUNTRY_PREF"
-    private var savedCountry = " "
-    private var sharedPreferences = context.getSharedPreferences(file, Context.MODE_PRIVATE)
-    private val editor = sharedPreferences.edit()
+    private val prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
+    private var sharedPreferences = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
 
-    fun save(country: String) {
-        savedCountry = country
-        editor.putString(key, country)
-        editor.apply()
+    fun save(countryPosition: Int) {
+        sharedPreferences.edit().putInt(prefName, countryPosition).apply()
     }
 
-    fun read(): String {
-        savedCountry = sharedPreferences.getString(key, "country").toString()
-        return savedCountry
-    }
-
-
+    fun read(): Int  = sharedPreferences.getInt(prefName, 0)
 }
