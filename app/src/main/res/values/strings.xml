@@ -43,9 +43,62 @@
 
     <!--    Settings Fragment-->
     <string name="select_country">Select country</string>
+
+    <!--    Country names-->
     <string name="country_russia">Russia</string>
     <string name="country_germany">Germany</string>
     <string name="country_england">England</string>
     <string name="country_australia">Australia</string>
+    <string name="country_united_arab_emirates">United Arab Emirates</string>
+    <string name="country_argentina">Argentina</string>
+    <string name="country_austria">Austria</string>
+    <string name="country_belgium">Belgium</string>
+    <string name="country_bulgaria">Bulgaria</string>
+    <string name="country_brasil">Brazil</string>
+    <string name="country_canada">Canada</string>
+    <string name="country_switzerland">Switzerland</string>
+    <string name="country_china">China</string>
+    <string name="country_colombia">Colombia</string>
+    <string name="country_cuba">Cuba</string>
+    <string name="country_czech_republic">Czech Republic</string>
+    <string name="country_egypt">Egypt</string>
+    <string name="country_france">France</string>
+    <string name="country_united_kingdom">United Kingdom of Great Britain</string>
+    <string name="country_greece">Greece</string>
+    <string name="country_hong_kong">Hong Kong</string>
+    <string name="country_hungary">Hungary</string>
+    <string name="country_indonesia">Indonesia</string>
+    <string name="country_ireland">Ireland</string>
+    <string name="country_israel">Israel</string>
+    <string name="country_india">India</string>
+    <string name="country_italy">Italy</string>
+    <string name="country_japan">Japan</string>
+    <string name="country_korea">Korea Republic</string>
+    <string name="country_lithuania">Lithuania</string>
+    <string name="country_latvia">Latvia</string>
+    <string name="country_morocco">Morocco</string>
+    <string name="country_mexico">Mexico</string>
+    <string name="country_malaysia">Malaysia</string>
+    <string name="country_nigeria">Nigeria</string>
+    <string name="country_netherlands">Netherlands</string>
+    <string name="country_norway">Norway</string>
+    <string name="country_new_zealand">New Zealand</string>
+    <string name="country_philippines">Philippines</string>
+    <string name="country_poland">Poland</string>
+    <string name="country_portugal">Portugal</string>
+    <string name="country_romania">Romania</string>
+    <string name="country_serbia">Serbia</string>
+    <string name="country_saudi_arabia">Saudi Arabia</string>
+    <string name="country_sweden">Sweden</string>
+    <string name="country_singapore">Singapore</string>
+    <string name="country_slovenia">Slovenia</string>
+    <string name="country_slovakia">Slovakia</string>
+    <string name="country_thailand">Thailand</string>
+    <string name="country_turkey">Turkey</string>
+    <string name="country_taiwan">Taiwan, Province of China</string>
+    <string name="country_ukraine">Ukraine</string>
+    <string name="country_usa">USA</string>
+    <string name="country_venezuela">Venezuela</string>
+    <string name="country_south_africa">South Africa</string>
 
 </resources>
