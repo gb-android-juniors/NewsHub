@@ -24,11 +24,14 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
             ArrayAdapter(requireContext(), R.layout.country_list_item, getCountriesNames())
         (selectCountryLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 
-        selectCountryLayout.hint = getCountryName()
+        selectCountryLayout.hint = getString(R.string.select_news_region)
+        selectCountryLayout.helperText = "${getString(R.string.selected_news_region)} ${getCountryName()}"
         selectCountryText.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 PrivateSharedPreferences(requireContext()).save(position)
                 App.countryCode = Countries.values()[position].countryCode
+                selectCountryLayout.hint = getString(R.string.selected_news_region)
+                selectCountryLayout.helperText = ""
             }
     }
 

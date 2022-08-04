@@ -25,9 +25,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_8"
         android:layout_marginTop="@dimen/margin_24"
-        android:hint="@string/select_country"
-        android:inputType="none"
         android:enabled="false"
+        android:hint="@string/select_news_region"
+        android:inputType="none"
+        android:textColorHint="@color/purple_200"
         app:layout_constraintTop_toBottomOf="@+id/settings_name">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
@@ -35,7 +36,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
-            tools:ignore="LabelFor" />
+            android:textColor="@color/category_button_text_color"
+            tools:ignore="LabelFor"
+            tools:text="@string/country_argentina" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

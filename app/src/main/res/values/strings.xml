@@ -42,7 +42,8 @@
     <string name="no">No</string>
 
     <!--    Settings Fragment-->
-    <string name="select_country">Select country</string>
+    <string name="select_news_region">Select news region</string>
+    <string name="selected_news_region">Current region:</string>
 
     <!--    Country names-->
     <string name="country_russia">Russia</string>
