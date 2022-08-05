@@ -49,16 +49,16 @@
                 android:src="@drawable/ic_bookmarks_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/article_header_text"
-                tools:tint="@color/pink_100" />
+                tools:tint="@color/indigo_100" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/article_header_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8"
+                android:textColor="@color/textDarkPrimary"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/header_text_size"
-                android:textColor="@color/textDarkPrimary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/example_header_text" />
@@ -90,9 +90,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_8"
                 android:layout_marginVertical="@dimen/margin_24"
+                android:textColor="@color/textDarkSecondary"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/common_text_size"
-                android:textColor="@color/textDarkSecondary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/article_image"

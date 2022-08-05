@@ -95,10 +95,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="gone"
         android:text="@string/no_news"
         android:textSize="@dimen/first_news_source_text_size"
         android:textStyle="bold"
+        android:visibility="gone"
         tools:visibility="visible" />
 
 </FrameLayout>

@@ -11,13 +11,13 @@
         android:id="@+id/settings_name"
         android:layout_width="0dp"
         android:layout_height="?actionBarSize"
+        android:background="@color/indigo_700"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@color/pink_700"
         app:subtitleTextAppearance="@dimen/header_text_size"
-        app:titleTextColor="@color/textLightPrimary"
-        app:title="@string/settings">
+        app:title="@string/settings"
+        app:titleTextColor="@color/textLightPrimary">
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -31,7 +31,7 @@
         android:enabled="false"
         android:hint="@string/select_news_region"
         android:inputType="none"
-        android:textColorHint="@color/pink_400"
+        android:textColorHint="@color/indigo_400"
         app:layout_constraintTop_toBottomOf="@+id/settings_name">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
