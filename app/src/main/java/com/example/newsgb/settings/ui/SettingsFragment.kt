@@ -19,30 +19,36 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     }
 
     private fun initView() = with(binding) {
-        selectCountryText.setText(getSelectedCountryName())
+        selectCountryText.setText(getSelectedCountryNameFromPreferences())
         setCountryListListener()
     }
 
-
     private fun setCountryListListener() = with(binding) {
         val adapter =
-            ArrayAdapter(requireContext(), R.layout.country_list_item, getCountryNamesList())
+            ArrayAdapter(requireContext(), R.layout.country_list_item, getMapOfCountryNamesWithIndexes().keys.toTypedArray().sorted())
         selectCountryText.setAdapter(adapter)
         selectCountryText.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, position, _ ->
-                PrivateSharedPreferences(requireContext()).save(position)
-                App.countryCode = Countries.values()[position].countryCode
+            AdapterView.OnItemClickListener { parent, _, position, _ ->
+                val selectedCountryName = parent.getItemAtPosition(position).toString()
+                getMapOfCountryNamesWithIndexes()[selectedCountryName]?.let { index ->
+                    saveSelectedRegionToPreferences(index)
+                }
             }
     }
 
-    private fun getSelectedCountryName(): String {
-        val position = PrivateSharedPreferences(requireContext()).read()
-        return getString(Countries.values()[position].nameResId)
+    private fun saveSelectedRegionToPreferences(index: Int) {
+        PrivateSharedPreferences(requireContext()).save(index)
+        App.countryCode = Countries.values()[index].countryCode
     }
 
-    private fun getCountryNamesList(): List<String> = Countries.values().map { country ->
-        getString(country.nameResId)
+    private fun getSelectedCountryNameFromPreferences(): String {
+        val index = PrivateSharedPreferences(requireContext()).read()
+        return getString(Countries.values()[index].nameResId)
     }
+
+    private fun getMapOfCountryNamesWithIndexes(): Map<String, Int> = mapOf< String, Int>().plus(Countries.values().map { country ->
+        getString(country.nameResId) to country.ordinal
+    })
 
     companion object {
         @JvmStatic
