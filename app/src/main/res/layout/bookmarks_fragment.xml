@@ -22,7 +22,7 @@
                 android:layout_marginHorizontal="@dimen/margin_4"
                 android:gravity="center"
                 android:text="@string/bookmarks"
-                android:textColor="@color/white"
+                android:textColor="@color/textLightPrimary"
                 android:textSize="@dimen/header_text_size"
                 android:textStyle="bold" />
 
@@ -33,7 +33,7 @@
                 android:layout_gravity="end"
                 android:padding="@dimen/margin_8"
                 android:src="@drawable/ic_bookmarks_delete"
-                android:tint="@color/white" />
+                android:tint="@color/textLightPrimary" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -50,14 +50,14 @@
             android:layout_height="@dimen/empty_bookmarks_warning_image_size"
             android:layout_gravity="center"
             android:src="@drawable/ic_bookmarks_24"
-            android:tint="@color/category_button_text_color" />
+            android:tint="@color/textDarkSecondary" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_16"
             android:text="@string/empty_bookmark_warning_text"
-            android:textColor="@color/category_button_text_color"
+            android:textColor="@color/textDarkSecondary"
             android:textSize="@dimen/common_text_size"
             android:textStyle="bold" />
     </LinearLayout>
