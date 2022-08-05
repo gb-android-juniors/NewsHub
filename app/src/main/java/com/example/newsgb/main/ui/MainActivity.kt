@@ -12,6 +12,7 @@ import android.view.ViewTreeObserver
 import android.view.animation.AnticipateInterpolator
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import com.example.newsgb.App
 import com.example.newsgb.R
@@ -19,6 +20,7 @@ import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.MainActivityBinding
 import com.example.newsgb.splash.ui.CustomSplashScreenActivity
+import com.example.newsgb.utils.Constants
 import com.example.newsgb.utils.PrivateSharedPreferences
 import com.example.newsgb.utils.network.OnlineLiveData
 import com.example.newsgb.utils.ui.AlertDialogFragment
@@ -30,12 +32,13 @@ import org.koin.core.parameter.parametersOf
 class MainActivity : AppCompatActivity(), NewsStoreHolder {
 
     override val newsStore: NewsStore by inject()
-    private val viewModel: MainViewModel by viewModel() { parametersOf(newsStore) }
+    private val viewModel: MainViewModel by viewModel { parametersOf(newsStore) }
 
     private lateinit var binding: MainActivityBinding
     private var isNetworkAvailable: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setApplicationTheme()
         super.onCreate(savedInstanceState)
         setSplashScreen()
         binding = MainActivityBinding.inflate(layoutInflater)
@@ -51,11 +54,21 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
         subscribeToNetworkChange(savedInstanceState)
     }
 
+    private fun setApplicationTheme() {
+        PrivateSharedPreferences(context = this, prefName = Constants.APP_PREFERENCES_THEME_MODE).read().let { index ->
+            when(index) {
+                1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+        }
+    }
+
     /**
      * метод который устанавливает код страны для запроса, сохраненный в SharedPreferences или по умолчанию
      */
     private fun getCountryCodeFromPreferences() {
-        val position = PrivateSharedPreferences(this).read()
+        val position = PrivateSharedPreferences(context = this, prefName = Constants.APP_PREFERENCES_COUNTRY_CODE).read()
         App.countryCode = Countries.values()[position].countryCode
     }
 

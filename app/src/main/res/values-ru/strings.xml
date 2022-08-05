@@ -35,8 +35,9 @@
     <string name="no">Нет</string>
 
     <!--    Settings Fragment-->
-    <string name="select_news_region">Выберите регион новостей</string>
-    <string name="selected_news_region">Текущий регион новостей:</string>
+    <string name="settings_region_selection_hint_text">Выберите регион новостей</string>
+    <string name="settings_theme_hint_text">Выберите тему приложения</string>
+    <string name="settings_theme_helper_text">* Перезайдите в приложение, чтобы настройка вступила в силу</string>
 
     <!--    Country names-->
     <string name="country_russia">Россия</string>
@@ -94,5 +95,8 @@
     <string name="country_usa">США</string>
     <string name="country_venezuela">Венесуэла</string>
     <string name="country_south_africa">Южная Африка</string>
+    <string name="settings_system_theme_name">Как в системе</string>
+    <string name="settings_dark_theme_name">Темный режим</string>
+    <string name="settings_light_theme_name">Светлый режим</string>
 
 </resources>

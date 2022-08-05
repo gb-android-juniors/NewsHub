@@ -35,8 +35,8 @@
     <string name="no">Nein</string>
 
     <!--    Settings Fragment-->
-    <string name="select_news_region">Nachrichtenregion auswählen</string>
-    <string name="selected_news_region">Aktuelle Region:</string>
+    <string name="settings_region_selection_hint_text">Nachrichtenregion auswählen</string>
+    <string name="settings_theme_hint_text">Wählen Sie ein App-Design aus</string>
 
     <!--    Country names-->
     <string name="country_russia">Russland</string>
@@ -94,5 +94,9 @@
     <string name="country_usa">Vereinigte Staaten von Amerika</string>
     <string name="country_venezuela">Venezuela</string>
     <string name="country_south_africa">Südafrika</string>
+    <string name="settings_system_theme_name">Genauso wie im System</string>
+    <string name="settings_dark_theme_name">Dunkel Modus</string>
+    <string name="settings_light_theme_name">Heller Modus</string>
+    <string name="settings_theme_helper_text">* Starten Sie die App neu, damit die Einstellung wirksam wird</string>
 
 </resources>
