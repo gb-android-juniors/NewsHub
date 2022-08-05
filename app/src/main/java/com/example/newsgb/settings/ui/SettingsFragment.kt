@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import com.example.newsgb.App
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
@@ -20,27 +19,28 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     }
 
     private fun initView() = with(binding) {
-        val adapter =
-            ArrayAdapter(requireContext(), R.layout.country_list_item, getCountriesNames())
-        (selectCountryLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        selectCountryText.setText(getSelectedCountryName())
+        setCountryListListener()
+    }
 
-        selectCountryLayout.hint = getString(R.string.select_news_region)
-        selectCountryLayout.helperText = "${getString(R.string.selected_news_region)} ${getCountryName()}"
+
+    private fun setCountryListListener() = with(binding) {
+        val adapter =
+            ArrayAdapter(requireContext(), R.layout.country_list_item, getCountryNamesList())
+        selectCountryText.setAdapter(adapter)
         selectCountryText.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 PrivateSharedPreferences(requireContext()).save(position)
                 App.countryCode = Countries.values()[position].countryCode
-                selectCountryLayout.hint = getString(R.string.selected_news_region)
-                selectCountryLayout.helperText = ""
             }
     }
 
-    private fun getCountryName(): String {
+    private fun getSelectedCountryName(): String {
         val position = PrivateSharedPreferences(requireContext()).read()
         return getString(Countries.values()[position].nameResId)
     }
 
-    private fun getCountriesNames(): List<String> = Countries.values().map { country ->
+    private fun getCountryNamesList(): List<String> = Countries.values().map { country ->
         getString(country.nameResId)
     }
 
