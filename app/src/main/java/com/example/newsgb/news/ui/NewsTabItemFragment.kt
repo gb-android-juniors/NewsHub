@@ -112,7 +112,7 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
             }
             is ListViewState.Loading -> {
                 enableProgress(state = true)
-                enableEmptyState(state = false)
+                enableEmptyState(state = true)
                 enableError(state = false)
                 enableContent(state = false)
             }
@@ -172,7 +172,7 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
     }
 
     private fun enableEmptyState(state: Boolean) {
-        binding.noNewsText.isVisible = state
+        binding.noNewsImage.isVisible = state
     }
 
     private fun enableProgress(state: Boolean) {

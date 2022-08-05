@@ -7,34 +7,44 @@
     android:background="@color/app_background_color"
     tools:context=".settings.ui.SettingsFragment">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/settings_name"
-        android:layout_width="0dp"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/settings_appbar"
+        android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="@string/settings">
+        app:layout_constraintTop_toTopOf="parent">
 
-    </com.google.android.material.appbar.MaterialToolbar>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/settings_name"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:title="@string/settings"
+            app:titleTextColor="@color/white" />
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/select_country_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_8"
         android:layout_marginTop="@dimen/margin_24"
         android:enabled="false"
         android:hint="@string/select_news_region"
-        android:inputType="none"
+        android:inputType="text"
         android:textColorHint="@color/purple_200"
-        app:layout_constraintTop_toBottomOf="@+id/settings_name">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_appbar"
+        app:startIconDrawable="@drawable/ic_country">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/select_country_text"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
             android:inputType="none"
             android:textColor="@color/category_button_text_color"
             tools:ignore="LabelFor"
