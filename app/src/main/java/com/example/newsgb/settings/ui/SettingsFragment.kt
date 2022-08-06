@@ -49,6 +49,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     private fun initView() = with(binding) {
         selectCountryText.setText(getSelectedCountryNameFromPreferences())
         selectAppThemeText.setText(getSelectedAppThemeName())
+        selectAppThemeLayout.helperText = getString(R.string.settings_theme_helper_text)
         setCountryListListener()
         setThemeListListener()
     }
@@ -81,8 +82,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
                     context = requireContext(),
                     prefName = Constants.APP_PREFERENCES_THEME_MODE
                 ).save(index = position)
-                selectAppThemeLayout.helperText = getString(R.string.settings_theme_helper_text)
-//                requireActivity().recreate() //TODO придумать другое решение
+                requireActivity().recreate()
             }
     }
 

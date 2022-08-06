@@ -37,7 +37,7 @@
     <!--    Settings Fragment-->
     <string name="settings_region_selection_hint_text">Выберите регион новостей</string>
     <string name="settings_theme_hint_text">Выберите тему приложения</string>
-    <string name="settings_theme_helper_text">* Перезайдите в приложение, чтобы настройка вступила в силу</string>
+    <string name="settings_theme_helper_text">* Приложение будет перезапущено, чтобы применить настройку.</string>
 
     <!--    Country names-->
     <string name="country_russia">Россия</string>

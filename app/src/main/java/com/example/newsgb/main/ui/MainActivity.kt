@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import com.example.newsgb.App
 import com.example.newsgb.R
+import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.MainActivityBinding
@@ -54,9 +55,17 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
         subscribeToNetworkChange(savedInstanceState)
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        newsStore.dispatch(AppEvent.Refresh)
+    }
+
     private fun setApplicationTheme() {
-        PrivateSharedPreferences(context = this, prefName = Constants.APP_PREFERENCES_THEME_MODE).read().let { index ->
-            when(index) {
+        PrivateSharedPreferences(
+            context = this,
+            prefName = Constants.APP_PREFERENCES_THEME_MODE
+        ).read().let { index ->
+            when (index) {
                 1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                 else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
@@ -68,7 +77,10 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
      * метод который устанавливает код страны для запроса, сохраненный в SharedPreferences или по умолчанию
      */
     private fun getCountryCodeFromPreferences() {
-        val position = PrivateSharedPreferences(context = this, prefName = Constants.APP_PREFERENCES_COUNTRY_CODE).read()
+        val position = PrivateSharedPreferences(
+            context = this,
+            prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
+        ).read()
         App.countryCode = Countries.values()[position].countryCode
     }
 
@@ -82,11 +94,9 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
         } else if (isNetworkAvailable) {
             binding.networkLostImage.visibility = View.GONE
             binding.mainContainer.visibility = View.VISIBLE
-            if (savedInstanceState == null) {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.main_container, NavigationFragment.newInstance())
-                    .commit()
-            }
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, NavigationFragment.newInstance())
+                .commit()
         }
     }
 

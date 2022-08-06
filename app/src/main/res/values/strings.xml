@@ -44,6 +44,7 @@
     <!--    Settings Fragment-->
     <string name="settings_region_selection_hint_text">Select news region</string>
     <string name="settings_theme_hint_text">Choose an app theme</string>
+    <string name="settings_theme_helper_text">* The app will restart to apply the setting.</string>
 
     <!--    Country names-->
     <string name="country_russia">Russia</string>
@@ -104,6 +105,5 @@
     <string name="settings_light_theme_name">Light mode</string>
     <string name="settings_dark_theme_name">Dark mode</string>
     <string name="settings_system_theme_name">Same as in the system</string>
-    <string name="settings_theme_helper_text">* Restart the app for the setting to take effect</string>
 
 </resources>
