@@ -119,7 +119,6 @@ class NewsViewModel(
         viewModelScope.launch {
             useCases.getNewsByCategory(
                 initialPage = INITIAL_PAGE,
-                countryCode = "ru",
                 category = category,
                 isRefreshing = isRefreshing
             )

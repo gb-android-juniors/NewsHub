@@ -3,7 +3,6 @@ package com.example.newsgb.news.domain
 import com.example.newsgb._core.data.api.model.ApiKeys
 import com.example.newsgb._core.ui.mapper.EntitiesToArticleMapper
 import com.example.newsgb._core.ui.mapper.NewsDtoToUiMapper
-import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.bookmarks.domain.BookmarkRepository
 import com.example.newsgb.utils.ui.Category
@@ -17,7 +16,6 @@ class NewsUseCases(
      **/
     suspend fun getNewsByCategory(
         initialPage: Int,
-        countryCode: String = "ru",
         category: Category,
         isRefreshing: Boolean
     ): Result<List<Article>> {
@@ -26,7 +24,6 @@ class NewsUseCases(
 
         var result = newsRepo.getNewsByCategory(
             page = initialPage,
-            countryCode = countryCode,
             category = category.apiCode,
             token = token
         )
@@ -35,7 +32,6 @@ class NewsUseCases(
                 token = ApiKeys.values()[tokenIndex].token
                 result = newsRepo.getNewsByCategory(
                     page = initialPage,
-                    countryCode = countryCode,
                     category = category.apiCode,
                     token = token
                 )
