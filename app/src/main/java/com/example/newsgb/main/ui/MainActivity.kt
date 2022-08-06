@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
         isNetworkAvailable =
             (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected == true
         getCountryCodeFromPreferences()
-        viewModel.getInitialData()
+        viewModel.initData()
         //запускаем главный фрагмент
         startMainScreen()
         //подписываемся на изменение наличия интернет-подключения
