@@ -24,7 +24,6 @@ class SettingsViewModel(private val useCases: MainUseCases, private val store: N
     }
 
     private fun getInitialData() {
-        store.dispatch(event = AppEvent.Refresh)
         viewModelScope.launch {
             useCases.getInitialData(INITIAL_PAGE)
                 .onSuccess { store.dispatch(AppEvent.DataReceived(data = it)) }

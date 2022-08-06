@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
         getCountryCodeFromPreferences()
         viewModel.getInitialData()
         //запускаем главный фрагмент
-        startMainScreen(savedInstanceState)
+        startMainScreen()
         //подписываемся на изменение наличия интернет-подключения
         subscribeToNetworkChange(savedInstanceState)
     }
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
      * если интернет недоступен, уведомляем пользователя с помощью ImageView в активити и AlertDialog,
      * иначе запускаем основной фрагмент
      * */
-    private fun startMainScreen(savedInstanceState: Bundle?) {
+    private fun startMainScreen() {
         if (!isNetworkAvailable && isDialogNull()) {
             showNoInternetConnectionInfo()
         } else if (isNetworkAvailable) {
@@ -129,7 +129,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
     private fun subscribeToNetworkChange(savedInstanceState: Bundle?) {
         OnlineLiveData(this).observe(this@MainActivity) {
             isNetworkAvailable = it
-            startMainScreen(savedInstanceState)
+            startMainScreen()
         }
     }
 
