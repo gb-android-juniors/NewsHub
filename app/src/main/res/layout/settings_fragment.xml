@@ -32,7 +32,7 @@
         android:layout_marginHorizontal="@dimen/margin_8"
         android:layout_marginTop="@dimen/margin_24"
         android:enabled="false"
-        android:hint="@string/select_news_region"
+        android:hint="@string/settings_region_selection_hint_text"
         android:inputType="text"
         android:textColorHint="@color/purple_200"
         app:layout_constraintEnd_toEndOf="parent"
@@ -42,6 +42,35 @@
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/select_country_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:textColor="@color/category_button_text_color"
+            tools:ignore="LabelFor"
+            tools:text="@string/country_argentina" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/select_app_theme_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_24"
+        android:enabled="false"
+        android:hint="@string/settings_theme_hint_text"
+        app:helperTextTextColor="@color/settings_warning_helper_text"
+        android:inputType="text"
+        android:textColorHint="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_country_layout"
+        app:startIconDrawable="@drawable/ic_theme">
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/select_app_theme_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
