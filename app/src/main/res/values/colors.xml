@@ -28,6 +28,8 @@
     <color name="indigo_900">#1A237E</color>
     <color name="indigo_700">#303F9F</color>
     <color name="indigo_400">#5C6BC0</color>
+    <color name="indigo_300">#7986CB</color>
+    <color name="indigo_200">#9FA8DA</color>
     <color name="indigo_100">#C5CAE9</color>
     <color name="blue_900">#0D47A1</color>
     <color name="blue_700">#1976D2</color>
