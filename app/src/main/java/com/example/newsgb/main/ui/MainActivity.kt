@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.animation.doOnEnd
 import com.example.newsgb.App
 import com.example.newsgb.R
-import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.MainActivityBinding
@@ -52,12 +51,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
         //запускаем главный фрагмент
         startMainScreen()
         //подписываемся на изменение наличия интернет-подключения
-        subscribeToNetworkChange(savedInstanceState)
-    }
-
-    override fun onRestart() {
-        super.onRestart()
-        newsStore.dispatch(AppEvent.Refresh)
+        subscribeToNetworkChange()
     }
 
     private fun setApplicationTheme() {
@@ -126,7 +120,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
         AlertDialogFragment.newInstance(title, message)
             .show(supportFragmentManager, DIALOG_FRAGMENT_TAG)
 
-    private fun subscribeToNetworkChange(savedInstanceState: Bundle?) {
+    private fun subscribeToNetworkChange() {
         OnlineLiveData(this).observe(this@MainActivity) {
             isNetworkAvailable = it
             startMainScreen()
