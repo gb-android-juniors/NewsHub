@@ -1,24 +1,16 @@
 package com.example.newsgb.main.ui
 
-import android.animation.ObjectAnimator
 import android.content.Context
-import android.content.Intent
 import android.net.ConnectivityManager
-import android.os.Build
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.View
-import android.view.ViewTreeObserver
-import android.view.animation.AnticipateInterpolator
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.newsgb.App
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.MainActivityBinding
-import com.example.newsgb.splash.ui.CustomSplashScreenActivity
 import com.example.newsgb.utils.PrivateSharedPreferences
 import com.example.newsgb.utils.network.OnlineLiveData
 import com.example.newsgb.utils.ui.AlertDialogFragment
@@ -37,7 +29,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setSplashScreen()
+        installSplashScreen()
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //проверяем наличие интернет-подключения на старте
@@ -108,76 +100,6 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
             isNetworkAvailable = it
             startMainScreen(savedInstanceState)
         }
-    }
-
-    /**
-     * Устанавливает дефолтный SplashScreen если версия андроид 12 и выше, и кастомный SplashScreen,
-     * если у пользователя более ранняя версия андроид
-     * */
-    private fun setSplashScreen() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            setDefaultSplashScreen()
-        } else {
-            setCustomSplashScreen()
-        }
-    }
-
-    private fun setCustomSplashScreen() {
-        startActivity(Intent(this@MainActivity, CustomSplashScreenActivity::class.java))
-    }
-
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun setDefaultSplashScreen() {
-        setSplashScreenHideAnimation()
-        setSplashScreenDuration()
-    }
-
-    /**
-     * Прописываем анимацию
-     * */
-    @RequiresApi(Build.VERSION_CODES.S)
-    private fun setSplashScreenHideAnimation() {
-        splashScreen.setOnExitAnimationListener { splashScreenView ->
-            val slideLeft = ObjectAnimator.ofFloat(
-                splashScreenView,
-                View.TRANSLATION_X,
-                0f,
-                -splashScreenView.height.toFloat()
-            )
-            slideLeft.interpolator = AnticipateInterpolator()
-            slideLeft.duration = SLIDE_LEFT_DURATION
-            slideLeft.doOnEnd { splashScreenView.remove() }
-            slideLeft.start()
-        }
-    }
-
-    /**
-     * настройка времени отображения splash screen
-     * */
-    private fun setSplashScreenDuration() {
-        var isHideSplashScreen = false
-
-        object : CountDownTimer(
-            COUNTDOWN_DURATION, COUNTDOWN_INTERVAL
-        ) {
-            override fun onTick(millisUntilFinished: Long) {}
-            override fun onFinish() {
-                isHideSplashScreen = true
-            }
-        }.start()
-        val content: View = findViewById(android.R.id.content)
-        content.viewTreeObserver.addOnPreDrawListener(
-            object : ViewTreeObserver.OnPreDrawListener {
-                override fun onPreDraw(): Boolean {
-                    return if (isHideSplashScreen) {
-                        content.viewTreeObserver.removeOnPreDrawListener(this)
-                        true
-                    } else {
-                        false
-                    }
-                }
-            }
-        )
     }
 
     companion object {
