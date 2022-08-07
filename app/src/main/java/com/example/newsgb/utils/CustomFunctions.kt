@@ -15,7 +15,7 @@ fun String.formatApiStringToDate(): String = this.replace(("[a-zA-Z]").toRegex()
  */
 fun setBookmarkIconColor(context: Context, bookmarkImage: AppCompatImageView, isChecked: Boolean) {
     val tintColor = if (isChecked) {
-        R.color.indigo_100
+        R.color.bookmark_selected_color
     } else {
         R.color.bookmark_unselected_color
     }
