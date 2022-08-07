@@ -1,18 +1,45 @@
 package com.example.newsgb.settings.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import com.example.newsgb.App
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
+import com.example.newsgb._core.ui.store.NewsStore
+import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.SettingsFragmentBinding
+import com.example.newsgb.utils.Constants
 import com.example.newsgb.utils.PrivateSharedPreferences
 import com.example.newsgb.utils.ui.Countries
+import com.example.newsgb.utils.ui.ThemeModes
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
+
+    /** переменная хранителя экземпляра NewsStore */
+    private var storeHolder: NewsStoreHolder? = null
+
+    /** экземпляр NewsStore, который получаем из MainActivity как хранителя этого экземпляра */
+    private val newsStore: NewsStore by lazy {
+        storeHolder?.newsStore ?: throw IllegalArgumentException()
+    }
+
+    private val viewModel by viewModel<SettingsViewModel> { parametersOf(newsStore) }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        /** инициализируем переменную хранителя экземпляра NewsStore */
+        storeHolder = context as NewsStoreHolder
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        storeHolder = null
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -20,29 +47,74 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     }
 
     private fun initView() = with(binding) {
-        val adapter =
-            ArrayAdapter(requireContext(), R.layout.country_list_item, getCountriesNames())
-        (selectCountryLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+        selectCountryText.setText(getSelectedCountryNameFromPreferences())
+        selectAppThemeText.setText(getSelectedAppThemeName())
+        selectAppThemeLayout.helperText = getString(R.string.settings_theme_helper_text)
+        setCountryListListener()
+        setThemeListListener()
+    }
 
-        selectCountryLayout.hint = getString(R.string.select_news_region)
-        selectCountryLayout.helperText = "${getString(R.string.selected_news_region)} ${getCountryName()}"
+    private fun setCountryListListener() = with(binding) {
+        val adapter =
+            ArrayAdapter(
+                requireContext(),
+                R.layout.settings_options_list_item,
+                getMapOfCountryNamesWithIndexes().keys.toTypedArray().sorted()
+            )
+        selectCountryText.setAdapter(adapter)
         selectCountryText.onItemClickListener =
-            AdapterView.OnItemClickListener { _, _, position, _ ->
-                PrivateSharedPreferences(requireContext()).save(position)
-                App.countryCode = Countries.values()[position].countryCode
-                selectCountryLayout.hint = getString(R.string.selected_news_region)
-                selectCountryLayout.helperText = ""
+            AdapterView.OnItemClickListener { adapterView, _, position, _ ->
+                saveSelectedCountry(adapterView, position)
+                viewModel.refreshData()
             }
     }
 
-    private fun getCountryName(): String {
-        val position = PrivateSharedPreferences(requireContext()).read()
-        return getString(Countries.values()[position].nameResId)
+    private fun setThemeListListener() = with(binding) {
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.settings_options_list_item,
+            ThemeModes.values().map { getString(it.resIdName) }.toList()
+        )
+        selectAppThemeText.setAdapter(adapter)
+        selectAppThemeText.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                PrivateSharedPreferences(
+                    context = requireContext(),
+                    prefName = Constants.APP_PREFERENCES_THEME_MODE
+                ).save(index = position)
+                requireActivity().recreate()
+            }
     }
 
-    private fun getCountriesNames(): List<String> = Countries.values().map { country ->
-        getString(country.nameResId)
+    private fun saveSelectedCountry(adapterView: AdapterView<*>, position: Int) {
+        val selectedCountryName = adapterView.getItemAtPosition(position).toString()
+        getMapOfCountryNamesWithIndexes()[selectedCountryName]?.let { index ->
+            PrivateSharedPreferences(
+                context = requireContext(),
+                prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
+            ).save(index = index)
+            App.countryCode = Countries.values()[index].countryCode
+        }
     }
+
+    private fun getSelectedAppThemeName(): String = PrivateSharedPreferences(
+        context = requireContext(),
+        prefName = Constants.APP_PREFERENCES_THEME_MODE
+    ).read().let { index ->
+        getString(ThemeModes.values()[index].resIdName)
+    }
+
+    private fun getSelectedCountryNameFromPreferences(): String = PrivateSharedPreferences(
+        context = requireContext(),
+        prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
+    ).read().let { index ->
+        getString(Countries.values()[index].nameResId)
+    }
+
+    private fun getMapOfCountryNamesWithIndexes(): Map<String, Int> =
+        mapOf<String, Int>().plus(Countries.values().map { country ->
+            getString(country.nameResId) to country.ordinal
+        })
 
     companion object {
         @JvmStatic

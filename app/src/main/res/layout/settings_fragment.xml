@@ -11,27 +11,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/settings_appbar"
+        style="@style/SmartAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.appbar.AppBarLayout
-            style="@style/SmartAppBar"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/settings_name"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize">
+            android:layout_height="?actionBarSize"
+            app:title="@string/settings"
+            app:titleTextColor="@color/textLightPrimary" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:layout_width="match_parent"
-                android:layout_height="?actionBarSize">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="@dimen/margin_4"
-                    android:gravity="center"
-                    android:text="@string/settings"
-                    android:textColor="@color/textLightPrimary"
-                    android:textSize="@dimen/header_text_size" />
-
-            </com.google.android.material.appbar.MaterialToolbar>
-        </com.google.android.material.appbar.AppBarLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/select_country_layout"
@@ -53,6 +49,44 @@
                 android:textColor="@color/category_button_text_color"
                 tools:ignore="LabelFor"
                 tools:text="@string/country_argentina" />
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/select_country_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:textColor="@color/category_button_text_color"
+            tools:ignore="LabelFor"
+            tools:text="@string/country_argentina" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/select_app_theme_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_24"
+        android:enabled="false"
+        android:hint="@string/settings_theme_hint_text"
+        app:helperTextTextColor="@color/settings_warning_helper_text"
+        android:inputType="text"
+        android:textColorHint="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_country_layout"
+        app:startIconDrawable="@drawable/ic_theme">
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/select_app_theme_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:textColor="@color/category_button_text_color"
+            tools:ignore="LabelFor"
+            tools:text="@string/country_argentina" />
 
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>

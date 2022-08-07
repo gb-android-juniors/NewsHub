@@ -14,7 +14,6 @@ class NewsRepositoryImpl(
 
     override suspend fun getNewsByCategory(
         page: Int,
-        countryCode: String,
         category: String,
         token: String
     ): Result<ResponseDTO> {

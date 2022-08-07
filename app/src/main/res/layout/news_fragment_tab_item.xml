@@ -81,7 +81,17 @@
         android:id="@+id/loader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="@dimen/margin_16" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/no_news_image"
+        android:layout_width="@dimen/no_news_image_size"
+        android:layout_height="@dimen/no_news_image_size"
+        android:layout_gravity="center"
+        android:alpha="0.4"
+        android:src="@drawable/ic_icon"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/error"
@@ -89,16 +99,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@drawable/ic_warning_amber_96" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/no_news_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/no_news"
-        android:textSize="@dimen/first_news_source_text_size"
-        android:textStyle="bold"
-        android:visibility="gone"
-        tools:visibility="visible" />
 
 </FrameLayout>

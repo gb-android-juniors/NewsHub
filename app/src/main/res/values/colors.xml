@@ -15,6 +15,7 @@
     <color name="bookmark_unselected_color">#7E7E80</color>
     <color name="bookmark_selected_color">#FF9800</color>
     <color name="splash_background">#FFFFFFFF</color>
+    <color name="settings_warning_helper_text">#F44336</color>
 
     <!--Colors for CustomTheme-->
     <color name="pink_900">#880E4F</color>

@@ -14,7 +14,7 @@ val appModule = module {
     single { Room.databaseBuilder(androidApplication(), BookmarkDataBase::class.java, DB_NAME).build() }
     single { get<BookmarkDataBase>().bookmarkDao() }
 
-    factory { NewsStore() }
+    single { NewsStore() }
 }
 
 

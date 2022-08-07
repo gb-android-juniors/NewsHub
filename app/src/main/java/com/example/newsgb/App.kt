@@ -6,6 +6,7 @@ import com.example.newsgb.article.di.articleModule
 import com.example.newsgb.bookmarks.di.bookmarkModule
 import com.example.newsgb.main.di.mainModule
 import com.example.newsgb.news.di.newsModule
+import com.example.newsgb.settings.di.settingsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -23,7 +24,7 @@ class App : Application() {
         startKoin {
             androidLogger(Level.DEBUG)
             androidContext(this@App)
-            modules(appModule, mainModule, newsModule, articleModule, bookmarkModule)
+            modules(appModule, mainModule, newsModule, articleModule, bookmarkModule, settingsModule)
         }
     }
 
