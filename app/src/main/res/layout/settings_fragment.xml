@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,13 +7,8 @@
     android:background="@color/app_background_color"
     tools:context=".settings.ui.SettingsFragment">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/settings_appbar"
-        style="@style/SmartAppBar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
@@ -29,31 +24,25 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/select_country_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/margin_8"
-            android:layout_marginTop="@dimen/margin_24"
-            android:enabled="false"
-            android:hint="@string/select_news_region"
-            android:inputType="none"
-            android:textColorHint="@color/indigo_400">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/select_country_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_24"
+        android:enabled="false"
+        android:hint="@string/settings_region_selection_hint_text"
+        android:inputType="none"
+        android:textColorHint="@color/indigo_400"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_appbar">
 
-            <androidx.appcompat.widget.AppCompatAutoCompleteTextView
-                android:id="@+id/select_country_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                android:textColor="@color/category_button_text_color"
-                tools:ignore="LabelFor"
-                tools:text="@string/country_argentina" />
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/select_country_text"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:inputType="none"
             android:textColor="@color/category_button_text_color"
             tools:ignore="LabelFor"
@@ -64,15 +53,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/select_app_theme_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_8"
         android:layout_marginTop="@dimen/margin_24"
         android:enabled="false"
         android:hint="@string/settings_theme_hint_text"
-        app:helperTextTextColor="@color/settings_warning_helper_text"
         android:inputType="text"
-        android:textColorHint="@color/purple_200"
+        android:textColorHint="@color/indigo_400"
+        app:helperTextTextColor="@color/settings_warning_helper_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_country_layout"
@@ -82,13 +71,11 @@
             android:id="@+id/select_app_theme_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:inputType="none"
             android:textColor="@color/category_button_text_color"
             tools:ignore="LabelFor"
-            tools:text="@string/country_argentina" />
+            tools:text="@string/settings_dark_theme_name" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-    </LinearLayout>
+    </com.google.android.material.textfield.TextInputLayout>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
