@@ -8,6 +8,7 @@
     tools:context=".settings.ui.SettingsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
+        style="@style/SmartAppBar"
         android:id="@+id/settings_appbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
@@ -44,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="none"
-            android:textColor="@color/category_button_text_color"
+            android:textColor="@color/textDarkPrimary"
             tools:ignore="LabelFor"
             tools:text="@string/country_argentina" />
 
@@ -72,7 +73,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="none"
-            android:textColor="@color/category_button_text_color"
+            android:textColor="@color/textDarkPrimary"
             tools:ignore="LabelFor"
             tools:text="@string/settings_dark_theme_name" />
 
