@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
     override fun onCreate(savedInstanceState: Bundle?) {
         setApplicationTheme()
         super.onCreate(savedInstanceState)
+        setTheme(R.style.CustomThemeIndigo)
         setSplashScreen()
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
