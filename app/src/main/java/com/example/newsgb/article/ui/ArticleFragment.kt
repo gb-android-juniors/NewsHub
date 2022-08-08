@@ -138,8 +138,7 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
 
         Glide.with(articleImage)
             .load(article.imageUrl)
-            .placeholder(R.drawable.ic_newspaper_24)
-            .error(R.drawable.general)
+            .error(article.category.imgResId)
             .into(articleImage)
     }
 
