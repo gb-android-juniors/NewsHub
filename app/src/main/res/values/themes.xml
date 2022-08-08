@@ -52,7 +52,7 @@
     <style name="CustomThemePink" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/pink_700</item>
-        <item name="colorPrimaryVariant">@color/pink_900</item>
+        <item name="colorPrimaryVariant">@color/pink_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/pink_400</item>
@@ -66,7 +66,7 @@
     <style name="CustomThemePurple" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_700</item>
-        <item name="colorPrimaryVariant">@color/purple_900</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/purple_400</item>
@@ -94,7 +94,7 @@
     <style name="CustomThemeBlue" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/blue_700</item>
-        <item name="colorPrimaryVariant">@color/blue_900</item>
+        <item name="colorPrimaryVariant">@color/blue_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/blue_400</item>
@@ -108,7 +108,7 @@
     <style name="CustomThemeCyan" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/cyan_700</item>
-        <item name="colorPrimaryVariant">@color/cyan_900</item>
+        <item name="colorPrimaryVariant">@color/cyan_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/cyan_400</item>
@@ -122,7 +122,7 @@
     <style name="CustomThemeGreen" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/green_700</item>
-        <item name="colorPrimaryVariant">@color/green_900</item>
+        <item name="colorPrimaryVariant">@color/green_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/green_400</item>
@@ -136,7 +136,7 @@
     <style name="CustomThemeYellow" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/yellow_700</item>
-        <item name="colorPrimaryVariant">@color/yellow_900</item>
+        <item name="colorPrimaryVariant">@color/yellow_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/yellow_400</item>
@@ -150,7 +150,7 @@
     <style name="CustomThemeOrange" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/orange_700</item>
-        <item name="colorPrimaryVariant">@color/orange_900</item>
+        <item name="colorPrimaryVariant">@color/orange_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/orange_400</item>
