@@ -3,6 +3,7 @@ package com.example.newsgb._core.data.api
 import com.example.newsgb.App
 import com.example.newsgb._core.data.api.model.ResponseDTO
 import com.example.newsgb.utils.Constants
+import com.example.newsgb.utils.Constants.Companion.SEARCH_ENDPOINT
 import com.example.newsgb.utils.Constants.Companion.TOP_HEADLINES_ENDPOINT
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
@@ -17,6 +18,13 @@ interface ApiService {
     suspend fun getNewsList(
         @Query("country") countryCode: String = App.countryCode,
         @Query("category") category: String = DEFAULT_CATEGORY,
+        @Query("page") pageNumber: Int = 1,
+        @Query("apiKey") apiKey: String,
+    ): ResponseDTO
+
+    @GET(SEARCH_ENDPOINT)
+    suspend fun searchNewsByPhrase(
+        @Query("q") phrase: String,
         @Query("page") pageNumber: Int = 1,
         @Query("apiKey") apiKey: String,
     ): ResponseDTO

@@ -63,7 +63,7 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
-        initContentView()
+        initView()
     }
 
     override fun onResume() {
@@ -80,14 +80,12 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
         viewModel.getData()
     }
 
-    private fun initContentView() {
-        with(binding) {
-            bookmarksRecycler.adapter = bookmarksListAdapter
-            clearAllBookmarks.setOnClickListener { showWarningDialog() }
-            swipeRefreshLayoutBookmarks.setOnRefreshListener {
-                initData()
-                swipeRefreshLayoutBookmarks.isRefreshing = false
-            }
+    private fun initView() = with(binding) {
+        bookmarksRecycler.adapter = bookmarksListAdapter
+        clearAllBookmarks.setOnClickListener { showWarningDialog() }
+        swipeRefreshLayoutBookmarks.setOnRefreshListener {
+            initData()
+            swipeRefreshLayoutBookmarks.isRefreshing = false
         }
     }
 

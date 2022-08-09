@@ -1,26 +1,20 @@
-package com.example.newsgb.news.data
+package com.example.newsgb.search.data
 
 import com.example.newsgb._core.data.api.ApiService
 import com.example.newsgb._core.data.api.model.ResponseDTO
-import com.example.newsgb.news.domain.NewsRepository
+import com.example.newsgb.search.domain.SearchRepository
 import com.example.newsgb.utils.Constants.Companion.STATUS_OK
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
-class NewsRepositoryImpl(
-    private val apiService: ApiService
-) : NewsRepository {
+class SearchRepositoryImpl(private val apiService: ApiService) : SearchRepository {
 
-    override suspend fun getNewsByCategory(
-        page: Int,
-        category: String,
-        token: String
-    ): Result<ResponseDTO> {
+    override suspend fun getNewsByPhrase(page: Int, phrase: String, token: String): Result<ResponseDTO> {
         return try {
             val response = withContext(Dispatchers.IO) {
-                apiService.getNewsList(pageNumber = page, category = category, apiKey = token)
+                apiService.searchNewsByPhrase(pageNumber = page, phrase = phrase, apiKey = token)
             }
             when (response.status) {
                 STATUS_OK -> Result.success(value = response)

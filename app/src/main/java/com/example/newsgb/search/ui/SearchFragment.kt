@@ -3,18 +3,24 @@ package com.example.newsgb.search.ui
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.lifecycleScope
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb._core.ui.adapter.NewsListAdapter
 import com.example.newsgb._core.ui.adapter.RecyclerItemListener
 import com.example.newsgb._core.ui.model.Article
+import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.article.ui.ArticleFragment
 import com.example.newsgb.databinding.SearchFragmentBinding
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -27,6 +33,10 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
     /** экземпляр NewsStore, который получаем из MainActivity как хранителя этого экземпляра */
     private val newsStore: NewsStore by lazy {
         storeHolder?.newsStore ?: throw IllegalArgumentException()
+    }
+
+    private val phrase: String by lazy {
+        requireArguments().getString(ARG_SEARCH_PHRASE, "")
     }
 
     /** инициализируем слушатель нажатий на элементы списка
@@ -55,7 +65,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
-        initContentView()
+        initView()
     }
 
     override fun onResume() {
@@ -71,16 +81,83 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
     override fun getViewBinding() = SearchFragmentBinding.inflate(layoutInflater)
 
     private fun initViewModel() {
-//        TODO("Not yet implemented")
+        viewModel.viewState.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun initContentView() {
-//        TODO("Not yet implemented")
+    private fun initView() = with(binding) {
+        searchRecycler.adapter = searchListAdapter
+        searchEditText.text?.apply {
+            if (phrase.isBlank()) clear() else replace(0, this.length, phrase)
+        }
     }
 
     private fun initData() {
-        val phrase = requireArguments().getString(ARG_SEARCH_PHRASE, "")
         viewModel.getData(phrase = phrase)
+    }
+
+    /**
+     * метод обработки состояний экрана
+     * */
+    private fun renderState(state: ListViewState) {
+        when (state) {
+            is ListViewState.Data -> {
+                enableProgress(state = false)
+                enableContent(state = true)
+                enableEmptyState(state = false)
+                enableError(state = false)
+                setDataToAdapter(data = state.data)
+            }
+            is ListViewState.Loading -> {
+                enableProgress(state = true)
+                enableEmptyState(state = false)
+                enableContent(state = false)
+                enableError(state = false)
+            }
+            is ListViewState.Empty -> {
+                enableProgress(state = false)
+                enableEmptyState(state = true)
+                enableContent(state = false)
+                enableError(state = false)
+            }
+            is ListViewState.Error -> {
+                enableEmptyState(state = false)
+                enableProgress(state = false)
+                enableContent(state = false)
+                enableError(state = true)
+                showToastMessage(message = state.message ?: getString(R.string.unknown_error))
+            }
+
+            is ListViewState.Refreshing -> {
+                enableProgress(state = true)
+                enableContent(state = true)
+                enableEmptyState(state = false)
+                enableError(state = false)
+            }
+            else -> {}
+        }
+    }
+
+    /**
+     * метод инициализации списка закладок на экране
+     * */
+    private fun setDataToAdapter(data: List<Article>) {
+        searchListAdapter.submitList(data)
+    }
+
+    private fun enableContent(state: Boolean) {
+        binding.searchRecycler.isVisible = state
+    }
+
+    private fun enableProgress(state: Boolean) {
+        binding.loader.isVisible = state
+    }
+
+    private fun enableEmptyState(state: Boolean) {
+        binding.emptySearchWarning.isVisible = state
+    }
+
+    private fun enableError(state: Boolean) {
+        binding.error.isVisible = state
     }
 
     private fun showFragment(fragment: Fragment) {
@@ -92,6 +169,9 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
             .commit()
     }
 
+    private fun showToastMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
 
     companion object {
         private const val ARTICLE_DETAILS_FRAGMENT_FROM_SEARCH = "ArticleDetailsFragmentFromSearch"
