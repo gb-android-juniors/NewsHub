@@ -100,5 +100,8 @@
     <string name="country_venezuela">Venezuela</string>
     <string name="country_south_africa">Südafrika</string>
     <string name="search_titles">Titel suchen</string>
+    <string name="enter_text">Text eingeben…</string>
+    <string name="search">Suche</string>
+    <string name="empty_search_warning_text">Nichts gefunden</string>
 
 </resources>

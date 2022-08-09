@@ -2,10 +2,16 @@ package com.example.newsgb.news.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
+import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb._core.ui.adapter.ViewPagerAdapter
 import com.example.newsgb.databinding.NewsFragmentBinding
+import com.example.newsgb.search.ui.SearchClickListener
+import com.example.newsgb.search.ui.SearchDialogFragment
+import com.example.newsgb.search.ui.SearchFragment
 import com.example.newsgb.utils.ui.Category
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -16,8 +22,11 @@ class NewsFragment : BaseFragment<NewsFragmentBinding>() {
         initView()
     }
 
+    override fun getViewBinding() = NewsFragmentBinding.inflate(layoutInflater)
+
     private fun initView() {
         setViewPagerAndTabsNavigation()
+        binding.searchFab.setOnClickListener { showSearchDialog() }
     }
 
     private fun setViewPagerAndTabsNavigation() = with(binding) {
@@ -36,9 +45,28 @@ class NewsFragment : BaseFragment<NewsFragmentBinding>() {
         }
     }
 
-    companion object {
-        fun newInstance() = NewsFragment()
+    private fun showSearchDialog() {
+        SearchDialogFragment.newInstance().apply {
+            setOnSearchClickListener(object : SearchClickListener {
+                override fun onClick(phrase: String) {
+                    showFragment(fragment = SearchFragment.newInstance(phrase = phrase))
+                }
+            })
+        }.show(parentFragmentManager, "")
     }
 
-    override fun getViewBinding() = NewsFragmentBinding.inflate(layoutInflater)
+    private fun showFragment(fragment: Fragment) {
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .add(R.id.main_container, fragment)
+            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            .addToBackStack(ARTICLE_SEARCH_FRAGMENT_FROM_DIALOG)
+            .commit()
+    }
+
+    companion object {
+        private const val ARTICLE_SEARCH_FRAGMENT_FROM_DIALOG = "ArticleSearchFragmentFromDialog"
+
+        fun newInstance() = NewsFragment()
+    }
 }
