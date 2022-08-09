@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.newsgb.App
 import com.example.newsgb.R
@@ -29,14 +30,18 @@ class MainActivity : AppCompatActivity(), NewsStoreHolder {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen()
+        installSplashScreen().run {
+            viewModel.getInitialData()
+            this.setKeepOnScreenCondition{true}
+            Thread.sleep(1000)
+            this.setKeepOnScreenCondition{false}
+        }
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //проверяем наличие интернет-подключения на старте
         isNetworkAvailable =
             (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected == true
         getCountryCodeFromPreferences()
-        viewModel.getInitialData()
         //запускаем главный фрагмент
         startMainScreen(savedInstanceState)
         //подписываемся на изменение наличия интернет-подключения
