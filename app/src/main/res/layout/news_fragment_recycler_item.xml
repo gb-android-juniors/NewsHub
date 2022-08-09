@@ -19,8 +19,8 @@
             android:maxLines="3"
             android:textColor="@color/textDarkPrimary"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/news_image"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/news_image"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tool:text="@string/example_header_text" />
 
@@ -32,7 +32,7 @@
             android:textColor="@color/textDarkSecondary"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/news_image"
+            app:layout_constraintStart_toEndOf="@+id/news_image"
             tool:text="@string/example_resource_name_text" />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -41,7 +41,7 @@
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tool:src="@drawable/example_image" />
 
@@ -52,7 +52,7 @@
             android:layout_margin="@dimen/margin_8"
             android:src="@drawable/ic_bookmarks_24"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
