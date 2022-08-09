@@ -110,5 +110,7 @@
     <string name="enter_text">Enter text…</string>
     <string name="search">Search</string>
     <string name="empty_search_warning_text">Nothing found</string>
+    <string name="details">Details</string>
+    <string name="source">Source</string>
 
 </resources>

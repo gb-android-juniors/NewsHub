@@ -19,7 +19,9 @@
             android:id="@+id/details_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIconTint="@color/white" />
+            app:navigationIconTint="@color/white"
+            app:title="@string/details"
+            app:titleTextColor="@color/textLightPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

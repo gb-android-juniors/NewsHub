@@ -2,12 +2,19 @@ package com.example.newsgb.search.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
@@ -64,6 +71,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initMenu()
         initViewModel()
         initView()
     }
@@ -79,6 +87,31 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
     }
 
     override fun getViewBinding() = SearchFragmentBinding.inflate(layoutInflater)
+
+    /** метод инициализации меню в апбаре экрана */
+    private fun initMenu() {
+        (requireActivity() as AppCompatActivity).apply {
+            /** привязываемся к тулбару в разметке */
+            setSupportActionBar(binding.searchToolbar)
+            /** подключаем к меню системную кнопку "назад" */
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        }
+        /** добавляем и инициализируем элементы меню */
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    /** инициализируем системную кнопку "назад" */
+                    android.R.id.home -> {
+                        requireActivity().onBackPressed()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
+    }
 
     private fun initViewModel() {
         viewModel.viewState.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)

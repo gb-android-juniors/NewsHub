@@ -68,7 +68,6 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
             setSupportActionBar(binding.detailsToolbar)
             /** подключаем к меню системную кнопку "назад" */
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.title = ""
         }
         /** добавляем и инициализируем элементы меню */
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {

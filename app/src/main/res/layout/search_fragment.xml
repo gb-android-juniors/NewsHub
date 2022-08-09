@@ -15,9 +15,11 @@
         android:layout_height="?actionBarSize">
 
         <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/search_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:orientation="horizontal"
+            app:navigationIconTint="@color/white"
             app:title="@string/search"
             app:titleTextColor="@color/textLightPrimary" />
 

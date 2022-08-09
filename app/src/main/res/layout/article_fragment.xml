@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:focusable="true"
-    android:clickable="true"
     android:background="@color/app_background_color"
+    android:clickable="true"
+    android:focusable="true"
     tools:context=".article.ui.WebViewFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -18,7 +18,9 @@
             android:id="@+id/web_view_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIconTint="@color/white" />
+            app:navigationIconTint="@color/white"
+            app:title="@string/source"
+            app:titleTextColor="@color/textLightPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

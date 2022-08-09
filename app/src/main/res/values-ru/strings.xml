@@ -103,5 +103,7 @@
     <string name="enter_text">Введите текст…</string>
     <string name="search">Поиск</string>
     <string name="empty_search_warning_text">Ничего не найдено</string>
+    <string name="details">Подробности</string>
+    <string name="source">Источник</string>
 
 </resources>
