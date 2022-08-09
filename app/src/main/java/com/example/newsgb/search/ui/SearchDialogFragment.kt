@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.newsgb.databinding.SearchDialogFragmentBinding
+import com.example.newsgb.utils.hideKeyboard
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class SearchDialogFragment : BottomSheetDialogFragment() {
@@ -35,6 +36,7 @@ class SearchDialogFragment : BottomSheetDialogFragment() {
 
     private fun initView() = with(binding) {
         searchInputLayout.setEndIconOnClickListener {
+            hideKeyboard()
             searchClickListener?.onClick(phrase = searchEditText.text.toString())
             dismiss()
         }

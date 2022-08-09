@@ -26,6 +26,7 @@ import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.article.ui.ArticleFragment
 import com.example.newsgb.databinding.SearchFragmentBinding
+import com.example.newsgb.utils.hideKeyboard
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -120,6 +121,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
     private fun initView() = with(binding) {
         searchRecycler.adapter = searchListAdapter
         searchInputLayout.setEndIconOnClickListener {
+            hideKeyboard()
             viewModel.getData(phrase = searchEditText.text.toString())
         }
         searchEditText.text?.apply {

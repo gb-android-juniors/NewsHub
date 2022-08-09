@@ -13,6 +13,7 @@ import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.SettingsFragmentBinding
 import com.example.newsgb.utils.Constants
 import com.example.newsgb.utils.PrivateSharedPreferences
+import com.example.newsgb.utils.hideKeyboard
 import com.example.newsgb.utils.ui.Countries
 import com.example.newsgb.utils.ui.ThemeModes
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -47,6 +48,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     }
 
     private fun initView() = with(binding) {
+        root.setOnClickListener { hideKeyboard() }
         selectCountryText.setText(getSelectedCountryNameFromPreferences())
         selectAppThemeText.setText(getSelectedAppThemeName())
         selectAppThemeLayout.helperText = getString(R.string.settings_theme_helper_text)
@@ -64,12 +66,14 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         selectCountryText.setAdapter(adapter)
         selectCountryText.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView, _, position, _ ->
+                hideKeyboard()
                 saveSelectedCountry(adapterView, position)
                 viewModel.refreshData()
             }
     }
 
     private fun setThemeListListener() = with(binding) {
+        selectAppThemeText.setOnClickListener { hideKeyboard() }
         val adapter = ArrayAdapter(
             requireContext(),
             R.layout.settings_options_list_item,
