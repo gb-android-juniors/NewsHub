@@ -119,6 +119,9 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
 
     private fun initView() = with(binding) {
         searchRecycler.adapter = searchListAdapter
+        searchInputLayout.setEndIconOnClickListener {
+            viewModel.getData(phrase = searchEditText.text.toString())
+        }
         searchEditText.text?.apply {
             if (phrase.isBlank()) clear() else replace(0, this.length, phrase)
         }
@@ -135,9 +138,9 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
         when (state) {
             is ListViewState.Data -> {
                 enableProgress(state = false)
-                enableContent(state = true)
                 enableEmptyState(state = false)
                 enableError(state = false)
+                enableContent(state = true)
                 setDataToAdapter(data = state.data)
             }
             is ListViewState.Loading -> {
