@@ -38,11 +38,11 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
     }
 
     /** вытягиваем url статьи из аргументов, если его там нет, то заменяем на пустую строку */
-    private val articleUrl: String by lazy {
-        arguments?.getString(ARG_ARTICLE_URL, DEFAULT_URL) ?: DEFAULT_URL
+    private val article: Article by lazy {
+        requireArguments().getParcelable<Article>(ARG_ARTICLE_DATA) as Article
     }
 
-    private val viewModel: ArticleViewModel by viewModel { parametersOf(newsStore, articleUrl) }
+    private val viewModel: ArticleViewModel by viewModel { parametersOf(newsStore, article) }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -132,21 +132,13 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
         }
         bookmarkIcon.apply {
             setBookmarkIconColor(context = requireContext(), bookmarkImage = this, isChecked = article.isChecked)
-            setOnClickListener { onBookmarkClickListener(article) }
+            setOnClickListener { viewModel.checkBookmark() }
         }
 
         Glide.with(articleImage)
             .load(article.imageUrl)
             .error(article.category.imgResId)
             .into(articleImage)
-    }
-
-    /**
-     * метод обработки нажатия на иконку с закладкой
-     * добавляет или удаляет статью из БД с закладками
-     */
-    private fun onBookmarkClickListener(article: Article) {
-        viewModel.checkBookmark(article = article)
     }
 
     private fun enableProgress(state: Boolean) {
@@ -174,13 +166,13 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
     }
 
     companion object {
-        private const val ARG_ARTICLE_URL = "arg_article_url"
+        private const val ARG_ARTICLE_DATA = "arg_article_data"
         private const val DEFAULT_URL = ""
 
         @JvmStatic
-        fun newInstance(articleUrl: String): ArticleFragment =
+        fun newInstance(article: Article): ArticleFragment =
             ArticleFragment().apply {
-                arguments = bundleOf(ARG_ARTICLE_URL to articleUrl)
+                arguments = bundleOf(ARG_ARTICLE_DATA to article)
             }
     }
 

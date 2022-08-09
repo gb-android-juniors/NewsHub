@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 class ArticleViewModel(
     private val useCases: ArticleUseCases,
     private val store: NewsStore,
-    private val articleUrl: String
+    private val article: Article
     ) : ViewModel() {
 
     /** переменная состояния экрана детализации */
@@ -60,17 +60,17 @@ class ArticleViewModel(
      **/
     private fun setSuccessState(data: List<Article>) {
         try {
-            val article = data.first { it.contentUrl == articleUrl }
+            val article = data.first { it.contentUrl == article.contentUrl }
             _viewState.value = ItemViewState.Data(data = article)
         } catch (ex: Throwable) {
-            _viewState.value = ItemViewState.Error(message = ex.message)
+            _viewState.value = ItemViewState.Data(data = article)
         }
     }
 
     /**
      * метод обработки нажатия на фложок закладки
      */
-    fun checkBookmark(article: Article) {
+    fun checkBookmark() {
         store.dispatch(event = AppEvent.BookmarkCheck(article = article))
     }
 

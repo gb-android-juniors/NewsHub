@@ -49,7 +49,7 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
      * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
-            showFragment(fragment = ArticleFragment.newInstance(articleUrl = itemArticle.contentUrl))
+            showFragment(fragment = ArticleFragment.newInstance(article = itemArticle))
         }
 
         override fun onBookmarkCheck(itemArticle: Article) {
@@ -163,7 +163,7 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
         binding.firstNewsHeader.text = article.title
         binding.firstNewsSource.text = article.sourceName
         binding.firstNewsContent.setOnClickListener {
-            showFragment(fragment = ArticleFragment.newInstance(articleUrl = article.contentUrl))
+            showFragment(fragment = ArticleFragment.newInstance(article = article))
         }
         Glide.with(binding.firstNewsImage)
             .load(article.imageUrl)

@@ -42,7 +42,7 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
      * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
-            showFragment(fragment = ArticleFragment.newInstance(articleUrl = itemArticle.contentUrl))
+            showFragment(fragment = ArticleFragment.newInstance(article = itemArticle))
         }
 
         override fun onBookmarkCheck(itemArticle: Article) {
