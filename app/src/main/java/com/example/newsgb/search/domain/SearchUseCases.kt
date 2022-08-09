@@ -1,4 +1,4 @@
-package com.example.newsgb.news.domain
+package com.example.newsgb.search.domain
 
 import com.example.newsgb._core.data.api.model.ApiKeys
 import com.example.newsgb._core.ui.mapper.EntitiesToArticleMapper
@@ -7,39 +7,28 @@ import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.bookmarks.domain.BookmarkRepository
 import com.example.newsgb.utils.ui.Category
 
-class NewsUseCases(
+class SearchUseCases(
     private val bookmarkRepo: BookmarkRepository,
-    private val newsRepo: NewsRepository
+    private val searchRepo: SearchRepository
 ) {
-    /**
-     * метод запроса первой страницы новостей по категории.
-     **/
-    suspend fun getNewsByCategory(
+
+    suspend fun getNewsByPhrase(
         page: Int,
-        category: Category,
-        isRefreshing: Boolean
+        phrase: String,
     ): Result<List<Article>> {
         var tokenIndex = 0
         var token = ApiKeys.values()[tokenIndex].token
 
-        var result = newsRepo.getNewsByCategory(
-            page = page,
-            category = category.apiCode,
-            token = token
-        )
+        var result = searchRepo.getNewsByPhrase(page = page, phrase = phrase, token = token)
         while (result.isFailure && result.exceptionOrNull()?.message == "HTTP 429 ") {
             if (++tokenIndex < ApiKeys.values().size) {
                 token = ApiKeys.values()[tokenIndex].token
-                result = newsRepo.getNewsByCategory(
-                    page = page,
-                    category = category.apiCode,
-                    token = token
-                )
+                result = searchRepo.getNewsByPhrase(page = page, phrase = phrase, token = token)
             } else break
         }
 
         return result.map { response ->
-            var remoteArticles = NewsDtoToUiMapper(response.articles, category = category).toMutableList()
+            var remoteArticles = NewsDtoToUiMapper(response.articles, category = Category.SEARCH).toMutableList()
             bookmarkRepo.getAllBookmarks().onSuccess { entities ->
                 val bookmarkArticles = EntitiesToArticleMapper(entities)
                 bookmarkArticles.forEach { bookmark ->
@@ -51,7 +40,6 @@ class NewsUseCases(
                         }
                     }.toMutableList()
                 }
-                if (isRefreshing) remoteArticles += bookmarkArticles
             }
             remoteArticles
         }

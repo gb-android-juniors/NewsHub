@@ -17,7 +17,6 @@ import androidx.core.animation.doOnEnd
 import com.example.newsgb.App
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.store.NewsStore
-import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.MainActivityBinding
 import com.example.newsgb.splash.ui.CustomSplashScreenActivity
 import com.example.newsgb.utils.Constants
@@ -27,12 +26,11 @@ import com.example.newsgb.utils.ui.AlertDialogFragment
 import com.example.newsgb.utils.ui.Countries
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
-class MainActivity : AppCompatActivity(), NewsStoreHolder {
+class MainActivity : AppCompatActivity() {
 
-    override val newsStore: NewsStore by inject()
-    private val viewModel: MainViewModel by viewModel { parametersOf(newsStore) }
+    val newsStore: NewsStore by inject()
+    private val viewModel: MainViewModel by viewModel()
 
     private lateinit var binding: MainActivityBinding
     private var isNetworkAvailable: Boolean = true

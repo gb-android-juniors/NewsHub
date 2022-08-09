@@ -1,13 +1,15 @@
 package com.example.newsgb.article.ui
 
 import android.os.Bundle
-import android.view.*
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb.databinding.ArticleFragmentBinding
@@ -28,7 +30,6 @@ class WebViewFragment : BaseFragment<ArticleFragmentBinding>() {
             setSupportActionBar(binding.webViewToolbar)
             /** подключаем к меню системную кнопку "назад" */
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.title = ""
         }
         /** добавляем и инициализируем элементы меню */
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {

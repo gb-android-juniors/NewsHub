@@ -137,16 +137,22 @@ class NewsStore : CoroutineScope by MainScope() {
         }
 
 
-    private fun checkBookmarkInCurrentData(
-        bookmark: Article,
-        currentData: List<Article>
-    ): List<Article> =
-        currentData.map { article ->
-            if (article.isTheSame(bookmark)) {
-                article.copy(isChecked = bookmark.isChecked)
-            } else {
-                article
+    /**
+     * Ищем в текущем списке статью соответсвующую статье bookmark, если она есть, то меняем ее флаг isChecked,
+     * если такой статьи в текущем списке нет, то добавляем ее в список
+     **/
+    private fun checkBookmarkInCurrentData(bookmark: Article, currentData: List<Article>): List<Article> {
+        return if (currentData.any { it.isTheSame(bookmark) }) {
+            currentData.map { article ->
+                if (article.isTheSame(bookmark)) {
+                    article.copy(isChecked = bookmark.isChecked)
+                } else {
+                    article
+                }
             }
+        } else {
+            currentData + bookmark
         }
+    }
 
 }

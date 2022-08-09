@@ -1,12 +1,19 @@
-package com.example.newsgb.bookmarks.ui
+package com.example.newsgb.search.ui
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
@@ -15,18 +22,23 @@ import com.example.newsgb._core.ui.adapter.RecyclerItemListener
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
 import com.example.newsgb.article.ui.ArticleFragment
-import com.example.newsgb.databinding.BookmarksFragmentBinding
+import com.example.newsgb.databinding.SearchFragmentBinding
+import com.example.newsgb.utils.hideKeyboard
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
+class SearchFragment : BaseFragment<SearchFragmentBinding>() {
 
-    private val viewModel by viewModel<BookmarksViewModel>()
+    private val viewModel by viewModel<SearchViewModel>()
+
+    private val phrase: String by lazy {
+        requireArguments().getString(ARG_SEARCH_PHRASE, "")
+    }
 
     /** инициализируем слушатель нажатий на элементы списка
      * onItemClick - колбэк нажатия на элемент списка
-     * onBookmarkCheck - колбэк нажатия на закладку на элеменете списка (пока не реализовано!)
+     * onBookmarkCheck - колбэк нажатия на закладку на элеменете списка
      * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
@@ -39,11 +51,11 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
     }
 
     /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
-    private val bookmarksListAdapter: NewsListAdapter =
-        NewsListAdapter(listener = recyclerItemListener)
+    private val searchListAdapter: NewsListAdapter = NewsListAdapter(listener = recyclerItemListener)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initMenu()
         initViewModel()
         initView()
     }
@@ -53,22 +65,50 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
         initData()
     }
 
-    private fun initData() {
-        viewModel.getData()
-    }
+    override fun getViewBinding() = SearchFragmentBinding.inflate(layoutInflater)
 
-    private fun initView() = with(binding) {
-        bookmarksRecycler.adapter = bookmarksListAdapter
-        clearAllBookmarks.setOnClickListener { showWarningDialog() }
-        swipeRefreshLayoutBookmarks.setOnRefreshListener {
-            initData()
-            swipeRefreshLayoutBookmarks.isRefreshing = false
+    /** метод инициализации меню в апбаре экрана */
+    private fun initMenu() {
+        (requireActivity() as AppCompatActivity).apply {
+            /** привязываемся к тулбару в разметке */
+            setSupportActionBar(binding.searchToolbar)
+            /** подключаем к меню системную кнопку "назад" */
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
+        /** добавляем и инициализируем элементы меню */
+        (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+                    /** инициализируем системную кнопку "назад" */
+                    android.R.id.home -> {
+                        requireActivity().onBackPressed()
+                        true
+                    }
+                    else -> false
+                }
+            }
+        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     private fun initViewModel() {
-        /**подписываемся на изменения состояний экрана */
         viewModel.viewState.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun initView() = with(binding) {
+        searchRecycler.adapter = searchListAdapter
+        searchInputLayout.setEndIconOnClickListener {
+            hideKeyboard()
+            viewModel.getData(phrase = searchEditText.text.toString())
+        }
+        searchEditText.text?.apply {
+            if (phrase.isBlank()) clear() else replace(0, this.length, phrase)
+        }
+    }
+
+    private fun initData() {
+        viewModel.getData(phrase = phrase)
     }
 
     /**
@@ -78,24 +118,28 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
         when (state) {
             is ListViewState.Data -> {
                 enableProgress(state = false)
-                enableContent(state = true)
                 enableEmptyState(state = false)
+                enableError(state = false)
+                enableContent(state = true)
                 setDataToAdapter(data = state.data)
             }
             is ListViewState.Loading -> {
                 enableProgress(state = true)
                 enableEmptyState(state = false)
                 enableContent(state = false)
+                enableError(state = false)
             }
             is ListViewState.Empty -> {
                 enableProgress(state = false)
                 enableEmptyState(state = true)
                 enableContent(state = false)
+                enableError(state = false)
             }
             is ListViewState.Error -> {
                 enableEmptyState(state = false)
                 enableProgress(state = false)
                 enableContent(state = false)
+                enableError(state = true)
                 showToastMessage(message = state.message ?: getString(R.string.unknown_error))
             }
 
@@ -103,6 +147,7 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
                 enableProgress(state = true)
                 enableContent(state = true)
                 enableEmptyState(state = false)
+                enableError(state = false)
             }
             else -> {}
         }
@@ -112,11 +157,11 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
      * метод инициализации списка закладок на экране
      * */
     private fun setDataToAdapter(data: List<Article>) {
-        bookmarksListAdapter.submitList(data)
+        searchListAdapter.submitList(data)
     }
 
     private fun enableContent(state: Boolean) {
-        binding.bookmarksRecycler.isVisible = state
+        binding.searchRecycler.isVisible = state
     }
 
     private fun enableProgress(state: Boolean) {
@@ -124,7 +169,11 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
     }
 
     private fun enableEmptyState(state: Boolean) {
-        binding.emptyBookmarksWarning.isVisible = state
+        binding.emptySearchWarning.isVisible = state
+    }
+
+    private fun enableError(state: Boolean) {
+        binding.error.isVisible = state
     }
 
     private fun showFragment(fragment: Fragment) {
@@ -132,7 +181,7 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
             .beginTransaction()
             .add(R.id.main_container, fragment)
             .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-            .addToBackStack(ARTICLE_DETAILS_FRAGMENT_FROM_BOOKMARKS)
+            .addToBackStack(ARTICLE_DETAILS_FRAGMENT_FROM_SEARCH)
             .commit()
     }
 
@@ -140,21 +189,13 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun showWarningDialog() {
-        AlertDialog.Builder(requireContext())
-            .setTitle(R.string.closing_warning)
-            .setPositiveButton(R.string.yes) { _, _ -> viewModel.clearBookmarks() }
-            .setNegativeButton(R.string.no) { dialog, _ -> dialog.dismiss() }
-            .create()
-            .show()
-    }
-
     companion object {
-        private const val ARTICLE_DETAILS_FRAGMENT_FROM_BOOKMARKS =
-            "ArticleDetailsFragmentFromBookmarks"
+        private const val ARTICLE_DETAILS_FRAGMENT_FROM_SEARCH = "ArticleDetailsFragmentFromSearch"
+        private const val ARG_SEARCH_PHRASE = "arg_search_phase"
 
-        fun newInstance() = BookmarksFragment()
+        fun newInstance(phrase: String): SearchFragment =
+            SearchFragment().apply {
+                arguments = bundleOf(ARG_SEARCH_PHRASE to phrase)
+            }
     }
-
-    override fun getViewBinding() = BookmarksFragmentBinding.inflate(layoutInflater)
 }

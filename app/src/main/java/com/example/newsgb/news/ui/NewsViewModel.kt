@@ -31,13 +31,11 @@ class NewsViewModel(
      * */
     private fun renderStoreState(storeState: AppState) {
         when (storeState) {
-            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value =
-                ListViewState.Loading
-            is AppState.Refreshing, is AppState.BookmarkChecking -> _viewState.value =
-                ListViewState.Refreshing
+            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value = ListViewState.Loading
+            is AppState.Refreshing -> _viewState.value = ListViewState.Refreshing(data = storeState.data)
+            is AppState.BookmarkChecking -> _viewState.value = ListViewState.Refreshing(data = storeState.data)
             is AppState.Data -> setSuccessState(data = storeState.data)
-            is AppState.Error -> _viewState.value =
-                ListViewState.Error(message = storeState.message)
+            is AppState.Error -> _viewState.value = ListViewState.Error(message = storeState.message)
             else -> {}
         }
     }
@@ -118,7 +116,7 @@ class NewsViewModel(
     private fun getNewsByCategory(isRefreshing: Boolean) {
         viewModelScope.launch {
             useCases.getNewsByCategory(
-                initialPage = INITIAL_PAGE,
+                page = INITIAL_PAGE,
                 category = category,
                 isRefreshing = isRefreshing
             )

@@ -1,8 +1,11 @@
 package com.example.newsgb.utils
 
+import android.app.Activity
 import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.example.newsgb.R
 
 /**
@@ -20,4 +23,11 @@ fun setBookmarkIconColor(context: Context, bookmarkImage: AppCompatImageView, is
         R.color.bookmark_unselected_color
     }
     bookmarkImage.setColorFilter(ContextCompat.getColor(context, tintColor), android.graphics.PorterDuff.Mode.SRC_IN)
+}
+
+internal fun Fragment.hideKeyboard() {
+    view?.let { view ->
+        val imm = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 }

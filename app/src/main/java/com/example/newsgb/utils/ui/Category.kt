@@ -10,5 +10,6 @@ enum class Category(val apiCode: String, val nameResId: Int, val imgResId: Int) 
     TECHNOLOGY(apiCode = "technology", nameResId = R.string.technology_category_name_text, imgResId = R.drawable.technology),
     SCIENCE(apiCode = "science", nameResId = R.string.science_category_name_text, imgResId = R.drawable.science),
     HEALTH(apiCode = "health", nameResId = R.string.health_category_name_text, imgResId = R.drawable.health),
-    BOOKMARKS(apiCode = "", nameResId = R.string.bookmarks, imgResId = R.drawable.general)
+    BOOKMARKS(apiCode = "", nameResId = R.string.bookmarks, imgResId = R.drawable.general),
+    SEARCH(apiCode = "", nameResId = R.string.search, imgResId = R.drawable.general)
 }

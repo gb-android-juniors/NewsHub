@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Theme.NewsGB" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
@@ -9,7 +9,8 @@
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Customize your theme here. -->
+        <!--floatingActionButton-->
+        <item name="floatingActionButtonStyle">@style/AppFabStyle</item>
     </style>
 
     <style name="NewsCategoryLayoutStyle">
@@ -88,7 +89,8 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <!--floatingActionButton-->
+        <item name="floatingActionButtonStyle">@style/AppFabStyle</item>
     </style>
 
     <style name="CustomThemeBlue" parent="Theme.MaterialComponents.DayNight.NoActionBar">
@@ -159,6 +161,14 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" >?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <!--floatingActionButton-->
+    <style name="AppFabStyle" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="tint">@color/white</item>
+        <item name="backgroundTint">@color/bookmark_selected_color</item>
+        <item name="borderWidth">0dp</item>
+        <item name="fabSize">mini</item>
     </style>
 
 </resources>
