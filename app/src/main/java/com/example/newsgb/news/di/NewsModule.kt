@@ -12,10 +12,10 @@ import org.koin.dsl.module
 val newsModule = module {
     single<NewsRepository> { NewsRepositoryImpl(apiService = get()) }
     single { NewsUseCases(bookmarkRepo = get(), newsRepo = get()) }
-    viewModel { (store: NewsStore, category: Category) ->
+    viewModel { (category: Category) ->
         NewsViewModel(
             useCases = get(),
-            store = store,
+            store = get(),
             category = category
         )
     }

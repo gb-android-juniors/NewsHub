@@ -1,6 +1,5 @@
 package com.example.newsgb.article.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -21,8 +20,6 @@ import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ItemViewState
-import com.example.newsgb._core.ui.store.NewsStore
-import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.DetailsFragmentBinding
 import com.example.newsgb.utils.formatApiStringToDate
 import com.example.newsgb.utils.setBookmarkIconColor
@@ -32,36 +29,18 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
 class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
-    /** переменная хранителя экземпляра NewsStore */
-    private var storeHolder: NewsStoreHolder? = null
-
-    /** экземпляр NewsStore, который получаем из MainActivity как хранителя этого экземпляра */
-    private val newsStore: NewsStore by lazy {
-        storeHolder?.newsStore ?: throw IllegalArgumentException()
-    }
 
     /** вытягиваем url статьи из аргументов, если его там нет, то заменяем на пустую строку */
     private val article: Article by lazy {
         requireArguments().getParcelable<Article>(ARG_ARTICLE_DATA) as Article
     }
 
-    private val viewModel: ArticleViewModel by viewModel { parametersOf(newsStore, article) }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        /** инициализируем переменную хранителя экземпляра NewsStore */
-        storeHolder = context as NewsStoreHolder
-    }
+    private val viewModel: ArticleViewModel by viewModel { parametersOf(article) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initMenu()
         initViewModel()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        storeHolder = null
     }
 
     /** метод инициализации меню в апбаре экрана */
@@ -170,7 +149,6 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
 
     companion object {
         private const val ARG_ARTICLE_DATA = "arg_article_data"
-        private const val DEFAULT_URL = ""
 
         @JvmStatic
         fun newInstance(article: Article): ArticleFragment =

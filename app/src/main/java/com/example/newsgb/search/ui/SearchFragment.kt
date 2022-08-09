@@ -1,6 +1,5 @@
 package com.example.newsgb.search.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,26 +21,16 @@ import com.example.newsgb._core.ui.adapter.NewsListAdapter
 import com.example.newsgb._core.ui.adapter.RecyclerItemListener
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
-import com.example.newsgb._core.ui.store.NewsStore
-import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.article.ui.ArticleFragment
 import com.example.newsgb.databinding.SearchFragmentBinding
 import com.example.newsgb.utils.hideKeyboard
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 class SearchFragment : BaseFragment<SearchFragmentBinding>() {
 
-    private val viewModel by viewModel<SearchViewModel> { parametersOf(newsStore) }
-    /** переменная хранителя экземпляра NewsStore */
-    private var storeHolder: NewsStoreHolder? = null
-
-    /** экземпляр NewsStore, который получаем из MainActivity как хранителя этого экземпляра */
-    private val newsStore: NewsStore by lazy {
-        storeHolder?.newsStore ?: throw IllegalArgumentException()
-    }
+    private val viewModel by viewModel<SearchViewModel>()
 
     private val phrase: String by lazy {
         requireArguments().getString(ARG_SEARCH_PHRASE, "")
@@ -49,7 +38,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
 
     /** инициализируем слушатель нажатий на элементы списка
      * onItemClick - колбэк нажатия на элемент списка
-     * onBookmarkCheck - колбэк нажатия на закладку на элеменете списка (пока не реализовано!)
+     * onBookmarkCheck - колбэк нажатия на закладку на элеменете списка
      * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
@@ -59,12 +48,6 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
         override fun onBookmarkCheck(itemArticle: Article) {
             viewModel.checkBookmark(article = itemArticle)
         }
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        /** инициализируем переменную хранителя экземпляра NewsStore */
-        storeHolder = context as NewsStoreHolder
     }
 
     /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
@@ -80,11 +63,6 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
     override fun onResume() {
         super.onResume()
         initData()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        storeHolder = null
     }
 
     override fun getViewBinding() = SearchFragmentBinding.inflate(layoutInflater)

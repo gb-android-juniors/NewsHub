@@ -10,39 +10,6 @@
     <string name="technology_category_name_text">Technologie</string>
     <string name="science_category_name_text">Wissenschaft</string>
 
-    <!--    Details Fragment news-->
-    <string name="news_source">Quelle:</string>
-    <string name="publication_date">Veröffentlichungsdatum:</string>
-
-    <!--    BottomNavigation names-->
-    <string name="news">Nachrichten</string>
-    <string name="bookmarks">Lesezeichen</string>
-    <string name="settings">Einstellungen</string>
-
-    <!--    AlertDialog-->
-    <string name="dialog_message_device_is_offline">Sie können die App nicht ohne Internetverbindung verwenden. Bitte überprüfen Sie die Internetverbindung.</string>
-    <string name="dialog_title_device_is_offline">Keine Internetverbindung</string>
-    <string name="dialog_button_cancel">Absagen</string>
-    <string name="dialog_title_stub">Undefinierter Fehler</string>
-
-<!--    Bookmarks Fragment news-->
-    <string name="empty_bookmark_warning_text">Keine ausgewählten Artikel</string>
-    <string name="no_news">Keine Neuigkeiten!</string>
-    <string name="more_details">Mehr Details…</string>
-    <string name="unknown_error">Unbekannter Fehler!</string>
-    <string name="closing_warning">Möchten Sie wirklich alle Lesezeichen löschen?</string>
-    <string name="yes">Ja</string>
-    <string name="no">Nein</string>
-
-    <!--    Settings Fragment-->
-    <string name="settings_region_selection_hint_text">Nachrichtenregion auswählen</string>
-    <string name="settings_theme_hint_text">Wählen Sie ein App-Design aus</string>
-    <string name="settings_theme_helper_text">* Die App wird neu gestartet, um die Einstellung zu übernehmen.</string>
-    <string name="settings_system_theme_name">Genauso wie im System</string>
-    <string name="settings_dark_theme_name">Dunkel Modus</string>
-    <string name="settings_light_theme_name">Heller Modus</string>
-    <string name="settings_battery_theme_name">Batterie spar thema</string>
-
     <!--    Country names-->
     <string name="country_russia">Russland</string>
     <string name="country_germany">Deutschland</string>
@@ -99,6 +66,41 @@
     <string name="country_usa">Vereinigte Staaten von Amerika</string>
     <string name="country_venezuela">Venezuela</string>
     <string name="country_south_africa">Südafrika</string>
+
+    <!--    Details Fragment news-->
+    <string name="news_source">Quelle:</string>
+    <string name="publication_date">Veröffentlichungsdatum:</string>
+
+    <!--    BottomNavigation names-->
+    <string name="news">Nachrichten</string>
+    <string name="bookmarks">Lesezeichen</string>
+    <string name="settings">Einstellungen</string>
+
+    <!--    AlertDialog-->
+    <string name="dialog_message_device_is_offline">Sie können die App nicht ohne Internetverbindung verwenden. Bitte überprüfen Sie die Internetverbindung.</string>
+    <string name="dialog_title_device_is_offline">Keine Internetverbindung</string>
+    <string name="dialog_button_cancel">Absagen</string>
+    <string name="dialog_title_stub">Undefinierter Fehler</string>
+
+    <!--    Bookmarks Fragment news-->
+    <string name="empty_bookmark_warning_text">Keine ausgewählten Artikel</string>
+    <string name="no_news">Keine Neuigkeiten!</string>
+    <string name="more_details">Mehr Details…</string>
+    <string name="unknown_error">Unbekannter Fehler!</string>
+    <string name="closing_warning">Möchten Sie wirklich alle Lesezeichen löschen?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nein</string>
+
+    <!--    Settings Fragment-->
+    <string name="settings_region_selection_hint_text">Nachrichtenregion auswählen</string>
+    <string name="settings_theme_hint_text">Wählen Sie ein App-Design aus</string>
+    <string name="settings_theme_helper_text">* Die App wird neu gestartet, um die Einstellung zu übernehmen.</string>
+    <string name="settings_system_theme_name">Genauso wie im System</string>
+    <string name="settings_dark_theme_name">Dunkel Modus</string>
+    <string name="settings_light_theme_name">Heller Modus</string>
+    <string name="settings_battery_theme_name">Batterie spar thema</string>
+
+    <!--    Search Fragment-->
     <string name="search_titles">Titel suchen</string>
     <string name="enter_text">Text eingeben…</string>
     <string name="search">Suche</string>

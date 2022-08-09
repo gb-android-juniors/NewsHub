@@ -1,6 +1,5 @@
 package com.example.newsgb.news.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -16,8 +15,6 @@ import com.example.newsgb._core.ui.adapter.NewsListAdapter
 import com.example.newsgb._core.ui.adapter.RecyclerItemListener
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
-import com.example.newsgb._core.ui.store.NewsStore
-import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.article.ui.ArticleFragment
 import com.example.newsgb.databinding.NewsFragmentTabItemBinding
 import com.example.newsgb.utils.ui.Category
@@ -32,16 +29,8 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
     private val category: Category?
         get() = requireArguments().getSerializable(ARG_CATEGORY) as? Category
 
-    /** переменная хранителя экземпляра NewsStore */
-    private var storeHolder: NewsStoreHolder? = null
-
-    /** экземпляр NewsStore, который получаем из MainActivity как хранителя этого экземпляра */
-    private val newsStore: NewsStore by lazy {
-        storeHolder?.newsStore ?: throw IllegalArgumentException()
-    }
-
     /** во viewModel в качестве параметров передаем экземпляр NewsStore и категорию новостей */
-    private val viewModel by viewModel<NewsViewModel> { parametersOf(newsStore, category) }
+    private val viewModel by viewModel<NewsViewModel> { parametersOf(category) }
 
     /** инициализируем слушатель нажатий на элементы списка
      * onItemClick - колбэк нажатия на элемент списка
@@ -60,12 +49,6 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
     /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
     private val newsListAdapter: NewsListAdapter = NewsListAdapter(listener = recyclerItemListener)
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        /** инициализируем переменную хранителя экземпляра NewsStore */
-        storeHolder = context as NewsStoreHolder
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -75,11 +58,6 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
     override fun onResume() {
         super.onResume()
         initData()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        storeHolder = null
     }
 
     private fun initView() = with(binding) {

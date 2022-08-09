@@ -1,6 +1,5 @@
 package com.example.newsgb.bookmarks.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -15,26 +14,15 @@ import com.example.newsgb._core.ui.adapter.NewsListAdapter
 import com.example.newsgb._core.ui.adapter.RecyclerItemListener
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ListViewState
-import com.example.newsgb._core.ui.store.NewsStore
-import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.article.ui.ArticleFragment
 import com.example.newsgb.databinding.BookmarksFragmentBinding
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
 
-    /** переменная хранителя экземпляра NewsStore */
-    private var storeHolder: NewsStoreHolder? = null
-
-    /** экземпляр NewsStore, который получаем из MainActivity как хранителя этого экземпляра */
-    private val newsStore: NewsStore by lazy {
-        storeHolder?.newsStore ?: throw IllegalArgumentException()
-    }
-
-    private val viewModel by viewModel<BookmarksViewModel> { parametersOf(newsStore) }
+    private val viewModel by viewModel<BookmarksViewModel>()
 
     /** инициализируем слушатель нажатий на элементы списка
      * onItemClick - колбэк нажатия на элемент списка
@@ -50,12 +38,6 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        /** инициализируем переменную хранителя экземпляра NewsStore */
-        storeHolder = context as NewsStoreHolder
-    }
-
     /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
     private val bookmarksListAdapter: NewsListAdapter =
         NewsListAdapter(listener = recyclerItemListener)
@@ -69,11 +51,6 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
     override fun onResume() {
         super.onResume()
         initData()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        storeHolder = null
     }
 
     private fun initData() {

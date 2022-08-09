@@ -1,6 +1,5 @@
 package com.example.newsgb.settings.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -8,8 +7,6 @@ import android.widget.ArrayAdapter
 import com.example.newsgb.App
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
-import com.example.newsgb._core.ui.store.NewsStore
-import com.example.newsgb._core.ui.store.NewsStoreHolder
 import com.example.newsgb.databinding.SettingsFragmentBinding
 import com.example.newsgb.utils.Constants
 import com.example.newsgb.utils.PrivateSharedPreferences
@@ -17,30 +14,10 @@ import com.example.newsgb.utils.hideKeyboard
 import com.example.newsgb.utils.ui.Countries
 import com.example.newsgb.utils.ui.ThemeModes
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
 
-    /** переменная хранителя экземпляра NewsStore */
-    private var storeHolder: NewsStoreHolder? = null
-
-    /** экземпляр NewsStore, который получаем из MainActivity как хранителя этого экземпляра */
-    private val newsStore: NewsStore by lazy {
-        storeHolder?.newsStore ?: throw IllegalArgumentException()
-    }
-
-    private val viewModel by viewModel<SettingsViewModel> { parametersOf(newsStore) }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        /** инициализируем переменную хранителя экземпляра NewsStore */
-        storeHolder = context as NewsStoreHolder
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        storeHolder = null
-    }
+    private val viewModel by viewModel<SettingsViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

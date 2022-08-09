@@ -1,6 +1,5 @@
 package com.example.newsgb.search.di
 
-import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.search.data.SearchRepositoryImpl
 import com.example.newsgb.search.domain.SearchRepository
 import com.example.newsgb.search.domain.SearchUseCases
@@ -11,5 +10,5 @@ import org.koin.dsl.module
 val searchModule = module {
     single<SearchRepository> { SearchRepositoryImpl(apiService = get()) }
     single { SearchUseCases(bookmarkRepo = get(), searchRepo = get()) }
-    viewModel { (store: NewsStore) -> SearchViewModel(useCases = get(), store = store) }
+    viewModel { SearchViewModel(useCases = get(), store = get()) }
 }
