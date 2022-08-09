@@ -51,9 +51,6 @@ class NewsViewModel(
         when (effect) {
             is AppEffect.LoadData -> getNewsByCategory(isRefreshing = effect.isRefreshing)
             is AppEffect.CheckBookmark -> checkBookmarkInDatabase(article = effect.dataItem)
-            is AppEffect.Error -> {
-                //todo вывести тост с ошибкой
-            }
             else -> {}
         }
     }

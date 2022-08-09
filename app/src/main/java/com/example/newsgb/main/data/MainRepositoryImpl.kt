@@ -1,7 +1,6 @@
 package com.example.newsgb.main.data
 
 import com.example.newsgb._core.data.api.ApiService
-import com.example.newsgb._core.data.api.model.ApiKeys
 import com.example.newsgb._core.data.api.model.ResponseDTO
 import com.example.newsgb.main.domain.MainRepository
 import kotlinx.coroutines.Dispatchers

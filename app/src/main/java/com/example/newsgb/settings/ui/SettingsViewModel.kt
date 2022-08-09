@@ -6,7 +6,8 @@ import com.example.newsgb._core.ui.model.AppEffect
 import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.main.domain.MainUseCases
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(private val useCases: MainUseCases, private val store: NewsStore) :

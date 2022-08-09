@@ -3,7 +3,6 @@ package com.example.newsgb.main.domain
 import com.example.newsgb._core.data.api.model.ApiKeys
 import com.example.newsgb._core.ui.mapper.EntitiesToArticleMapper
 import com.example.newsgb._core.ui.mapper.NewsDtoToUiMapper
-import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb.bookmarks.domain.BookmarkRepository
 
