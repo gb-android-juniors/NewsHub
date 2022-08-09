@@ -4,12 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_background_color"
     tools:context=".settings.ui.SettingsFragment">
 
     <com.google.android.material.appbar.AppBarLayout
-        style="@style/SmartAppBar"
         android:id="@+id/settings_appbar"
+        style="@style/SmartAppBar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,19 +31,19 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_8"
         android:layout_marginTop="@dimen/margin_24"
-        android:enabled="false"
         android:hint="@string/settings_region_selection_hint_text"
-        android:inputType="none"
         android:textColorHint="@color/indigo_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_appbar">
+        app:layout_constraintTop_toBottomOf="@+id/settings_appbar"
+        app:startIconDrawable="@drawable/ic_country">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/select_country_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="none"
+            android:inputType="textAutoComplete"
+            android:selectAllOnFocus="true"
             android:textColor="@color/textDarkPrimary"
             tools:ignore="LabelFor"
             tools:text="@string/country_argentina" />
@@ -58,9 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_8"
         android:layout_marginTop="@dimen/margin_24"
-        android:enabled="false"
         android:hint="@string/settings_theme_hint_text"
-        android:inputType="text"
         android:textColorHint="@color/indigo_400"
         app:helperTextTextColor="@color/settings_warning_helper_text"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +69,8 @@
             android:id="@+id/select_app_theme_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:inputType="none"
+            android:editable="false"
+            android:focusable="false"
             android:textColor="@color/textDarkPrimary"
             tools:ignore="LabelFor"
             tools:text="@string/settings_dark_theme_name" />

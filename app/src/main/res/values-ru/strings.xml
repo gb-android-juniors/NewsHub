@@ -99,5 +99,6 @@
     <string name="country_usa">США</string>
     <string name="country_venezuela">Венесуэла</string>
     <string name="country_south_africa">Южная Африка</string>
+    <string name="search_titles">Поиск статей</string>
 
 </resources>

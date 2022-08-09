@@ -99,5 +99,6 @@
     <string name="country_usa">Vereinigte Staaten von Amerika</string>
     <string name="country_venezuela">Venezuela</string>
     <string name="country_south_africa">Südafrika</string>
+    <string name="search_titles">Titel suchen</string>
 
 </resources>

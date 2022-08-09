@@ -106,5 +106,6 @@
     <string name="country_usa">USA</string>
     <string name="country_venezuela">Venezuela</string>
     <string name="country_south_africa">South Africa</string>
+    <string name="search_titles">Search titles</string>
 
 </resources>
