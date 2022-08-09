@@ -27,8 +27,7 @@ class CustomSplashScreenFragment : BaseFragment<CustomSplashScreenFragmentBindin
 
                 override fun onAnimationEnd(animation: Animator?) {
                     requireActivity().supportFragmentManager.beginTransaction()
-                        .remove(this@CustomSplashScreenFragment)
-                        .add(R.id.main_container, NavigationFragment.newInstance())
+                        .replace(R.id.main_container, NavigationFragment.newInstance())
                         .commit()
                 }
 
