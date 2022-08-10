@@ -18,6 +18,7 @@
             android:name=".main.ui.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.NewsGB.SplashScreen"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,10 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".splash.ui.CustomSplashScreenActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>

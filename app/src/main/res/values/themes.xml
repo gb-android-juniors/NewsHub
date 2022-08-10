@@ -13,6 +13,12 @@
         <item name="floatingActionButtonStyle">@style/AppFabStyle</item>
     </style>
 
+    <style name="Theme.NewsGB.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_icon_splash_v</item>
+        <item name="postSplashScreenTheme">@style/Theme.NewsGB</item>
+    </style>
+
     <style name="NewsCategoryLayoutStyle">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
