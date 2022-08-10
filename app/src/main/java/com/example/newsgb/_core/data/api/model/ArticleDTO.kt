@@ -10,7 +10,7 @@ data class ArticleDTO(
     val author: String?,
 
     @SerializedName("title")
-    val title: String,
+    val title: String?,
 
     @SerializedName("description")
     val description: String?,
@@ -22,7 +22,7 @@ data class ArticleDTO(
     val imageUrl: String?,
 
     @SerializedName("publishedAt")
-    val publishedDate: String,
+    val publishedDate: String?,
 
     @SerializedName("content")
     val content: String?
