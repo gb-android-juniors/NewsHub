@@ -23,7 +23,6 @@
             app:titleTextColor="@color/textLightPrimary" />
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/select_country_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
@@ -32,11 +31,12 @@
         android:layout_marginHorizontal="@dimen/margin_8"
         android:layout_marginTop="@dimen/margin_24"
         android:hint="@string/settings_region_selection_hint_text"
-        android:textColorHint="@color/indigo_400"
+        android:textColorHint="@color/text_hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_appbar"
-        app:startIconDrawable="@drawable/ic_country">
+        app:startIconDrawable="@drawable/ic_country"
+        app:startIconTint="@color/start_icon_tint_color">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/select_country_text"
@@ -58,12 +58,13 @@
         android:layout_marginHorizontal="@dimen/margin_8"
         android:layout_marginTop="@dimen/margin_24"
         android:hint="@string/settings_theme_hint_text"
-        android:textColorHint="@color/indigo_400"
+        android:textColorHint="@color/text_hint_color"
         app:helperTextTextColor="@color/settings_warning_helper_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_country_layout"
-        app:startIconDrawable="@drawable/ic_theme">
+        app:startIconDrawable="@drawable/ic_theme"
+        app:startIconTint="@color/start_icon_tint_color">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/select_app_theme_text"

@@ -174,7 +174,7 @@
         <item name="tint">@color/white</item>
         <item name="backgroundTint">@color/bookmark_selected_color</item>
         <item name="borderWidth">0dp</item>
-        <item name="fabSize">mini</item>
+        <item name="fabSize">normal</item>
     </style>
 
 </resources>

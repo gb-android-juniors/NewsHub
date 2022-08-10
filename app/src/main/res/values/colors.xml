@@ -17,6 +17,8 @@
     <color name="splash_background">#FFFFFFFF</color>
     <color name="settings_warning_helper_text">#F44336</color>
     <color name="first_news_text_background">@color/indigo_700</color>
+    <color name="start_icon_tint_color">@color/indigo_700</color>
+    <color name="text_hint_color">@color/indigo_400</color>
 
     <!--Colors for CustomTheme-->
     <color name="pink_900">#880E4F</color>
