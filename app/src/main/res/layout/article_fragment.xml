@@ -10,6 +10,7 @@
     tools:context=".article.ui.WebViewFragment">
 
     <com.google.android.material.appbar.AppBarLayout
+        style="@style/SmartAppBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:liftOnScroll="true">
