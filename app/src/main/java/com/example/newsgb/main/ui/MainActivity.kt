@@ -3,8 +3,10 @@ package com.example.newsgb.main.ui
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: MainActivityBinding
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         setApplicationTheme()
         super.onCreate(savedInstanceState)
@@ -75,6 +78,7 @@ class MainActivity : AppCompatActivity() {
      * если интернет недоступен, уведомляем пользователя с помощью ImageView в активити и AlertDialog,
      * иначе запускаем основной фрагмент
      * */
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun startMainScreen() {
         if (!isNetworkAvailable() && isDialogNull()) {
             showNoInternetConnectionInfo()
@@ -87,18 +91,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun isNetworkAvailable(): Boolean {
         val connectivityManager =
             (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
         val capabilities =
             connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
         if (capabilities != null) {
-            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                return true
-            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                return true
-            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
-                return true
+            return when {
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                else -> false
             }
         }
         return false
@@ -130,6 +134,7 @@ class MainActivity : AppCompatActivity() {
         AlertDialogFragment.newInstance(title, message)
             .show(supportFragmentManager, DIALOG_FRAGMENT_TAG)
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun subscribeToNetworkChange() {
         OnlineLiveData(this).observe(this@MainActivity) {
             isNetworkAvailable()
