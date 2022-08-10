@@ -5,15 +5,12 @@ import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.newsgb.App
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.databinding.MainActivityBinding
-import com.example.newsgb.splash.ui.CustomSplashScreenActivity
 import com.example.newsgb.utils.Constants
 import com.example.newsgb.utils.PrivateSharedPreferences
 import com.example.newsgb.utils.network.OnlineLiveData
@@ -128,8 +125,5 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val DIALOG_FRAGMENT_TAG = "74a54328-5d62-46bf-ab6b-cbf5d8c79522"
-        private const val SLIDE_LEFT_DURATION = 1000L
-        private const val COUNTDOWN_DURATION = 2000L
-        private const val COUNTDOWN_INTERVAL = 1000L
     }
 }
