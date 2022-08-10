@@ -2,6 +2,7 @@ package com.example.newsgb.main.ui
 
 import android.content.Context
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -25,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModel()
 
     private lateinit var binding: MainActivityBinding
-    private var isNetworkAvailable: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setApplicationTheme()
@@ -33,16 +33,13 @@ class MainActivity : AppCompatActivity() {
         getCountryCodeFromPreferences()
         installSplashScreen().run {
             viewModel.getInitialData()
-            this.setKeepOnScreenCondition{true}
+            this.setKeepOnScreenCondition { true }
             Thread.sleep(1000)
-            this.setKeepOnScreenCondition{false}
+            this.setKeepOnScreenCondition { false }
         }
         setTheme(R.style.CustomThemeIndigo)
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //проверяем наличие интернет-подключения на старте
-        isNetworkAvailable =
-            (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected == true
         //запускаем главный фрагмент
         startMainScreen()
         //подписываемся на изменение наличия интернет-подключения
@@ -79,15 +76,32 @@ class MainActivity : AppCompatActivity() {
      * иначе запускаем основной фрагмент
      * */
     private fun startMainScreen() {
-        if (!isNetworkAvailable && isDialogNull()) {
+        if (!isNetworkAvailable() && isDialogNull()) {
             showNoInternetConnectionInfo()
-        } else if (isNetworkAvailable) {
+        } else if (isNetworkAvailable()) {
             binding.networkLostImage.visibility = View.GONE
             binding.mainContainer.visibility = View.VISIBLE
             supportFragmentManager.beginTransaction()
                 .replace(R.id.main_container, NavigationFragment.newInstance())
                 .commit()
         }
+    }
+
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager =
+            (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+        if (capabilities != null) {
+            if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                return true
+            } else if (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)) {
+                return true
+            }
+        }
+        return false
     }
 
     /**
@@ -118,7 +132,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun subscribeToNetworkChange() {
         OnlineLiveData(this).observe(this@MainActivity) {
-            isNetworkAvailable = it
+            isNetworkAvailable()
             startMainScreen()
         }
     }
