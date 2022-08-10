@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         setApplicationTheme()
         super.onCreate(savedInstanceState)
+        getCountryCodeFromPreferences()
         installSplashScreen().run {
             viewModel.getInitialData()
             this.setKeepOnScreenCondition{true}
@@ -42,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         //проверяем наличие интернет-подключения на старте
         isNetworkAvailable =
             (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected == true
-        getCountryCodeFromPreferences()
         //запускаем главный фрагмент
         startMainScreen()
         //подписываемся на изменение наличия интернет-подключения
