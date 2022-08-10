@@ -8,8 +8,14 @@
 Однако в "NewsGB" Вы можете смотреть актуальные новости в 54 странах/регионах нашей планеты.
 
 
-Разработка велась в Android Studio на языке Kotlin с использованием всех современных технологий 
-и методологии разработки - AGILE (MVI, Coroutines, Koin и т.д.). 
+Разработка велась по методологии разработки - AGILE.
+Среда разработки:  Android Studio.
+Язык программирования: Kotlin 
+Используемые технологии:
+Material.io, Glide, Splashscreen, Koin, Retrofit2, Room, Coroutines, ViewPager2, SwipeRefreshLayout.
+
+Ссылка на видео-презентацию:
+https://youtu.be/YgIxsc3nkXQ
 
 
 Обратная связь: gb.android.juniors@rambler.ru
