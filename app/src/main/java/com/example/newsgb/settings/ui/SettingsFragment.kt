@@ -12,6 +12,7 @@ import com.example.newsgb.utils.Constants
 import com.example.newsgb.utils.PrivateSharedPreferences
 import com.example.newsgb.utils.hideKeyboard
 import com.example.newsgb.utils.ui.Countries
+import com.example.newsgb.utils.ui.Languages
 import com.example.newsgb.utils.ui.ThemeModes
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,9 +29,10 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         root.setOnClickListener { hideKeyboard() }
         selectCountryText.setText(getSelectedCountryNameFromPreferences())
         selectAppThemeText.setText(getSelectedAppThemeName())
-        selectAppThemeLayout.helperText = getString(R.string.settings_theme_helper_text)
+        selectAppLanguageText.setText(getSelectedLanguage())
         setCountryListListener()
         setThemeListListener()
+        setLanguageListListener()
     }
 
     private fun setCountryListListener() = with(binding) {
@@ -54,7 +56,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         val adapter = ArrayAdapter(
             requireContext(),
             R.layout.settings_options_list_item,
-            ThemeModes.values().map { getString(it.resIdName) }.toList()
+            ThemeModes.values().map { getString(it.nameResId) }.toList()
         )
         selectAppThemeText.setAdapter(adapter)
         selectAppThemeText.onItemClickListener =
@@ -65,6 +67,23 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
                 ).save(index = position)
                 requireActivity().recreate()
             }
+    }
+
+    private fun setLanguageListListener() = with(binding) {
+        selectAppLanguageText.setOnClickListener { hideKeyboard() }
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.settings_options_list_item,
+            Languages.values().map { getString(it.nameResId) }.toList()
+        )
+        selectAppLanguageText.setAdapter(adapter)
+        selectAppLanguageText.onItemClickListener = AdapterView.OnItemClickListener {_, _, position, _ ->
+            PrivateSharedPreferences(
+                context = requireContext(),
+                prefName = Constants.APP_PREFERENCES_LANGUAGE
+            ).save(index = position)
+            requireActivity().recreate()
+        }
     }
 
     private fun saveSelectedCountry(adapterView: AdapterView<*>, position: Int) {
@@ -82,7 +101,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         context = requireContext(),
         prefName = Constants.APP_PREFERENCES_THEME_MODE
     ).read().let { index ->
-        getString(ThemeModes.values()[index].resIdName)
+        getString(ThemeModes.values()[index].nameResId)
     }
 
     private fun getSelectedCountryNameFromPreferences(): String = PrivateSharedPreferences(
@@ -90,6 +109,14 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
     ).read().let { index ->
         getString(Countries.values()[index].nameResId)
+    }
+
+
+    private fun getSelectedLanguage(): String = PrivateSharedPreferences(
+        context = requireContext(),
+        prefName = Constants.APP_PREFERENCES_THEME_MODE
+    ).read().let { index ->
+        getString(Languages.values()[index].nameResId)
     }
 
     private fun getMapOfCountryNamesWithIndexes(): Map<String, Int> =

@@ -74,6 +74,11 @@
     <string name="country_venezuela">Venezuela</string>
     <string name="country_south_africa">South Africa</string>
 
+    <!--    Languages-->
+    <string name="settings_language_english">English</string>
+    <string name="settings_language_deutsch">Deutsch</string>
+    <string name="settings_language_russian">Russian</string>
+
     <!--    Details Fragment news-->
     <string name="news_source">Source:</string>
     <string name="publication_date">Publication date:</string>
@@ -106,6 +111,7 @@
     <string name="settings_dark_theme_name">Dark mode</string>
     <string name="settings_system_theme_name">Same as in the system</string>
     <string name="settings_battery_theme_name">Battery saver theme</string>
+    <string name="settings_language_hint_text">Select application language:</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Search titles</string>

@@ -67,6 +67,11 @@
     <string name="country_venezuela">Venezuela</string>
     <string name="country_south_africa">Südafrika</string>
 
+    <!--    Languages-->
+    <string name="settings_language_russian">Russisch</string>
+    <string name="settings_language_deutsch">Deutsch</string>
+    <string name="settings_language_english">Englisch</string>
+
     <!--    Details Fragment news-->
     <string name="news_source">Quelle:</string>
     <string name="publication_date">Veröffentlichungsdatum:</string>
@@ -99,6 +104,7 @@
     <string name="settings_dark_theme_name">Dunkel Modus</string>
     <string name="settings_light_theme_name">Heller Modus</string>
     <string name="settings_battery_theme_name">Batterie spar thema</string>
+    <string name="settings_language_hint_text">Anwendungssprache auswählen:</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Titel suchen</string>

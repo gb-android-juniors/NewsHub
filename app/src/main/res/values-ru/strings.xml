@@ -67,6 +67,11 @@
     <string name="country_venezuela">Венесуэла</string>
     <string name="country_south_africa">Южная Африка</string>
 
+    <!--    Languages-->
+    <string name="settings_language_english">Английский</string>
+    <string name="settings_language_deutsch">Немецкий</string>
+    <string name="settings_language_russian">Русский</string>
+
     <!--    Details Fragment news-->
     <string name="news_source">Источник:</string>
     <string name="publication_date">Дата публикации:</string>
@@ -99,6 +104,7 @@
     <string name="settings_dark_theme_name">Темный режим</string>
     <string name="settings_light_theme_name">Светлый режим</string>
     <string name="settings_battery_theme_name">Режим экономии батареи</string>
+    <string name="settings_language_hint_text">Выберите язык приложения:</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Поиск статей</string>

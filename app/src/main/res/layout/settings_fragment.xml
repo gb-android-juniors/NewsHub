@@ -59,6 +59,7 @@
         android:layout_marginTop="@dimen/margin_24"
         android:hint="@string/settings_theme_hint_text"
         android:textColorHint="@color/text_hint_color"
+        app:helperText="@string/settings_theme_helper_text"
         app:helperTextTextColor="@color/settings_warning_helper_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,6 +76,35 @@
             android:textColor="@color/textDarkPrimary"
             tools:ignore="LabelFor"
             tools:text="@string/settings_dark_theme_name" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/select_app_language_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_24"
+        android:hint="@string/settings_language_hint_text"
+        android:textColorHint="@color/text_hint_color"
+        app:helperText="@string/settings_theme_helper_text"
+        app:helperTextTextColor="@color/settings_warning_helper_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_app_theme_layout"
+        app:startIconDrawable="@drawable/ic_language_24"
+        app:startIconTint="@color/icon_tint_color">
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/select_app_language_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="@color/textDarkPrimary"
+            tools:ignore="LabelFor"
+            tools:text="@string/settings_language_english" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
