@@ -12,13 +12,13 @@ object NewsDtoToUiMapper {
         return newsList.map { articleDTO ->
             Article(
                 category = category,
-                sourceName = articleDTO.source.name,
+                sourceName = articleDTO.source.name.orEmpty(),
                 author = articleDTO.author.orEmpty(),
-                title = articleDTO.title,
+                title = articleDTO.title.orEmpty(),
                 description = articleDTO.description.orEmpty(),
                 contentUrl = articleDTO.contentUrl,
                 imageUrl = articleDTO.imageUrl,
-                publishedDate = articleDTO.publishedDate,
+                publishedDate = articleDTO.publishedDate.orEmpty(),
                 content = articleDTO.content.orEmpty()
             )
         }
