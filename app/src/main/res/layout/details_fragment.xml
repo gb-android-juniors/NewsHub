@@ -5,9 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_background_color"
+    android:clickable="true"
+    android:focusable="true"
     tools:context=".article.ui.ArticleFragment">
 
     <com.google.android.material.appbar.AppBarLayout
+        style="@style/SmartAppBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:liftOnScroll="true">
@@ -16,7 +19,9 @@
             android:id="@+id/details_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIconTint="@color/white" />
+            app:navigationIconTint="@color/white"
+            app:title="@string/details"
+            app:titleTextColor="@color/textLightPrimary" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -56,9 +61,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8"
+                android:textColor="@color/textDarkPrimary"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/header_text_size"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/example_header_text" />
@@ -68,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8"
-                android:textColor="@color/resource_name_color"
+                android:textColor="@color/textDarkDisabled"
                 android:textIsSelectable="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/article_header_text"
@@ -80,6 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_8"
                 android:text="@string/example_news_publication_date"
+                android:textColor="@color/textDarkDisabled"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/article_source_name" />
 
@@ -89,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_8"
                 android:layout_marginVertical="@dimen/margin_24"
+                android:textColor="@color/textDarkSecondary"
                 android:textIsSelectable="true"
                 android:textSize="@dimen/common_text_size"
                 app:layout_constraintEnd_toEndOf="parent"

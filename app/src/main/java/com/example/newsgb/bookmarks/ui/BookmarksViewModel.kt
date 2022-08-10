@@ -29,13 +29,11 @@ class BookmarksViewModel(
      * */
     private fun renderStoreState(storeState: AppState) {
         when (storeState) {
-            AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value =
-                ListViewState.Loading
+            is AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value = ListViewState.Loading
             is AppState.Data -> filterBookmarksFromStore(data = storeState.data)
-            is AppState.BookmarkChecking, is AppState.BookmarksClearing  -> _viewState.value =
-                ListViewState.Refreshing
-            is AppState.Error -> _viewState.value =
-                ListViewState.Error(message = storeState.message)
+            is AppState.BookmarkChecking -> _viewState.value = ListViewState.Refreshing(data = storeState.data)
+            is AppState.BookmarksClearing  -> _viewState.value = ListViewState.Refreshing(data = storeState.data)
+            is AppState.Error -> _viewState.value = ListViewState.Error(message = storeState.message)
             else -> {}
         }
     }

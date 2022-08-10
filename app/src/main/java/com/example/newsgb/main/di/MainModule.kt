@@ -11,5 +11,5 @@ import org.koin.dsl.module
 val mainModule = module {
     single<MainRepository> { MainRepositoryImpl(apiService = get()) }
     single { MainUseCases(bookmarkRepo = get(), mainRepo = get()) }
-    viewModel { (store: NewsStore) -> MainViewModel(useCases = get(), store = store) }
+    viewModel { MainViewModel(useCases = get(), store = get()) }
 }

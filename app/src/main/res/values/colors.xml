@@ -2,7 +2,6 @@
 <resources>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
@@ -16,5 +15,61 @@
     <color name="bookmark_unselected_color">#7E7E80</color>
     <color name="bookmark_selected_color">#FF9800</color>
     <color name="splash_background">#FFFFFFFF</color>
+    <color name="settings_warning_helper_text">#F44336</color>
+    <color name="first_news_text_background">@color/indigo_700</color>
+
+    <!--Colors for CustomTheme-->
+    <color name="pink_900">#880E4F</color>
+    <color name="pink_700">#C2185B</color>
+    <color name="pink_400">#EC407A</color>
+    <color name="pink_300">#F06292</color>
+    <color name="pink_100">#F8BBD0</color>
+    <color name="purple_900">#4A148C</color>
+    <color name="purple_700">#7B1FA2</color>
+    <color name="purple_400">#AB47BC</color>
+    <color name="purple_300">#BA68C8</color>
+    <color name="purple_100">#E1BEE7</color>
+    <color name="indigo_900">#1A237E</color>
+    <color name="indigo_700">#303F9F</color>
+    <color name="indigo_400">#5C6BC0</color>
+    <color name="indigo_300">#7986CB</color>
+    <color name="indigo_200">#9FA8DA</color>
+    <color name="indigo_100">#C5CAE9</color>
+    <color name="blue_900">#0D47A1</color>
+    <color name="blue_700">#1976D2</color>
+    <color name="blue_400">#42A5F5</color>
+    <color name="blue_300">#64B5F6</color>
+    <color name="blue_100">#BBDEFB</color>
+    <color name="cyan_900">#006064</color>
+    <color name="cyan_700">#0097A7</color>
+    <color name="cyan_400">#26C6DA</color>
+    <color name="cyan_300">#4DD0E1</color>
+    <color name="cyan_100">#B2EBF2</color>
+    <color name="green_900">#1B5E20</color>
+    <color name="green_700">#388E3C</color>
+    <color name="green_400">#66BB6A</color>
+    <color name="green_300">#81C784</color>
+    <color name="green_100">#C8E6C9</color>
+    <color name="yellow_900">#F57F17</color>
+    <color name="yellow_700">#FBC02D</color>
+    <color name="yellow_400">#FFEE58</color>
+    <color name="yellow_300">#FFF176</color>
+    <color name="yellow_100">#FFF9C4</color>
+    <color name="orange_900">#E65100</color>
+    <color name="orange_700">#F57C00</color>
+    <color name="orange_400">#FFA726</color>
+    <color name="orange_300">#FFB74D</color>
+    <color name="orange_100">#FFE0B2</color>
+
+    <!--Colors for text with alpha-->
+    <!-- Dark Text Color for Light Background -->
+    <color name="textDarkPrimary">#DE000000</color> <!--DE for %87 opacity-->
+    <color name="textDarkSecondary">#8A000000</color> <!--8A for %54 opacity-->
+    <color name="textDarkDisabled">#61000000</color> <!--61 for %38 opacity-->
+
+    <!-- White Text Color for Dark Background -->
+    <color name="textLightPrimary">#FFFFFF</color> <!--%100 opacity-->
+    <color name="textLightSecondary">#B2FFFFFF</color> <!--B2 for %70 opacity-->
+    <color name="textLightDisabled">#80FFFFFF</color> <!--80 for %50 opacity-->
 
 </resources>

@@ -10,7 +10,7 @@ class ViewPagerAdapter(fragment: NewsFragment) :
     FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int {
-        return Category.values().size - 1
+        return Category.values().size - 2
     }
 
     /**

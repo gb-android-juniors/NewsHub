@@ -5,4 +5,10 @@
     <color name="category_button_text_color">#BCACAC</color>
     <color name="ic_network_tint_color">#BCACAC</color>
     <color name="splash_background">#4C4C4C</color>
+    <color name="first_news_text_background">#FF000000</color>
+
+    <color name="textDarkPrimary">#FFFFFF</color> <!--%100 opacity-->
+    <color name="textDarkSecondary">#B2FFFFFF</color> <!--B2 for %70 opacity-->
+    <color name="textDarkDisabled">#80FFFFFF</color> <!--80 for %50 opacity-->
+    <color name="bookmark_selected_color">#FF9800</color>
 </resources>
