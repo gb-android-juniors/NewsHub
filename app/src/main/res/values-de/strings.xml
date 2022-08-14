@@ -105,6 +105,9 @@
     <string name="settings_light_theme_name">Heller Modus</string>
     <string name="settings_battery_theme_name">Batterie spar thema</string>
     <string name="settings_language_hint_text">Anwendungssprache auswählen:</string>
+    <string name="settings_divider_content_name">Inhaltseinstellungen</string>
+    <string name="settings_divider_interface_name">Schnittstelleneinstellungen</string>
+    <string name="settings_save_button_name">Speichern</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Titel suchen</string>

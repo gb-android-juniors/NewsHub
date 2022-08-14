@@ -112,6 +112,9 @@
     <string name="settings_option_item_name_as_system">Same as in the system</string>
     <string name="settings_battery_theme_name">Battery saver theme</string>
     <string name="settings_language_hint_text">Select application language:</string>
+    <string name="settings_divider_content_name">Content settings</string>
+    <string name="settings_divider_interface_name">Interface settings</string>
+    <string name="settings_save_button_name">Save</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Search titles</string>

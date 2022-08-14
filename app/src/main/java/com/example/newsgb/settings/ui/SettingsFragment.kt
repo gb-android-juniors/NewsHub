@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import com.example.newsgb.App
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
@@ -33,6 +34,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         setCountryListListener()
         setThemeListListener()
         setLanguageListListener()
+        settingsSaveButton.setOnClickListener { requireActivity().recreate() }
     }
 
     private fun setCountryListListener() = with(binding) {
@@ -61,8 +63,15 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         selectAppThemeText.setAdapter(adapter)
         selectAppThemeText.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                val selectedTheme = ThemeModes.values()[position].name
-                saveSelectedParameterToPreferences(prefName = Constants.APP_PREFERENCES_THEME_MODE, selectedParameter = selectedTheme)
+                if (getString(ThemeModes.values()[position].nameResId) != getSelectedAppThemeName()) {
+                    val selectedTheme = ThemeModes.values()[position].name
+                    PrivateSharedPreferences(
+                        context = requireContext(),
+                        prefName = Constants.APP_PREFERENCES_THEME_MODE
+                    ).save(parameter = selectedTheme)
+                    selectAppThemeLayout.helperText = getString(R.string.settings_theme_helper_text)
+                    setSaveButtonActive()
+                }
             }
     }
 
@@ -76,17 +85,30 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         selectAppLanguageText.setAdapter(adapter)
         selectAppLanguageText.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                val selectedLanguage = Languages.values()[position].languageCode
-                saveSelectedParameterToPreferences(prefName = Constants.APP_PREFERENCES_LANGUAGE, selectedParameter = selectedLanguage)
+                if (getString(Languages.values()[position].nameResId) != getSelectedLanguage()) {
+                    val selectedLanguage = Languages.values()[position].languageCode
+                    PrivateSharedPreferences(
+                        context = requireContext(),
+                        prefName = Constants.APP_PREFERENCES_LANGUAGE
+                    ).save(parameter = selectedLanguage)
+                    selectAppLanguageLayout.helperText =
+                        getString(R.string.settings_theme_helper_text)
+                    setSaveButtonActive()
+                }
             }
     }
 
-    private fun saveSelectedParameterToPreferences(prefName: String, selectedParameter: String?) {
-        PrivateSharedPreferences(
-            context = requireContext(),
-            prefName = prefName
-        ).save(parameter = selectedParameter)
-        requireActivity().recreate()
+    private fun setSaveButtonActive() = with(binding) {
+        settingsSaveButton.apply {
+            isEnabled = true
+            setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.bookmark_selected_color
+                )
+            )
+        }
+
     }
 
     private fun saveSelectedCountry(adapterView: AdapterView<*>, position: Int) {

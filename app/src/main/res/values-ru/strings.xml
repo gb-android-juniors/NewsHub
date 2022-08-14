@@ -105,6 +105,9 @@
     <string name="settings_light_theme_name">Светлый режим</string>
     <string name="settings_battery_theme_name">Режим экономии батареи</string>
     <string name="settings_language_hint_text">Выберите язык приложения:</string>
+    <string name="settings_divider_content_name">Настройки контента</string>
+    <string name="settings_divider_interface_name">Настройки интерфейса</string>
+    <string name="settings_save_button_name">Сохранить</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Поиск статей</string>
