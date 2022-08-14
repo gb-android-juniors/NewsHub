@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_appbar"
         app:startIconDrawable="@drawable/ic_country"
-        app:startIconTint="@color/icon_tint_color">
+        app:startIconTint="@color/start_icon_tint_color">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/select_country_text"
@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_country_layout"
         app:startIconDrawable="@drawable/ic_theme"
-        app:startIconTint="@color/icon_tint_color">
+        app:startIconTint="@color/start_icon_tint_color">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/select_app_theme_text"
@@ -94,7 +94,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/select_app_theme_layout"
         app:startIconDrawable="@drawable/ic_language_24"
-        app:startIconTint="@color/icon_tint_color">
+        app:startIconTint="@color/start_icon_tint_color">
 
         <androidx.appcompat.widget.AppCompatAutoCompleteTextView
             android:id="@+id/select_app_language_text"

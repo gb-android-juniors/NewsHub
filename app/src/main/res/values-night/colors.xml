@@ -11,6 +11,6 @@
     <color name="textDarkSecondary">#B2FFFFFF</color> <!--B2 for %70 opacity-->
     <color name="textDarkDisabled">#80FFFFFF</color> <!--80 for %50 opacity-->
     <color name="bookmark_selected_color">#FF9800</color>
-    <color name="icon_tint_color">@color/indigo_300</color>
+    <color name="start_icon_tint_color">@color/indigo_300</color>
     <color name="text_hint_color">@color/indigo_300</color>
 </resources>
