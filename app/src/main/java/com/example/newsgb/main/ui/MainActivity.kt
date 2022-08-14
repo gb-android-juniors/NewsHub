@@ -3,10 +3,12 @@ package com.example.newsgb.main.ui
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.LocaleList
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.animation.AnticipateInterpolator
@@ -26,6 +28,7 @@ import com.example.newsgb.utils.ui.AlertDialogFragment
 import com.example.newsgb.utils.ui.Countries
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,8 +39,9 @@ class MainActivity : AppCompatActivity() {
     private var isNetworkAvailable: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setApplicationTheme()
         super.onCreate(savedInstanceState)
+        setApplicationThemeMode()
+        setApplicationLocale()
         setTheme(R.style.CustomThemeIndigo)
         setSplashScreen()
         binding = MainActivityBinding.inflate(layoutInflater)
@@ -53,11 +57,29 @@ class MainActivity : AppCompatActivity() {
         subscribeToNetworkChange()
     }
 
-    private fun setApplicationTheme() {
+    private fun setApplicationLocale() {
+        PrivateSharedPreferences(
+            context = this,
+            prefName = Constants.APP_PREFERENCES_LANGUAGE
+        ).readString().let { localeToSet ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                val local = localeToSet?.let { Locale(it) } ?: Resources.getSystem().configuration.locales[0]
+                val localeListToSet = LocaleList(local)
+                LocaleList.setDefault(localeListToSet)
+                resources.configuration.setLocales(localeListToSet)
+            } else {
+                val local = localeToSet?.let { Locale(it) } ?: Resources.getSystem().configuration.locale
+                resources.configuration.setLocale(local)
+            }
+            resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+        }
+    }
+
+    private fun setApplicationThemeMode() {
         PrivateSharedPreferences(
             context = this,
             prefName = Constants.APP_PREFERENCES_THEME_MODE
-        ).read().let { index ->
+        ).readInt().let { index ->
             when (index) {
                 1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -74,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         val position = PrivateSharedPreferences(
             context = this,
             prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
-        ).read()
+        ).readInt()
         App.countryCode = Countries.values()[position].countryCode
     }
 

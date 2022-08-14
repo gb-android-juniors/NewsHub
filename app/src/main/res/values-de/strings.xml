@@ -100,7 +100,7 @@
     <string name="settings_region_selection_hint_text">Nachrichtenregion auswählen</string>
     <string name="settings_theme_hint_text">Wählen Sie ein App-Design aus</string>
     <string name="settings_theme_helper_text">* Die App wird neu gestartet, um die Einstellung zu übernehmen.</string>
-    <string name="settings_system_theme_name">Genauso wie im System</string>
+    <string name="settings_option_item_name_as_system">Genauso wie im System</string>
     <string name="settings_dark_theme_name">Dunkel Modus</string>
     <string name="settings_light_theme_name">Heller Modus</string>
     <string name="settings_battery_theme_name">Batterie spar thema</string>

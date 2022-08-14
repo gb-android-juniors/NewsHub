@@ -10,5 +10,11 @@ class PrivateSharedPreferences(context: Context, private val prefName: String) {
         sharedPreferences.edit().putInt(prefName, index).apply()
     }
 
-    fun read(): Int  = sharedPreferences.getInt(prefName, 0)
+    fun save(parameter: String?) {
+        sharedPreferences.edit().putString(prefName, parameter).apply()
+    }
+
+    fun readInt(): Int  = sharedPreferences.getInt(prefName, 0)
+
+    fun readString(): String? = sharedPreferences.getString(prefName, null)
 }

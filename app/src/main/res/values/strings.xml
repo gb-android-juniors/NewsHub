@@ -109,7 +109,7 @@
     <string name="settings_theme_helper_text">* The app will restart to apply the setting.</string>
     <string name="settings_light_theme_name">Light mode</string>
     <string name="settings_dark_theme_name">Dark mode</string>
-    <string name="settings_system_theme_name">Same as in the system</string>
+    <string name="settings_option_item_name_as_system">Same as in the system</string>
     <string name="settings_battery_theme_name">Battery saver theme</string>
     <string name="settings_language_hint_text">Select application language:</string>
 

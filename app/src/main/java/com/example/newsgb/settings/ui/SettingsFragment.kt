@@ -77,13 +77,19 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
             Languages.values().map { getString(it.nameResId) }.toList()
         )
         selectAppLanguageText.setAdapter(adapter)
-        selectAppLanguageText.onItemClickListener = AdapterView.OnItemClickListener {_, _, position, _ ->
-            PrivateSharedPreferences(
-                context = requireContext(),
-                prefName = Constants.APP_PREFERENCES_LANGUAGE
-            ).save(index = position)
-            requireActivity().recreate()
-        }
+        selectAppLanguageText.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                val selectedLanguage = Languages.values()[position].languageCode
+                saveSelectedLocale(selectedLanguage)
+            }
+    }
+
+    private fun saveSelectedLocale(selectedLanguage: String?) {
+        PrivateSharedPreferences(
+            context = requireContext(),
+            prefName = Constants.APP_PREFERENCES_LANGUAGE
+        ).save(parameter = selectedLanguage)
+        requireActivity().recreate()
     }
 
     private fun saveSelectedCountry(adapterView: AdapterView<*>, position: Int) {
@@ -100,24 +106,23 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     private fun getSelectedAppThemeName(): String = PrivateSharedPreferences(
         context = requireContext(),
         prefName = Constants.APP_PREFERENCES_THEME_MODE
-    ).read().let { index ->
+    ).readInt().let { index ->
         getString(ThemeModes.values()[index].nameResId)
     }
 
     private fun getSelectedCountryNameFromPreferences(): String = PrivateSharedPreferences(
         context = requireContext(),
         prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
-    ).read().let { index ->
+    ).readInt().let { index ->
         getString(Countries.values()[index].nameResId)
     }
 
-
     private fun getSelectedLanguage(): String = PrivateSharedPreferences(
         context = requireContext(),
-        prefName = Constants.APP_PREFERENCES_THEME_MODE
-    ).read().let { index ->
-        getString(Languages.values()[index].nameResId)
-    }
+        prefName = Constants.APP_PREFERENCES_LANGUAGE
+    ).readString()?.let { selectedLocale ->
+        getString(Languages.valueOf(selectedLocale.uppercase()).nameResId)
+    } ?: getString(Languages.DEFAULT.nameResId)
 
     private fun getMapOfCountryNamesWithIndexes(): Map<String, Int> =
         mapOf<String, Int>().plus(Countries.values().map { country ->
