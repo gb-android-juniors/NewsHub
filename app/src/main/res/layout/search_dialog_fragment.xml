@@ -13,8 +13,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_8"
         android:hint="@string/enter_text"
-        android:textColorHint="@color/icon_tint_color"
+        android:textColorHint="@color/text_hint_color"
         app:endIconDrawable="@drawable/ic_search_24"
+        app:endIconTint="@color/start_icon_tint_color"
         app:endIconMode="custom">
 
         <com.google.android.material.textfield.TextInputEditText
