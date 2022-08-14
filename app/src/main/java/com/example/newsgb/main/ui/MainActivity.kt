@@ -19,6 +19,7 @@ import com.example.newsgb.utils.PrivateSharedPreferences
 import com.example.newsgb.utils.network.OnlineLiveData
 import com.example.newsgb.utils.ui.AlertDialogFragment
 import com.example.newsgb.utils.ui.Countries
+import com.example.newsgb.utils.ui.ThemeModes
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
@@ -32,69 +33,68 @@ class MainActivity : AppCompatActivity() {
     private var isNetworkAvailable: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setApplicationThemeMode()
         super.onCreate(savedInstanceState)
+        setTheme(R.style.CustomThemeIndigo)
+        setApplicationThemeMode()
         setApplicationLocale()
-        getCountryCodeFromPreferences()
+        setCountryCodeForApi()
         installSplashScreen().run {
             viewModel.getInitialData()
-            this.setKeepOnScreenCondition{true}
+            this.setKeepOnScreenCondition { true }
             Thread.sleep(1000)
-            this.setKeepOnScreenCondition{false}
+            this.setKeepOnScreenCondition { false }
         }
-        setTheme(R.style.CustomThemeIndigo)
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //проверяем наличие интернет-подключения на старте
         isNetworkAvailable =
             (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected == true
-        //запускаем главный фрагмент
         startMainScreen()
-        //подписываемся на изменение наличия интернет-подключения
         subscribeToNetworkChange()
     }
 
-    private fun setApplicationThemeMode() {
-        PrivateSharedPreferences(
-            context = this,
-            prefName = Constants.APP_PREFERENCES_THEME_MODE
-        ).readInt().let { index ->
-            when (index) {
-                1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                3 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY)
-                else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-            }
+    private fun setApplicationThemeMode() = PrivateSharedPreferences(
+        context = this,
+        prefName = Constants.APP_PREFERENCES_THEME_MODE
+    ).readString().let { themeMode ->
+        when (themeMode) {
+            ThemeModes.LIGHT_MODE.name -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_NO
+            )
+            ThemeModes.DARK_MODE.name -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            ThemeModes.BATTERY_MODE.name -> AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+            )
+            else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         }
     }
 
-    private fun setApplicationLocale() {
-        PrivateSharedPreferences(
-            context = this,
-            prefName = Constants.APP_PREFERENCES_LANGUAGE
-        ).readString().let { localeToSet ->
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val local = localeToSet?.let { Locale(it) } ?: Resources.getSystem().configuration.locales[0]
-                val localeListToSet = LocaleList(local)
-                LocaleList.setDefault(localeListToSet)
-                resources.configuration.setLocales(localeListToSet)
-            } else {
-                val local = localeToSet?.let { Locale(it) } ?: Resources.getSystem().configuration.locale
-                resources.configuration.setLocale(local)
-            }
-            resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+    private fun setApplicationLocale() = PrivateSharedPreferences(
+        context = this,
+        prefName = Constants.APP_PREFERENCES_LANGUAGE
+    ).readString().let { localeToSet ->
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            val local = localeToSet?.let { Locale(it) }
+                ?: Resources.getSystem().configuration.locales[0]
+            val localeListToSet = LocaleList(local)
+            LocaleList.setDefault(localeListToSet)
+            resources.configuration.setLocales(localeListToSet)
+        } else {
+            val local =
+                localeToSet?.let { Locale(it) } ?: Resources.getSystem().configuration.locale
+            resources.configuration.setLocale(local)
         }
+        resources.updateConfiguration(resources.configuration, resources.displayMetrics)
     }
 
     /**
      * метод который устанавливает код страны для запроса, сохраненный в SharedPreferences или по умолчанию
      */
-    private fun getCountryCodeFromPreferences() {
-        val position = PrivateSharedPreferences(
-            context = this,
-            prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
-        ).readInt()
-        App.countryCode = Countries.values()[position].countryCode
+    private fun setCountryCodeForApi() = PrivateSharedPreferences(
+        context = this,
+        prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
+    ).readInt().let { index ->
+        App.countryCode = Countries.values()[index].countryCode
     }
 
     /**
@@ -122,9 +122,9 @@ class MainActivity : AppCompatActivity() {
     /**
      * Метод делает картинку отсутствия интернета видимой в макете и запускает AlertDialog
      * */
-    private fun showNoInternetConnectionInfo() {
-        binding.networkLostImage.visibility = View.VISIBLE
-        binding.mainContainer.visibility = View.GONE
+    private fun showNoInternetConnectionInfo() = with(binding) {
+        networkLostImage.visibility = View.VISIBLE
+        mainContainer.visibility = View.GONE
         showNoInternetConnectionDialog()
     }
 

@@ -61,11 +61,8 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         selectAppThemeText.setAdapter(adapter)
         selectAppThemeText.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                PrivateSharedPreferences(
-                    context = requireContext(),
-                    prefName = Constants.APP_PREFERENCES_THEME_MODE
-                ).save(index = position)
-                requireActivity().recreate()
+                val selectedTheme = ThemeModes.values()[position].name
+                saveSelectedParameterToPreferences(prefName = Constants.APP_PREFERENCES_THEME_MODE, selectedParameter = selectedTheme)
             }
     }
 
@@ -80,15 +77,15 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         selectAppLanguageText.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 val selectedLanguage = Languages.values()[position].languageCode
-                saveSelectedLocale(selectedLanguage)
+                saveSelectedParameterToPreferences(prefName = Constants.APP_PREFERENCES_LANGUAGE, selectedParameter = selectedLanguage)
             }
     }
 
-    private fun saveSelectedLocale(selectedLanguage: String?) {
+    private fun saveSelectedParameterToPreferences(prefName: String, selectedParameter: String?) {
         PrivateSharedPreferences(
             context = requireContext(),
-            prefName = Constants.APP_PREFERENCES_LANGUAGE
-        ).save(parameter = selectedLanguage)
+            prefName = prefName
+        ).save(parameter = selectedParameter)
         requireActivity().recreate()
     }
 
@@ -106,9 +103,9 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     private fun getSelectedAppThemeName(): String = PrivateSharedPreferences(
         context = requireContext(),
         prefName = Constants.APP_PREFERENCES_THEME_MODE
-    ).readInt().let { index ->
-        getString(ThemeModes.values()[index].nameResId)
-    }
+    ).readString()?.let { selectedTheme ->
+        getString(ThemeModes.valueOf(selectedTheme).nameResId)
+    } ?: getString(ThemeModes.SYSTEM_MODE.nameResId)
 
     private fun getSelectedCountryNameFromPreferences(): String = PrivateSharedPreferences(
         context = requireContext(),
