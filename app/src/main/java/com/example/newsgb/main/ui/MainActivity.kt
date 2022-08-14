@@ -32,8 +32,8 @@ class MainActivity : AppCompatActivity() {
     private var isNetworkAvailable: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         setApplicationThemeMode()
+        super.onCreate(savedInstanceState)
         setApplicationLocale()
         getCountryCodeFromPreferences()
         installSplashScreen().run {
