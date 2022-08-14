@@ -3,7 +3,6 @@ package com.example.newsgb.main.ui
 import android.content.Context
 import android.content.res.Resources
 import android.net.ConnectivityManager
-import android.os.Build
 import android.os.Bundle
 import android.os.LocaleList
 import android.view.View

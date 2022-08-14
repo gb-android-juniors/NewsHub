@@ -70,7 +70,7 @@ class ArticleViewModel(
     /**
      * метод обработки нажатия на фложок закладки
      */
-    fun checkBookmark() {
+    fun checkBookmark(article: Article) {
         store.dispatch(event = AppEvent.BookmarkCheck(article = article))
     }
 

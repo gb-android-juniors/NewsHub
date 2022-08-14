@@ -4,6 +4,7 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorPrimaryDark">@color/indigo_700</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
@@ -11,6 +12,12 @@
         <item name="colorOnSecondary">@color/black</item>
         <!--floatingActionButton-->
         <item name="floatingActionButtonStyle">@style/AppFabStyle</item>
+    </style>
+
+    <style name="Theme.NewsGB.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_icon_splash_v</item>
+        <item name="postSplashScreenTheme">@style/Theme.NewsGB</item>
     </style>
 
     <style name="NewsCategoryLayoutStyle">
