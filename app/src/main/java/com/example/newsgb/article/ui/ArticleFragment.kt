@@ -114,7 +114,7 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
         }
         bookmarkIcon.apply {
             setBookmarkIconColor(context = requireContext(), bookmarkImage = this, isChecked = article.isChecked)
-            setOnClickListener { viewModel.checkBookmark() }
+            setOnClickListener { viewModel.checkBookmark(article = article) }
         }
 
         Glide.with(articleImage)
