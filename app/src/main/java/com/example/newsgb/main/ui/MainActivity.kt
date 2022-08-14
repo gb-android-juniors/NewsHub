@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setTheme(R.style.CustomThemeIndigo)
         setApplicationThemeMode()
         setApplicationLocale()
         setCountryCodeForApi()
@@ -46,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setTheme(R.style.CustomThemeIndigo)
         //проверяем наличие интернет-подключения на старте
         isNetworkAvailable =
             (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected == true
