@@ -16,7 +16,7 @@
 
     <style name="Theme.NewsGB.SplashScreen" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/white</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_icon_splash_v</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_icon_splash</item>
         <item name="postSplashScreenTheme">@style/Theme.NewsGB</item>
     </style>
 
@@ -199,8 +199,7 @@
     <style name="AppSettingsSaveButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="backgroundTint">@color/bookmark_unselected_color</item>
-        <item name="enabled">false</item>
+        <item name="backgroundTint">@color/settings_save_button_unselected_color</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:layout_marginTop">@dimen/margin_16</item>
     </style>

@@ -34,7 +34,10 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         setCountryListListener()
         setThemeListListener()
         setLanguageListListener()
-        settingsSaveButton.setOnClickListener { requireActivity().recreate() }
+        with(settingsSaveButton) {
+            isEnabled = false
+            setOnClickListener { requireActivity().recreate() }
+        }
     }
 
     private fun setCountryListListener() = with(binding) {
@@ -104,7 +107,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
             setBackgroundColor(
                 ContextCompat.getColor(
                     requireContext(),
-                    R.color.bookmark_selected_color
+                    R.color.settings_save_button_selected_color
                 )
             )
         }
