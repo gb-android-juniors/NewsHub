@@ -2,7 +2,7 @@ package com.example.newsgb.utils
 
 import android.content.Context
 
-class PrivateSharedPreferences(context: Context, private val prefName: String) {
+class PreferencesHelper(context: Context, private val prefName: String) {
 
     private var sharedPreferences = context.getSharedPreferences(prefName, Context.MODE_PRIVATE)
 

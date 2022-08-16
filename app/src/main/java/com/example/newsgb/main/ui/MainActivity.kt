@@ -1,11 +1,9 @@
 package com.example.newsgb.main.ui
 
 import android.content.Context
-import android.content.res.Resources
+import android.content.ContextWrapper
 import android.net.ConnectivityManager
-import android.os.Build
 import android.os.Bundle
-import android.os.LocaleList
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -15,14 +13,14 @@ import com.example.newsgb.R
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.databinding.MainActivityBinding
 import com.example.newsgb.utils.Constants
-import com.example.newsgb.utils.PrivateSharedPreferences
+import com.example.newsgb.utils.ContextUtils
+import com.example.newsgb.utils.PreferencesHelper
 import com.example.newsgb.utils.network.OnlineLiveData
 import com.example.newsgb.utils.ui.AlertDialogFragment
 import com.example.newsgb.utils.ui.Countries
 import com.example.newsgb.utils.ui.ThemeModes
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +33,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setApplicationThemeMode()
-        setApplicationLocale()
         setCountryCodeForApi()
         installSplashScreen().run {
             viewModel.getInitialData()
@@ -53,7 +50,19 @@ class MainActivity : AppCompatActivity() {
         subscribeToNetworkChange()
     }
 
-    private fun setApplicationThemeMode() = PrivateSharedPreferences(
+    /**
+     * Настраиваем язык приложения выбранный пользователем
+     */
+    override fun attachBaseContext(newBase: Context) {
+        val selectedLang = PreferencesHelper(
+            context = newBase,
+            prefName = Constants.APP_PREFERENCES_LANGUAGE
+        ).readString()
+        val localUpdatedContext: ContextWrapper = ContextUtils.updateLocale(newBase, selectedLang)
+        super.attachBaseContext(localUpdatedContext)
+    }
+
+    private fun setApplicationThemeMode() = PreferencesHelper(
         context = this,
         prefName = Constants.APP_PREFERENCES_THEME_MODE
     ).readString().let { themeMode ->
@@ -69,28 +78,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setApplicationLocale() = PrivateSharedPreferences(
-        context = this,
-        prefName = Constants.APP_PREFERENCES_LANGUAGE
-    ).readString().let { localeToSet ->
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val local = localeToSet?.let { Locale(it) }
-                ?: Resources.getSystem().configuration.locales[0]
-            val localeListToSet = LocaleList(local)
-            LocaleList.setDefault(localeListToSet)
-            resources.configuration.setLocales(localeListToSet)
-        } else {
-            val local =
-                localeToSet?.let { Locale(it) } ?: Resources.getSystem().configuration.locale
-            resources.configuration.setLocale(local)
-        }
-        resources.updateConfiguration(resources.configuration, resources.displayMetrics)
-    }
-
     /**
      * метод который устанавливает код страны для запроса, сохраненный в SharedPreferences или по умолчанию
      */
-    private fun setCountryCodeForApi() = PrivateSharedPreferences(
+    private fun setCountryCodeForApi() = PreferencesHelper(
         context = this,
         prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
     ).readInt().let { index ->

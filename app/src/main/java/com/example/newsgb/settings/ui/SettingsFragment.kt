@@ -10,7 +10,7 @@ import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb.databinding.SettingsFragmentBinding
 import com.example.newsgb.utils.Constants
-import com.example.newsgb.utils.PrivateSharedPreferences
+import com.example.newsgb.utils.PreferencesHelper
 import com.example.newsgb.utils.hideKeyboard
 import com.example.newsgb.utils.ui.Countries
 import com.example.newsgb.utils.ui.Languages
@@ -68,7 +68,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 if (getString(ThemeModes.values()[position].nameResId) != getSelectedAppThemeName()) {
                     val selectedTheme = ThemeModes.values()[position].name
-                    PrivateSharedPreferences(
+                    PreferencesHelper(
                         context = requireContext(),
                         prefName = Constants.APP_PREFERENCES_THEME_MODE
                     ).save(parameter = selectedTheme)
@@ -90,7 +90,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
             AdapterView.OnItemClickListener { _, _, position, _ ->
                 if (getString(Languages.values()[position].nameResId) != getSelectedLanguage()) {
                     val selectedLanguage = Languages.values()[position].languageCode
-                    PrivateSharedPreferences(
+                    PreferencesHelper(
                         context = requireContext(),
                         prefName = Constants.APP_PREFERENCES_LANGUAGE
                     ).save(parameter = selectedLanguage)
@@ -117,7 +117,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     private fun saveSelectedCountry(adapterView: AdapterView<*>, position: Int) {
         val selectedCountryName = adapterView.getItemAtPosition(position).toString()
         getMapOfCountryNamesWithIndexes()[selectedCountryName]?.let { index ->
-            PrivateSharedPreferences(
+            PreferencesHelper(
                 context = requireContext(),
                 prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
             ).save(index = index)
@@ -125,21 +125,21 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         }
     }
 
-    private fun getSelectedAppThemeName(): String = PrivateSharedPreferences(
+    private fun getSelectedAppThemeName(): String = PreferencesHelper(
         context = requireContext(),
         prefName = Constants.APP_PREFERENCES_THEME_MODE
     ).readString()?.let { selectedTheme ->
         getString(ThemeModes.valueOf(selectedTheme).nameResId)
     } ?: getString(ThemeModes.SYSTEM_MODE.nameResId)
 
-    private fun getSelectedCountryNameFromPreferences(): String = PrivateSharedPreferences(
+    private fun getSelectedCountryNameFromPreferences(): String = PreferencesHelper(
         context = requireContext(),
         prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
     ).readInt().let { index ->
         getString(Countries.values()[index].nameResId)
     }
 
-    private fun getSelectedLanguage(): String = PrivateSharedPreferences(
+    private fun getSelectedLanguage(): String = PreferencesHelper(
         context = requireContext(),
         prefName = Constants.APP_PREFERENCES_LANGUAGE
     ).readString()?.let { selectedLocale ->
