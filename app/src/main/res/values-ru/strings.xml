@@ -20,7 +20,7 @@
     <string name="country_austria">Австрия</string>
     <string name="country_belgium">Бельгия</string>
     <string name="country_bulgaria">Болгария</string>
-    <string name="country_brasil">Бразилия</string>
+    <string name="country_brazil">Бразилия</string>
     <string name="country_canada">Канада</string>
     <string name="country_switzerland">Швейцария</string>
     <string name="country_china">Китай</string>
@@ -71,6 +71,7 @@
     <string name="settings_language_english">Английский</string>
     <string name="settings_language_deutsch">Немецкий</string>
     <string name="settings_language_russian">Русский</string>
+    <string name="settings_language_french">Французский</string>
 
     <!--    Details Fragment news-->
     <string name="news_source">Источник:</string>
@@ -89,7 +90,6 @@
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Нет избранных статей</string>
-    <string name="no_news">Нет новостей!</string>
     <string name="more_details">Подробнее…</string>
     <string name="unknown_error">Неизвестная ошибка!</string>
     <string name="closing_warning">Вы уверены, что хотите удалить все закладки?</string>

@@ -20,7 +20,7 @@
     <string name="country_austria">Österreich</string>
     <string name="country_belgium">Belgien</string>
     <string name="country_bulgaria">Bulgarien</string>
-    <string name="country_brasil">Brasilien</string>
+    <string name="country_brazil">Brasilien</string>
     <string name="country_canada">Kanada</string>
     <string name="country_switzerland">Schweiz</string>
     <string name="country_china">China</string>
@@ -71,6 +71,7 @@
     <string name="settings_language_russian">Russisch</string>
     <string name="settings_language_deutsch">Deutsch</string>
     <string name="settings_language_english">Englisch</string>
+    <string name="settings_language_french">Französisch</string>
 
     <!--    Details Fragment news-->
     <string name="news_source">Quelle:</string>
@@ -89,7 +90,6 @@
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Keine ausgewählten Artikel</string>
-    <string name="no_news">Keine Neuigkeiten!</string>
     <string name="more_details">Mehr Details…</string>
     <string name="unknown_error">Unbekannter Fehler!</string>
     <string name="closing_warning">Möchten Sie wirklich alle Lesezeichen löschen?</string>

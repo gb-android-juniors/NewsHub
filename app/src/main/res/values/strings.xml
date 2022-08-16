@@ -27,7 +27,7 @@
     <string name="country_austria">Austria</string>
     <string name="country_belgium">Belgium</string>
     <string name="country_bulgaria">Bulgaria</string>
-    <string name="country_brasil">Brazil</string>
+    <string name="country_brazil">Brazil</string>
     <string name="country_canada">Canada</string>
     <string name="country_switzerland">Switzerland</string>
     <string name="country_china">China</string>
@@ -78,6 +78,7 @@
     <string name="settings_language_english">English</string>
     <string name="settings_language_deutsch">Deutsch</string>
     <string name="settings_language_russian">Russian</string>
+    <string name="settings_language_french">French</string>
 
     <!--    Details Fragment news-->
     <string name="news_source">Source:</string>
@@ -96,7 +97,6 @@
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">No favourite articles</string>
-    <string name="no_news">No news!</string>
     <string name="more_details">More details…</string>
     <string name="unknown_error">Unknown Error!</string>
     <string name="closing_warning">Are you sure you want to delete all bookmarks?</string>

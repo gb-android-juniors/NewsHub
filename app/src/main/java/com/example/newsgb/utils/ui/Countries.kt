@@ -10,7 +10,7 @@ enum class Countries(val nameResId: Int, val countryCode: String) {
     AUSTRIA(nameResId = R.string.country_austria, countryCode = "au"),
     BELGIUM(nameResId = R.string.country_belgium, countryCode = "be"),
     BULGARIA(nameResId = R.string.country_bulgaria, countryCode = "bg"),
-    BRAZIL(nameResId = R.string.country_brasil, countryCode = "br"),
+    BRAZIL(nameResId = R.string.country_brazil, countryCode = "br"),
     CANADA(nameResId = R.string.country_canada, countryCode = "ca"),
     SWITZERLAND(nameResId = R.string.country_switzerland, countryCode = "ch"),
     CHINA(nameResId = R.string.country_china, countryCode = "cn"),
