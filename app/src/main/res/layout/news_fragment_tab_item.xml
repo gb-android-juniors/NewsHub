@@ -85,7 +85,7 @@
         android:layout_gravity="center"
         android:textStyle="bold"
         android:visibility="gone"
-        android:textSize="@dimen/header_text_size"
+        android:textSize="@dimen/first_news_source_text_size"
         android:text="@string/no_news"/>
 
 </FrameLayout>

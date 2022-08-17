@@ -11,6 +11,7 @@ import com.example.newsgb._core.data.api.model.ArticleDTO
  * */
 sealed class AppEvent {
     object Refresh: AppEvent()
-    data class DataReceived(val data: List<ArticleDTO>) : AppEvent()
+    data class NewDataReceived(val data: List<Article>) : AppEvent()
+    data class MoreDataReceived(val data: List<Article>) : AppEvent()
     data class ErrorReceived(val message: String?): AppEvent()
 }

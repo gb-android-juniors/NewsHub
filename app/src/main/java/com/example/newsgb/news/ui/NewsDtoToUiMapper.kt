@@ -2,11 +2,16 @@ package com.example.newsgb.news.ui
 
 import com.example.newsgb._core.data.api.model.ArticleDTO
 import com.example.newsgb._core.ui.model.Article
+import com.example.newsgb.utils.ui.Category
 
 class NewsDtoToUiMapper {
-    operator fun invoke(newsList: List<ArticleDTO>): List<Article> {
+    operator fun invoke(
+        newsList: List<ArticleDTO>,
+        category: Category = Category.GENERAL
+    ): List<Article> {
         return newsList.map { articleDTO ->
             Article(
+                category = category,
                 sourceName = articleDTO.source.name,
                 author = articleDTO.author.orEmpty(),
                 title = articleDTO.title,

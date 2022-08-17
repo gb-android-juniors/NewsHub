@@ -108,7 +108,7 @@ class NewsTabItemFragment : Fragment() {
     }
 
     private fun initData() {
-        category?.let { viewModel.getNewsByCategory() }
+        category?.let { viewModel.getData() }
     }
 
     /**
@@ -150,7 +150,6 @@ class NewsTabItemFragment : Fragment() {
                 newsAdapter.submitList(listOf())
             }
         }
-
     }
 
     /**

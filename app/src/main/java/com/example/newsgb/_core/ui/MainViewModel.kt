@@ -5,10 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.news.domain.NewsRepository
+import com.example.newsgb.news.ui.NewsDtoToUiMapper
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     private val newsRepo: NewsRepository,
+    private val mapper: NewsDtoToUiMapper,
     private val store: NewsStore
 ) : ViewModel() {
 
@@ -21,7 +23,7 @@ class MainViewModel(
         viewModelScope.launch {
             newsRepo.getBreakingNews(page = INITIAL_PAGE)
                 .onSuccess { response ->
-                    store.dispatch(AppEvent.DataReceived(data = response.articles))
+                    store.dispatch(AppEvent.NewDataReceived(data = mapper(response.articles)))
                 }
                 .onFailure { ex ->
                     store.dispatch(AppEvent.ErrorReceived(message = ex.message))

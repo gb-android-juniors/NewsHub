@@ -22,11 +22,24 @@ class NewsStore : CoroutineScope by MainScope() {
     private val _storeState = MutableStateFlow<AppState>(AppState.Default)
     val storeState: StateFlow<AppState> = _storeState.asStateFlow()
 
+    /**
+     * Метод обработки событий
+     * При событии Refresh переключаемся в состояние загрузки (AppState.Loading)
+     * При событии ErrorReceived переключаемся в состояние ошибки (AppState.Error) и передаем сообщение об ошибке
+     * При событии NewDataReceived переключаемся в состояние успеха (AppState.Success) и передаем новые полученные данные
+     * При событии MoreDataReceived переключаемся в состояние успеха (AppState.Success) прибавляя к старым данным вновь полученные данные
+     * */
     fun dispatch(event: AppEvent) {
+        val oldState = storeState.value
         when(event) {
             AppEvent.Refresh -> _storeState.value = AppState.Loading
-            is AppEvent.DataReceived -> _storeState.value = AppState.Success(data = event.data)
             is AppEvent.ErrorReceived -> _storeState.value = AppState.Error(message = event.message)
+            is AppEvent.NewDataReceived -> _storeState.value = AppState.Success(data = event.data)
+            is AppEvent.MoreDataReceived -> {
+                if(oldState is AppState.Success) {
+                    _storeState.value = AppState.Success(data = oldState.data + event.data)
+                }
+            }
         }
     }
 }

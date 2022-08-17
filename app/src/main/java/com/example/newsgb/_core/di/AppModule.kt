@@ -17,7 +17,7 @@ val appModule = module {
     single { get<BookmarkDataBase>().bookmarkDao() }
 
     factory { NewsStore() }
-    viewModel { (store: NewsStore) -> MainViewModel(newsRepo = get(), store = store) }
+    viewModel { (store: NewsStore) -> MainViewModel(newsRepo = get(), mapper = get(), store = store) }
 }
 
 
