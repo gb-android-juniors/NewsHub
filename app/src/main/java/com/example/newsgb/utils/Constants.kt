@@ -9,5 +9,6 @@ class Constants {
         const val STATUS_OK = "ok"
         const val APP_PREFERENCES_COUNTRY_CODE = "APP_PREFERENCES_COUNTRY_CODE"
         const val APP_PREFERENCES_THEME_MODE = "APP_PREFERENCES_THEME_MODE"
+        const val APP_PREFERENCES_LANGUAGE = "APP_PREFERENCES_LANGUAGE"
     }
 }

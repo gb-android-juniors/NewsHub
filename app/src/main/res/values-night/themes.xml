@@ -132,7 +132,7 @@
 
     <style name="Theme.NewsGB.SplashScreen" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@color/black</item>
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_icon_splash_v</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_icon_splash</item>
         <item name="postSplashScreenTheme">@style/Theme.NewsGB</item>
     </style>
 </resources>

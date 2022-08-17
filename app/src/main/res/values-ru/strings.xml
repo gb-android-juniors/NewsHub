@@ -20,7 +20,7 @@
     <string name="country_austria">Австрия</string>
     <string name="country_belgium">Бельгия</string>
     <string name="country_bulgaria">Болгария</string>
-    <string name="country_brasil">Бразилия</string>
+    <string name="country_brazil">Бразилия</string>
     <string name="country_canada">Канада</string>
     <string name="country_switzerland">Швейцария</string>
     <string name="country_china">Китай</string>
@@ -67,6 +67,12 @@
     <string name="country_venezuela">Венесуэла</string>
     <string name="country_south_africa">Южная Африка</string>
 
+    <!--    Languages-->
+    <string name="settings_language_english">Английский</string>
+    <string name="settings_language_deutsch">Немецкий</string>
+    <string name="settings_language_russian">Русский</string>
+    <string name="settings_language_french">Французский</string>
+
     <!--    Details Fragment news-->
     <string name="news_source">Источник:</string>
     <string name="publication_date">Дата публикации:</string>
@@ -84,7 +90,6 @@
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Нет избранных статей</string>
-    <string name="no_news">Нет новостей!</string>
     <string name="more_details">Подробнее…</string>
     <string name="unknown_error">Неизвестная ошибка!</string>
     <string name="closing_warning">Вы уверены, что хотите удалить все закладки?</string>
@@ -95,10 +100,14 @@
     <string name="settings_region_selection_hint_text">Выберите регион новостей</string>
     <string name="settings_theme_hint_text">Выберите тему приложения</string>
     <string name="settings_theme_helper_text">* Приложение будет перезапущено, чтобы применить настройку.</string>
-    <string name="settings_system_theme_name">Как в системе</string>
+    <string name="settings_option_item_name_as_system">Как в системе</string>
     <string name="settings_dark_theme_name">Темный режим</string>
     <string name="settings_light_theme_name">Светлый режим</string>
     <string name="settings_battery_theme_name">Режим экономии батареи</string>
+    <string name="settings_language_hint_text">Выберите язык приложения:</string>
+    <string name="settings_divider_content_name">Настройки контента</string>
+    <string name="settings_divider_interface_name">Настройки интерфейса</string>
+    <string name="settings_save_button_name">Сохранить</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Поиск статей</string>

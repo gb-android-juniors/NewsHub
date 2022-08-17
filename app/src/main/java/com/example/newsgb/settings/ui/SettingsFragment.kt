@@ -4,14 +4,16 @@ import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.content.ContextCompat
 import com.example.newsgb.App
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb.databinding.SettingsFragmentBinding
 import com.example.newsgb.utils.Constants
-import com.example.newsgb.utils.PrivateSharedPreferences
+import com.example.newsgb.utils.PreferencesHelper
 import com.example.newsgb.utils.hideKeyboard
 import com.example.newsgb.utils.ui.Countries
+import com.example.newsgb.utils.ui.Languages
 import com.example.newsgb.utils.ui.ThemeModes
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -28,9 +30,14 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         root.setOnClickListener { hideKeyboard() }
         selectCountryText.setText(getSelectedCountryNameFromPreferences())
         selectAppThemeText.setText(getSelectedAppThemeName())
-        selectAppThemeLayout.helperText = getString(R.string.settings_theme_helper_text)
+        selectAppLanguageText.setText(getSelectedLanguage())
         setCountryListListener()
         setThemeListListener()
+        setLanguageListListener()
+        with(settingsSaveButton) {
+            isEnabled = false
+            setOnClickListener { requireActivity().recreate() }
+        }
     }
 
     private fun setCountryListListener() = with(binding) {
@@ -54,23 +61,63 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         val adapter = ArrayAdapter(
             requireContext(),
             R.layout.settings_options_list_item,
-            ThemeModes.values().map { getString(it.resIdName) }.toList()
+            ThemeModes.values().map { getString(it.nameResId) }.toList()
         )
         selectAppThemeText.setAdapter(adapter)
         selectAppThemeText.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                PrivateSharedPreferences(
-                    context = requireContext(),
-                    prefName = Constants.APP_PREFERENCES_THEME_MODE
-                ).save(index = position)
-                requireActivity().recreate()
+                if (getString(ThemeModes.values()[position].nameResId) != getSelectedAppThemeName()) {
+                    val selectedTheme = ThemeModes.values()[position].name
+                    PreferencesHelper(
+                        context = requireContext(),
+                        prefName = Constants.APP_PREFERENCES_THEME_MODE
+                    ).save(parameter = selectedTheme)
+                    selectAppThemeLayout.helperText = getString(R.string.settings_theme_helper_text)
+                    setSaveButtonActive()
+                }
             }
+    }
+
+    private fun setLanguageListListener() = with(binding) {
+        selectAppLanguageText.setOnClickListener { hideKeyboard() }
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.settings_options_list_item,
+            Languages.values().map { getString(it.nameResId) }.toList()
+        )
+        selectAppLanguageText.setAdapter(adapter)
+        selectAppLanguageText.onItemClickListener =
+            AdapterView.OnItemClickListener { _, _, position, _ ->
+                if (getString(Languages.values()[position].nameResId) != getSelectedLanguage()) {
+                    val selectedLanguage = Languages.values()[position].languageCode
+                    PreferencesHelper(
+                        context = requireContext(),
+                        prefName = Constants.APP_PREFERENCES_LANGUAGE
+                    ).save(parameter = selectedLanguage)
+                    selectAppLanguageLayout.helperText =
+                        getString(R.string.settings_theme_helper_text)
+                    setSaveButtonActive()
+                }
+            }
+    }
+
+    private fun setSaveButtonActive() = with(binding) {
+        settingsSaveButton.apply {
+            isEnabled = true
+            setBackgroundColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.settings_save_button_selected_color
+                )
+            )
+        }
+
     }
 
     private fun saveSelectedCountry(adapterView: AdapterView<*>, position: Int) {
         val selectedCountryName = adapterView.getItemAtPosition(position).toString()
         getMapOfCountryNamesWithIndexes()[selectedCountryName]?.let { index ->
-            PrivateSharedPreferences(
+            PreferencesHelper(
                 context = requireContext(),
                 prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
             ).save(index = index)
@@ -78,19 +125,26 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         }
     }
 
-    private fun getSelectedAppThemeName(): String = PrivateSharedPreferences(
+    private fun getSelectedAppThemeName(): String = PreferencesHelper(
         context = requireContext(),
         prefName = Constants.APP_PREFERENCES_THEME_MODE
-    ).read().let { index ->
-        getString(ThemeModes.values()[index].resIdName)
-    }
+    ).readString()?.let { selectedTheme ->
+        getString(ThemeModes.valueOf(selectedTheme).nameResId)
+    } ?: getString(ThemeModes.SYSTEM_MODE.nameResId)
 
-    private fun getSelectedCountryNameFromPreferences(): String = PrivateSharedPreferences(
+    private fun getSelectedCountryNameFromPreferences(): String = PreferencesHelper(
         context = requireContext(),
         prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
-    ).read().let { index ->
+    ).readInt().let { index ->
         getString(Countries.values()[index].nameResId)
     }
+
+    private fun getSelectedLanguage(): String = PreferencesHelper(
+        context = requireContext(),
+        prefName = Constants.APP_PREFERENCES_LANGUAGE
+    ).readString()?.let { selectedLocale ->
+        getString(Languages.valueOf(selectedLocale.uppercase()).nameResId)
+    } ?: getString(Languages.DEFAULT.nameResId)
 
     private fun getMapOfCountryNamesWithIndexes(): Map<String, Int> =
         mapOf<String, Int>().plus(Countries.values().map { country ->

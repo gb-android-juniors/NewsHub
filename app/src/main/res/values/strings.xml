@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">NewsGB</string>
+    <string name="app_name" translatable="false">NewsHub</string>
 
     <!--    Examples for tools-->
     <string name="example_header_text" translatable="false">Эксперты американского CBS назвали рост рубля вопреки санкциям потрясающим</string>
@@ -27,7 +27,7 @@
     <string name="country_austria">Austria</string>
     <string name="country_belgium">Belgium</string>
     <string name="country_bulgaria">Bulgaria</string>
-    <string name="country_brasil">Brazil</string>
+    <string name="country_brazil">Brazil</string>
     <string name="country_canada">Canada</string>
     <string name="country_switzerland">Switzerland</string>
     <string name="country_china">China</string>
@@ -74,6 +74,12 @@
     <string name="country_venezuela">Venezuela</string>
     <string name="country_south_africa">South Africa</string>
 
+    <!--    Languages-->
+    <string name="settings_language_english">English</string>
+    <string name="settings_language_deutsch">Deutsch</string>
+    <string name="settings_language_russian">Russian</string>
+    <string name="settings_language_french">French</string>
+
     <!--    Details Fragment news-->
     <string name="news_source">Source:</string>
     <string name="publication_date">Publication date:</string>
@@ -91,7 +97,6 @@
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">No favourite articles</string>
-    <string name="no_news">No news!</string>
     <string name="more_details">More details…</string>
     <string name="unknown_error">Unknown Error!</string>
     <string name="closing_warning">Are you sure you want to delete all bookmarks?</string>
@@ -104,8 +109,12 @@
     <string name="settings_theme_helper_text">* The app will restart to apply the setting.</string>
     <string name="settings_light_theme_name">Light mode</string>
     <string name="settings_dark_theme_name">Dark mode</string>
-    <string name="settings_system_theme_name">Same as in the system</string>
+    <string name="settings_option_item_name_as_system">Same as in the system</string>
     <string name="settings_battery_theme_name">Battery saver theme</string>
+    <string name="settings_language_hint_text">Select application language:</string>
+    <string name="settings_divider_content_name">Content settings</string>
+    <string name="settings_divider_interface_name">Interface settings</string>
+    <string name="settings_save_button_name">Save</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Search titles</string>

@@ -20,7 +20,7 @@
     <string name="country_austria">Österreich</string>
     <string name="country_belgium">Belgien</string>
     <string name="country_bulgaria">Bulgarien</string>
-    <string name="country_brasil">Brasilien</string>
+    <string name="country_brazil">Brasilien</string>
     <string name="country_canada">Kanada</string>
     <string name="country_switzerland">Schweiz</string>
     <string name="country_china">China</string>
@@ -67,6 +67,12 @@
     <string name="country_venezuela">Venezuela</string>
     <string name="country_south_africa">Südafrika</string>
 
+    <!--    Languages-->
+    <string name="settings_language_russian">Russisch</string>
+    <string name="settings_language_deutsch">Deutsch</string>
+    <string name="settings_language_english">Englisch</string>
+    <string name="settings_language_french">Französisch</string>
+
     <!--    Details Fragment news-->
     <string name="news_source">Quelle:</string>
     <string name="publication_date">Veröffentlichungsdatum:</string>
@@ -84,7 +90,6 @@
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Keine ausgewählten Artikel</string>
-    <string name="no_news">Keine Neuigkeiten!</string>
     <string name="more_details">Mehr Details…</string>
     <string name="unknown_error">Unbekannter Fehler!</string>
     <string name="closing_warning">Möchten Sie wirklich alle Lesezeichen löschen?</string>
@@ -95,10 +100,14 @@
     <string name="settings_region_selection_hint_text">Nachrichtenregion auswählen</string>
     <string name="settings_theme_hint_text">Wählen Sie ein App-Design aus</string>
     <string name="settings_theme_helper_text">* Die App wird neu gestartet, um die Einstellung zu übernehmen.</string>
-    <string name="settings_system_theme_name">Genauso wie im System</string>
+    <string name="settings_option_item_name_as_system">Genauso wie im System</string>
     <string name="settings_dark_theme_name">Dunkel Modus</string>
     <string name="settings_light_theme_name">Heller Modus</string>
     <string name="settings_battery_theme_name">Batterie spar thema</string>
+    <string name="settings_language_hint_text">Anwendungssprache auswählen:</string>
+    <string name="settings_divider_content_name">Inhaltseinstellungen</string>
+    <string name="settings_divider_interface_name">Schnittstelleneinstellungen</string>
+    <string name="settings_save_button_name">Speichern</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Titel suchen</string>

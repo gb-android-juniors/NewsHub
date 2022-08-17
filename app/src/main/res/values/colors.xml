@@ -19,6 +19,8 @@
     <color name="first_news_text_background">@color/indigo_700</color>
     <color name="start_icon_tint_color">@color/indigo_700</color>
     <color name="text_hint_color">@color/indigo_700</color>
+    <color name="settings_save_button_unselected_color">#7E7E80</color>
+    <color name="settings_save_button_selected_color">@color/indigo_700</color>
 
     <!--Colors for CustomTheme-->
     <color name="pink_900">#880E4F</color>
@@ -62,6 +64,8 @@
     <color name="orange_400">#FFA726</color>
     <color name="orange_300">#FFB74D</color>
     <color name="orange_100">#FFE0B2</color>
+    <color name="grey_300">#E0E0E0</color>
+    <color name="grey_400">#BDBDBD</color>
 
     <!--Colors for text with alpha-->
     <!-- Dark Text Color for Light Background -->

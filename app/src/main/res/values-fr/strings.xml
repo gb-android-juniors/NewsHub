@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Category names-->
+    <string name="main_category_name_text">Main</string>
+    <string name="health_category_name_text">Santé</string>
+    <string name="sports_category_name_text">Des sports</string>
+    <string name="business_category_name_text">Entreprise</string>
+    <string name="entertainment_category_name_text">Divertissement</string>
+    <string name="technology_category_name_text">Technologie</string>
+    <string name="science_category_name_text">La science</string>
+
+    <!--    Country names-->
+    <string name="country_russia">Russie</string>
+    <string name="country_germany">Allemagne</string>
+    <string name="country_england">Angleterre</string>
+    <string name="country_australia">Australie</string>
+    <string name="country_united_arab_emirates">Émirats Arabes Unis</string>
+    <string name="country_argentina">Argentine</string>
+    <string name="country_austria">Autriche</string>
+    <string name="country_belgium">Belgique</string>
+    <string name="country_bulgaria">Bulgarie</string>
+    <string name="country_brazil">Brésil</string>
+    <string name="country_canada">Canada</string>
+    <string name="country_switzerland">Suisse</string>
+    <string name="country_china">China</string>
+    <string name="country_colombia">Colombie</string>
+    <string name="country_cuba">Cuba</string>
+    <string name="country_czech_republic">République Tchèque</string>
+    <string name="country_egypt">Egypte</string>
+    <string name="country_france">France</string>
+    <string name="country_united_kingdom">Royaume-Uni de Grande-Bretagne</string>
+    <string name="country_greece">Grèce</string>
+    <string name="country_hong_kong">Hong Kong</string>
+    <string name="country_hungary">Hongrie</string>
+    <string name="country_indonesia">Indonésie</string>
+    <string name="country_ireland">Irlande</string>
+    <string name="country_israel">Israël</string>
+    <string name="country_india">Inde</string>
+    <string name="country_italy">Italie</string>
+    <string name="country_japan">Japon</string>
+    <string name="country_korea">République de Corée</string>
+    <string name="country_lithuania">Lituanie</string>
+    <string name="country_latvia">Lettonie</string>
+    <string name="country_morocco">Maroc</string>
+    <string name="country_mexico">Mexique</string>
+    <string name="country_malaysia">Malaisie</string>
+    <string name="country_nigeria">Nigeria</string>
+    <string name="country_netherlands">Pays-Bas</string>
+    <string name="country_norway">Norvège</string>
+    <string name="country_new_zealand">Nouvelle-Zélande</string>
+    <string name="country_philippines">Philippines</string>
+    <string name="country_poland">Pologne</string>
+    <string name="country_portugal">Portugal</string>
+    <string name="country_romania">Roumanie</string>
+    <string name="country_serbia">Serbie</string>
+    <string name="country_saudi_arabia">Arabie Saoudite</string>
+    <string name="country_sweden">Suède</string>
+    <string name="country_singapore">Singapour</string>
+    <string name="country_slovenia">Slovénie</string>
+    <string name="country_slovakia">Slovaquie</string>
+    <string name="country_thailand">Thaïlande</string>
+    <string name="country_turkey">Turquie</string>
+    <string name="country_taiwan">Taïwan, Province de Chine</string>
+    <string name="country_ukraine">Ukraine</string>
+    <string name="country_usa">USA</string>
+    <string name="country_venezuela">Venezuela</string>
+    <string name="country_south_africa">Afrique du Sud</string>
+
+    <!--    Languages-->
+    <string name="settings_language_russian">Russe</string>
+    <string name="settings_language_deutsch">Allemand</string>
+    <string name="settings_language_english">Anglais</string>
+    <string name="settings_language_french">Français</string>
+
+    <!--    Details Fragment news-->
+    <string name="news_source">Source:</string>
+    <string name="publication_date">Date de publication:</string>
+
+    <!--    BottomNavigation names-->
+    <string name="news">Nouvelles</string>
+    <string name="bookmarks">Signets</string>
+    <string name="settings">Réglages</string>
+
+    <!--    AlertDialog-->
+    <string name="dialog_message_device_is_offline">Vous ne pouvez pas utiliser l\'application sans connexion Internet. S\'il vous plait, vérifiez votre connexion internet.</string>
+    <string name="dialog_title_device_is_offline">Pas de connexion Internet</string>
+    <string name="dialog_button_cancel">Annuler</string>
+    <string name="dialog_title_stub">Erreur non définie</string>
+
+    <!--    Bookmarks Fragment news-->
+    <string name="empty_bookmark_warning_text">Aucun article en vedette</string>
+    <string name="more_details">Plus de détails…</string>
+    <string name="unknown_error">Erreur inconnue!</string>
+    <string name="closing_warning">Êtes-vous sûr de vouloir supprimer tous les signets?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Pas</string>
+
+    <!--    Settings Fragment-->
+    <string name="settings_region_selection_hint_text">Sélectionner une région d\'actualités</string>
+    <string name="settings_theme_hint_text">Choisissez un thème d\'application</string>
+    <string name="settings_theme_helper_text">* L\'application redémarrera pour appliquer le paramètre.</string>
+    <string name="settings_option_item_name_as_system">Identique au système</string>
+    <string name="settings_dark_theme_name">Mode sombre</string>
+    <string name="settings_light_theme_name">Mode lumière</string>
+    <string name="settings_battery_theme_name">Thème économiseur de batterie</string>
+    <string name="settings_language_hint_text">Sélectionnez la langue de l\'application:</string>
+    <string name="settings_divider_content_name">Paramètres de contenu</string>
+    <string name="settings_divider_interface_name">Paramètres de l\'interface</string>
+    <string name="settings_save_button_name">Sauvegarder</string>
+
+    <!--    Search Fragment-->
+    <string name="search_titles">Titres de recherche</string>
+    <string name="enter_text">Entrez le texte…</string>
+    <string name="search">Recherche</string>
+    <string name="empty_search_warning_text">Rien trouvé</string>
+    <string name="details">Détails</string>
+    <string name="source">Source</string>
+</resources>

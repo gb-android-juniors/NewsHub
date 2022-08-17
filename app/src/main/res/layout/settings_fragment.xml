@@ -23,18 +23,30 @@
             app:titleTextColor="@color/textLightPrimary" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/first_divider"
+        style="@style/AppSettingsDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settings_appbar" />
+
+    <TextView
+        style="@style/SettingsDividerHeader"
+        android:text="@string/settings_divider_content_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/first_divider" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/select_country_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_8"
-        android:layout_marginTop="@dimen/margin_24"
+        android:layout_marginTop="@dimen/margin_32"
         android:hint="@string/settings_region_selection_hint_text"
         android:textColorHint="@color/text_hint_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_appbar"
+        app:layout_constraintTop_toBottomOf="@+id/first_divider"
         app:startIconDrawable="@drawable/ic_country"
         app:startIconTint="@color/start_icon_tint_color">
 
@@ -50,19 +62,31 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/second_divider"
+        style="@style/AppSettingsDivider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/select_country_layout" />
+
+    <TextView
+        style="@style/SettingsDividerHeader"
+        android:text="@string/settings_divider_interface_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/second_divider" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/select_app_theme_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_8"
-        android:layout_marginTop="@dimen/margin_24"
+        android:layout_marginTop="@dimen/margin_32"
         android:hint="@string/settings_theme_hint_text"
         android:textColorHint="@color/text_hint_color"
         app:helperTextTextColor="@color/settings_warning_helper_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/select_country_layout"
+        app:layout_constraintTop_toBottomOf="@+id/second_divider"
         app:startIconDrawable="@drawable/ic_theme"
         app:startIconTint="@color/start_icon_tint_color">
 
@@ -77,5 +101,41 @@
             tools:text="@string/settings_dark_theme_name" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/select_app_language_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_24"
+        android:hint="@string/settings_language_hint_text"
+        android:textColorHint="@color/text_hint_color"
+        app:helperTextTextColor="@color/settings_warning_helper_text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_app_theme_layout"
+        app:startIconDrawable="@drawable/ic_language_24"
+        app:startIconTint="@color/start_icon_tint_color">
+
+        <androidx.appcompat.widget.AppCompatAutoCompleteTextView
+            android:id="@+id/select_app_language_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:editable="false"
+            android:focusable="false"
+            android:textColor="@color/textDarkPrimary"
+            tools:ignore="LabelFor"
+            tools:text="@string/settings_language_english" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/settings_save_button"
+        style="@style/AppSettingsSaveButton"
+        android:text="@string/settings_save_button_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/select_app_language_layout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
