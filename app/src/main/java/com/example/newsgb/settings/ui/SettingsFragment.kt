@@ -5,9 +5,12 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.example.newsgb.App
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
+import com.example.newsgb._core.ui.model.SettingsViewState
 import com.example.newsgb.databinding.SettingsFragmentBinding
 import com.example.newsgb.utils.Constants
 import com.example.newsgb.utils.PreferencesHelper
@@ -15,6 +18,8 @@ import com.example.newsgb.utils.hideKeyboard
 import com.example.newsgb.utils.ui.Countries
 import com.example.newsgb.utils.ui.Languages
 import com.example.newsgb.utils.ui.ThemeModes
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
@@ -24,6 +29,18 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModel.viewState.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun renderState(state: SettingsViewState) = with(binding) {
+        when(state) {
+            is SettingsViewState.CountryLoading -> countryLoader.isVisible = true
+            else -> countryLoader.isVisible = false
+        }
     }
 
     private fun initView() = with(binding) {
@@ -51,8 +68,11 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         selectCountryText.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView, _, position, _ ->
                 hideKeyboard()
-                saveSelectedCountry(adapterView, position)
-                viewModel.refreshData()
+                val selectedCountryName = adapterView.getItemAtPosition(position).toString()
+                if (selectedCountryName != getSelectedCountryNameFromPreferences()) {
+                    saveSelectedCountry(selectedCountryName)
+                    viewModel.refreshData()
+                }
             }
     }
 
@@ -114,8 +134,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
 
     }
 
-    private fun saveSelectedCountry(adapterView: AdapterView<*>, position: Int) {
-        val selectedCountryName = adapterView.getItemAtPosition(position).toString()
+    private fun saveSelectedCountry(selectedCountryName: String) {
         getMapOfCountryNamesWithIndexes()[selectedCountryName]?.let { index ->
             PreferencesHelper(
                 context = requireContext(),

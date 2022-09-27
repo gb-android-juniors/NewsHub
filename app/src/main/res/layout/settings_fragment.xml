@@ -62,6 +62,14 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <ProgressBar
+        android:id="@+id/country_loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/select_country_layout"
+        app:layout_constraintTop_toTopOf="@id/select_country_layout"
+        app:layout_constraintBottom_toBottomOf="@id/select_country_layout"/>
+
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/second_divider"
         style="@style/AppSettingsDivider"
