@@ -28,7 +28,7 @@
                 android:layout_height="40dp"
                 android:layout_gravity="end"
                 android:padding="@dimen/margin_8"
-                android:src="@drawable/ic_contact_us_24"
+                android:src="@drawable/ic_about_app_24"
                 android:tint="@color/textLightPrimary" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>

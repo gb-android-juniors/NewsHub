@@ -1,6 +1,9 @@
 package com.example.newsgb.settings.ui
 
 import android.app.AlertDialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -64,11 +67,22 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         AlertDialog.Builder(requireContext())
             .setView(R.layout.developers_dialog_fragment)
             .setCancelable(true)
-            .setPositiveButton(R.string.connect_us) { _, _ ->
-                Toast.makeText(activity, "connect us", Toast.LENGTH_SHORT).show()
-            }
+            .setPositiveButton(R.string.connect_us) { _, _ -> composeEmail(getString(R.string.mail_header_feedback)) }
             .create()
             .show()
+    }
+
+    private fun composeEmail(subject: String) {
+        val intent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("mailto:") // only email apps should handle this
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.developers_email)))
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+        }
+        try {
+            startActivity(Intent.createChooser(intent, "Send mail..."))
+        } catch (ex: ActivityNotFoundException) {
+            Toast.makeText(requireContext(), getString(R.string.email_clients_not_found), Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun setCountryListListener() = with(binding) {

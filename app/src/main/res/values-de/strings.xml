@@ -121,5 +121,6 @@
     <string name="developers_header">Entwickler:</string>
     <string name="developers_list">Robilko Alexander\nMyasnikov Dmitry\nBronski Kirill\nPodobedov Andrey\nErshov Konstantin</string>
     <string name="connect_us">Verbinde dich mit uns</string>
+    <string name="email_clients_not_found">Es sind keine E-Mail-Clients installiert.</string>
 
 </resources>
