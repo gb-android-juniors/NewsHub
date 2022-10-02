@@ -124,4 +124,9 @@
     <string name="details">Details</string>
     <string name="source">Source</string>
 
+    <!--    Developers DialogFragment-->
+    <string name="developers_header">Developers:</string>
+    <string name="developers_list">Robilko Alexander\nMyasnikov Dmitry\nBronski Kirill\nPodobedov Andrey\nErshov Konstantin</string>
+    <string name="connect_us">Connect with us</string>
+
 </resources>

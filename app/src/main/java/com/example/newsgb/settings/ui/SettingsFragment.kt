@@ -1,9 +1,11 @@
 package com.example.newsgb.settings.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -45,6 +47,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
 
     private fun initView() = with(binding) {
         root.setOnClickListener { hideKeyboard() }
+        connectUs.setOnClickListener { showDevelopersDialogFragment() }
         selectCountryText.setText(getSelectedCountryNameFromPreferences())
         selectAppThemeText.setText(getSelectedAppThemeName())
         selectAppLanguageText.setText(getSelectedLanguage())
@@ -55,6 +58,17 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
             isEnabled = false
             setOnClickListener { requireActivity().recreate() }
         }
+    }
+
+    private fun showDevelopersDialogFragment() {
+        AlertDialog.Builder(requireContext())
+            .setView(R.layout.developers_dialog_fragment)
+            .setCancelable(true)
+            .setPositiveButton(R.string.connect_us) { _, _ ->
+                Toast.makeText(activity, "connect us", Toast.LENGTH_SHORT).show()
+            }
+            .create()
+            .show()
     }
 
     private fun setCountryListListener() = with(binding) {

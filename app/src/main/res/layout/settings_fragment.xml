@@ -20,7 +20,17 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:title="@string/settings"
-            app:titleTextColor="@color/textLightPrimary" />
+            app:titleTextColor="@color/textLightPrimary" >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/connect_us"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="end"
+                android:padding="@dimen/margin_8"
+                android:src="@drawable/ic_contact_us_24"
+                android:tint="@color/textLightPrimary" />
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.divider.MaterialDivider
