@@ -23,6 +23,7 @@ import com.example.newsgb._core.ui.model.ItemViewState
 import com.example.newsgb.databinding.DetailsFragmentBinding
 import com.example.newsgb.utils.formatApiStringToDate
 import com.example.newsgb.utils.setBookmarkIconColor
+import com.example.newsgb.utils.getShareNewsIntent
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -105,6 +106,7 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
     }
 
     private fun initContent(article: Article) = with(binding) {
+        share.setOnClickListener { getShareNewsIntent(article.contentUrl)?.let { startActivity(it) } }
         articleHeaderText.text = article.title
         articleSourceName.text = article.sourceName
         publicationDate.text = article.publishedDate.formatApiStringToDate()

@@ -2,6 +2,8 @@ package com.example.newsgb.utils
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
@@ -30,4 +32,35 @@ internal fun Fragment.hideKeyboard() {
         val imm = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
+}
+
+/**
+ * Метод для получения интента отправки ссылки на новость посредством мессенджеров и смс
+ */
+fun getShareNewsIntent(contentUrl:String): Intent? {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, contentUrl)
+    }
+    return Intent.createChooser(shareIntent, "Sharing something.")
+}
+
+/**
+ * Метод для получения интента отправки email письма с обратной связью разработчикам.
+ */
+fun getEmailSendingIntent(emails: Array<String>, subject: String): Intent? {
+    val mailIntent = Intent(Intent.ACTION_SENDTO).apply {
+        data = Uri.parse("mailto:") // only email apps should handle this
+        putExtra(Intent.EXTRA_EMAIL, emails)
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+    }
+    return Intent.createChooser(mailIntent, "Send mail...")
+}
+
+/**
+ * Метод верификации языка запроса поиска статей в API, в зависимости от выбранного региона новостей
+ */
+fun verifySearchLanguage(selectedCountryCode: String?) : String = when(selectedCountryCode) {
+    "ar", "de", "en", "es", "fr", "he", "it", "nl", "no", "pt", "ru", "sv", "ud", "zh" -> selectedCountryCode
+    else -> "en"
 }

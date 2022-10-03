@@ -20,12 +20,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/clear_all_bookmarks"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="end"
-                android:padding="@dimen/margin_8"
-                android:src="@drawable/ic_bookmarks_delete"
-                android:tint="@color/textLightPrimary" />
+                style="@style/ToolBarButton"
+                android:src="@drawable/ic_bookmarks_delete" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 

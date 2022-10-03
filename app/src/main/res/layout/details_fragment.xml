@@ -21,7 +21,13 @@
             android:layout_height="?attr/actionBarSize"
             app:navigationIconTint="@color/white"
             app:title="@string/details"
-            app:titleTextColor="@color/textLightPrimary" />
+            app:titleTextColor="@color/textLightPrimary">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/share"
+                style="@style/ToolBarButton"
+                android:src="@drawable/ic_share_24"/>
+        </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 

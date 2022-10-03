@@ -1,20 +1,29 @@
 package com.example.newsgb.settings.ui
 
+import android.app.AlertDialog
+import android.content.ActivityNotFoundException
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.example.newsgb.App
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
+import com.example.newsgb._core.ui.model.SettingsViewState
 import com.example.newsgb.databinding.SettingsFragmentBinding
 import com.example.newsgb.utils.Constants
 import com.example.newsgb.utils.PreferencesHelper
+import com.example.newsgb.utils.getEmailSendingIntent
 import com.example.newsgb.utils.hideKeyboard
 import com.example.newsgb.utils.ui.Countries
 import com.example.newsgb.utils.ui.Languages
 import com.example.newsgb.utils.ui.ThemeModes
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
@@ -24,10 +33,23 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModel.viewState.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun renderState(state: SettingsViewState) = with(binding) {
+        when(state) {
+            is SettingsViewState.CountryLoading -> countryLoader.isVisible = true
+            else -> countryLoader.isVisible = false
+        }
     }
 
     private fun initView() = with(binding) {
         root.setOnClickListener { hideKeyboard() }
+        connectUs.setOnClickListener { showDevelopersDialogFragment() }
         selectCountryText.setText(getSelectedCountryNameFromPreferences())
         selectAppThemeText.setText(getSelectedAppThemeName())
         selectAppLanguageText.setText(getSelectedLanguage())
@@ -37,6 +59,23 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         with(settingsSaveButton) {
             isEnabled = false
             setOnClickListener { requireActivity().recreate() }
+        }
+    }
+
+    private fun showDevelopersDialogFragment() {
+        AlertDialog.Builder(requireContext())
+            .setView(R.layout.developers_dialog_fragment)
+            .setCancelable(true)
+            .setPositiveButton(R.string.connect_us) { _, _ -> composeEmail(arrayOf(getString(R.string.developers_email)), getString(R.string.mail_header_feedback)) }
+            .create()
+            .show()
+    }
+
+    private fun composeEmail(emails: Array<String>, subject: String) {
+        try {
+            startActivity(getEmailSendingIntent(emails, subject))
+        } catch (ex: ActivityNotFoundException) {
+            Toast.makeText(requireContext(), getString(R.string.email_clients_not_found), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -51,8 +90,11 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         selectCountryText.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView, _, position, _ ->
                 hideKeyboard()
-                saveSelectedCountry(adapterView, position)
-                viewModel.refreshData()
+                val selectedCountryName = adapterView.getItemAtPosition(position).toString()
+                if (selectedCountryName != getSelectedCountryNameFromPreferences()) {
+                    saveSelectedCountry(selectedCountryName)
+                    viewModel.refreshData()
+                }
             }
     }
 
@@ -114,8 +156,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
 
     }
 
-    private fun saveSelectedCountry(adapterView: AdapterView<*>, position: Int) {
-        val selectedCountryName = adapterView.getItemAtPosition(position).toString()
+    private fun saveSelectedCountry(selectedCountryName: String) {
         getMapOfCountryNamesWithIndexes()[selectedCountryName]?.let { index ->
             PreferencesHelper(
                 context = requireContext(),

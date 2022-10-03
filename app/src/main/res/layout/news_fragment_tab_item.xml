@@ -93,8 +93,8 @@
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/no_news_image"
-        android:layout_width="@dimen/no_news_image_size"
-        android:layout_height="@dimen/no_news_image_size"
+        android:layout_width="@dimen/logo_image_size"
+        android:layout_height="@dimen/logo_image_size"
         android:layout_gravity="center"
         android:alpha="0.4"
         android:src="@drawable/ic_icon"

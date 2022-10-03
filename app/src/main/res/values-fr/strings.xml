@@ -115,4 +115,10 @@
     <string name="empty_search_warning_text">Rien trouvé</string>
     <string name="details">Détails</string>
     <string name="source">Source</string>
+
+    <!--    Developers DialogFragment-->
+    <string name="developers_header">Développeurs:</string>
+    <string name="developers_list">Robilko Alexander\nMyasnikov Dmitry\nBronski Kirill\nPodobedov Andrey\nErshov Konstantin</string>
+    <string name="connect_us">Connecte-toi avec nous</string>
+    <string name="email_clients_not_found">Aucun client de messagerie n\'est installé.</string>
 </resources>

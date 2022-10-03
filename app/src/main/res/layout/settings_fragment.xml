@@ -20,7 +20,13 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             app:title="@string/settings"
-            app:titleTextColor="@color/textLightPrimary" />
+            app:titleTextColor="@color/textLightPrimary">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/connect_us"
+                style="@style/ToolBarButton"
+                android:src="@drawable/ic_about_app_24"/>
+        </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <com.google.android.material.divider.MaterialDivider
@@ -61,6 +67,14 @@
             tools:text="@string/country_argentina" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <ProgressBar
+        android:id="@+id/country_loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/select_country_layout"
+        app:layout_constraintEnd_toEndOf="@+id/select_country_layout"
+        app:layout_constraintTop_toTopOf="@id/select_country_layout" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/second_divider"

@@ -4,17 +4,29 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsgb._core.ui.model.AppEffect
 import com.example.newsgb._core.ui.model.AppEvent
+import com.example.newsgb._core.ui.model.AppState
+import com.example.newsgb._core.ui.model.SettingsViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.main.domain.MainUseCases
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(private val useCases: MainUseCases, private val store: NewsStore) :
     ViewModel() {
 
+    private val _viewState = MutableStateFlow<SettingsViewState>(SettingsViewState.Data)
+    val viewState: StateFlow<SettingsViewState> = _viewState.asStateFlow()
+
     init {
+        store.storeState.onEach { renderStoreState(it) }.launchIn(viewModelScope)
         store.storeEffect.onEach { renderAppEffect(it) }.launchIn(viewModelScope)
+    }
+
+    private fun renderStoreState(appState: AppState) {
+        when(appState) {
+            is AppState.Refreshing -> _viewState.value = SettingsViewState.CountryLoading
+            else -> _viewState.value = SettingsViewState.Data
+        }
     }
 
     private fun renderAppEffect(effect: AppEffect) {

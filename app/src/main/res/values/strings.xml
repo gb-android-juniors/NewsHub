@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name" translatable="false">NewsHub</string>
+    <string name="developers_email" translatable="false">gb.android.juniors@rambler.ru</string>
 
     <!--    Examples for tools-->
     <string name="example_header_text" translatable="false">Эксперты американского CBS назвали рост рубля вопреки санкциям потрясающим</string>
@@ -123,5 +124,12 @@
     <string name="empty_search_warning_text">Nothing found</string>
     <string name="details">Details</string>
     <string name="source">Source</string>
+
+    <!--    Developers DialogFragment-->
+    <string name="developers_header">Developers:</string>
+    <string name="developers_list">Robilko Alexander\nMyasnikov Dmitry\nBronski Kirill\nPodobedov Andrey\nErshov Konstantin</string>
+    <string name="connect_us">Connect with us</string>
+    <string name="email_clients_not_found">There are no email clients installed.</string>
+    <string name="mail_header_feedback" translatable="false">User feedback about app \"NewsHub\"</string>
 
 </resources>

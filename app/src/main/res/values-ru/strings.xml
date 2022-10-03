@@ -117,4 +117,10 @@
     <string name="details">Подробности</string>
     <string name="source">Источник</string>
 
+    <!--    Developers DialogFragment-->
+    <string name="developers_header">Разработчики:</string>
+    <string name="developers_list">Робилко Александр\nМясников Дмитрий\nБронски Кирилл\nПодобедов Андрей\nЕршов Константин</string>
+    <string name="connect_us">Связаться с нами</string>
+    <string name="email_clients_not_found">Почтовые клиенты не установлены.</string>
+
 </resources>

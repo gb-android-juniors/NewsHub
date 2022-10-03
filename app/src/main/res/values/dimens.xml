@@ -19,5 +19,6 @@
     <dimen name="size_18">18sp</dimen>
     <dimen name="news_image_height">200dp</dimen>
     <dimen name="news_recycler_item_height">95dp</dimen>
-    <dimen name="no_news_image_size">100dp</dimen>
+    <dimen name="logo_image_size">100dp</dimen>
+    <dimen name="toolbar_button_size">40dp</dimen>
 </resources>
