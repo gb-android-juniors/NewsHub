@@ -2,8 +2,6 @@ package com.example.newsgb.settings.ui
 
 import android.app.AlertDialog
 import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -19,6 +17,7 @@ import com.example.newsgb._core.ui.model.SettingsViewState
 import com.example.newsgb.databinding.SettingsFragmentBinding
 import com.example.newsgb.utils.Constants
 import com.example.newsgb.utils.PreferencesHelper
+import com.example.newsgb.utils.getEmailSendingIntent
 import com.example.newsgb.utils.hideKeyboard
 import com.example.newsgb.utils.ui.Countries
 import com.example.newsgb.utils.ui.Languages
@@ -67,19 +66,14 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         AlertDialog.Builder(requireContext())
             .setView(R.layout.developers_dialog_fragment)
             .setCancelable(true)
-            .setPositiveButton(R.string.connect_us) { _, _ -> composeEmail(getString(R.string.mail_header_feedback)) }
+            .setPositiveButton(R.string.connect_us) { _, _ -> composeEmail(arrayOf(getString(R.string.developers_email)), getString(R.string.mail_header_feedback)) }
             .create()
             .show()
     }
 
-    private fun composeEmail(subject: String) {
-        val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:") // only email apps should handle this
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(getString(R.string.developers_email)))
-            putExtra(Intent.EXTRA_SUBJECT, subject)
-        }
+    private fun composeEmail(emails: Array<String>, subject: String) {
         try {
-            startActivity(Intent.createChooser(intent, "Send mail..."))
+            startActivity(getEmailSendingIntent(emails, subject))
         } catch (ex: ActivityNotFoundException) {
             Toast.makeText(requireContext(), getString(R.string.email_clients_not_found), Toast.LENGTH_LONG).show()
         }

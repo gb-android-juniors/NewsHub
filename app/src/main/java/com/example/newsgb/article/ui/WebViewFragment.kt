@@ -14,6 +14,7 @@ import androidx.lifecycle.Lifecycle
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb.databinding.ArticleFragmentBinding
 import com.example.newsgb.utils.Constants.Companion.URL
+import com.example.newsgb.utils.getShareNewsIntent
 
 class WebViewFragment : BaseFragment<ArticleFragmentBinding>() {
 
@@ -48,14 +49,15 @@ class WebViewFragment : BaseFragment<ArticleFragmentBinding>() {
         }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
-    private fun initView(){
+    private fun initView() = with(binding) {
         val url = arguments?.getString(URL)
-        binding.webView.apply {
+        webView.apply {
             webViewClient = WebViewClient()
             settings.javaScriptEnabled = true
             if (url != null) {
                 loadUrl(url)
-                binding.loader.isVisible = false
+                loader.isVisible = false
+                share.setOnClickListener { getShareNewsIntent(url)?.let { startActivity(it) } }
             }
         }
     }
@@ -71,5 +73,4 @@ class WebViewFragment : BaseFragment<ArticleFragmentBinding>() {
     }
 
     override fun getViewBinding() = ArticleFragmentBinding.inflate(layoutInflater)
-
 }
