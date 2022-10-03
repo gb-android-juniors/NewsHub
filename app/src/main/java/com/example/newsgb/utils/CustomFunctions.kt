@@ -56,3 +56,11 @@ fun getEmailSendingIntent(emails: Array<String>, subject: String): Intent? {
     }
     return Intent.createChooser(mailIntent, "Send mail...")
 }
+
+/**
+ * Метод верификации языка запроса поиска статей в API, в зависимости от выбранного региона новостей
+ */
+fun verifySearchLanguage(selectedCountryCode: String?) : String = when(selectedCountryCode) {
+    "ar", "de", "en", "es", "fr", "he", "it", "nl", "no", "pt", "ru", "sv", "ud", "zh" -> selectedCountryCode
+    else -> "en"
+}

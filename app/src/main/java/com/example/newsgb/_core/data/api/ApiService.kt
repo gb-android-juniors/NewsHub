@@ -5,6 +5,7 @@ import com.example.newsgb._core.data.api.model.ResponseDTO
 import com.example.newsgb.utils.Constants
 import com.example.newsgb.utils.Constants.Companion.SEARCH_ENDPOINT
 import com.example.newsgb.utils.Constants.Companion.TOP_HEADLINES_ENDPOINT
+import com.example.newsgb.utils.verifySearchLanguage
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -27,6 +28,7 @@ interface ApiService {
         @Query("q") phrase: String,
         @Query("page") pageNumber: Int = 1,
         @Query("apiKey") apiKey: String,
+        @Query("language") language: String = verifySearchLanguage(App.countryCode)
     ): ResponseDTO
 
     companion object {
