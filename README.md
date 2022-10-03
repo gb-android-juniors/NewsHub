@@ -22,21 +22,21 @@ ________________________________________________________________________________
 Презентация проекта:
 [Презентация NewsGB.pptx](https://github.com/gb-android-juniors/NewsGB/files/9301659/NewsGB.pptx)
 ______________________________________________________________________________________________________________________________________________________________
+
+Снапшот проекта:
+https://user-images.githubusercontent.com/75025794/193679699-5a71e8e5-4ad2-4aa1-84c7-d387c98c3a39.mp4
+
+______________________________________________________________________________________________________________________________________________________________
 Скриншоты проекта:
 
-
-![Рисунок1](https://user-images.githubusercontent.com/70439386/183954411-d9577b2e-6629-4eb3-9a56-d34ac6f75dfd.jpg)
-![Рисунок2](https://user-images.githubusercontent.com/70439386/183955155-39e36907-8038-4cab-943a-008861893152.jpg)
-![Рисунок3](https://user-images.githubusercontent.com/70439386/183958267-71b7370c-3484-40b5-8a8f-2332e5369cc3.jpg)
-![Рисунок4](https://user-images.githubusercontent.com/70439386/183955807-df4aeeaf-4ad9-4a7d-8784-aaacaf5236f6.jpg)
-![Рисунок9](https://user-images.githubusercontent.com/70439386/183956662-0fabcd2a-10e3-4773-8130-27a0b32ef761.jpg)
-![Рисунок10](https://user-images.githubusercontent.com/70439386/183956823-9fc66683-83a8-40ba-8c48-0fb2ecfada4c.jpg)
-![Рисунок11](https://user-images.githubusercontent.com/70439386/183956929-5c994e34-2060-485f-8403-be5412eab0de.jpg)
-![Рисунок12](https://user-images.githubusercontent.com/70439386/183958391-12cd74c1-7096-45bc-a284-c1fcb4986b13.jpg)
-![Рисунок13](https://user-images.githubusercontent.com/70439386/183957403-cad57ebc-6818-4516-9f79-9a4684373a4b.jpg)
-![Рисунок14](https://user-images.githubusercontent.com/70439386/183957466-d1a924c2-dc3d-42a8-84b4-aca44e7c3147.jpg)
-![Рисунок15](https://user-images.githubusercontent.com/70439386/183957523-080fa63c-7844-4525-97ec-e931b9ca242e.jpg)
-![Рисунок16](https://user-images.githubusercontent.com/70439386/183957592-311653cc-d18f-4040-81d5-1c1856b1d885.jpg)
+![1](https://user-images.githubusercontent.com/75025794/193677693-c95a31bd-5cf7-4518-a019-45b8e2630bd9.jpg)
+![2](https://user-images.githubusercontent.com/75025794/193677715-b44afcbe-2818-4370-bf85-57c0b2084057.jpg)
+![3](https://user-images.githubusercontent.com/75025794/193677748-3bd3d6fb-ec18-4e78-b6d5-3ef341e79348.jpg)
+![4](https://user-images.githubusercontent.com/75025794/193677800-4de021e1-f36b-4fe6-9352-b8e0f7818528.jpg)
+![5](https://user-images.githubusercontent.com/75025794/193677814-8ebcf0c3-2a2f-43e4-90bc-953ee728e722.jpg)
+![6](https://user-images.githubusercontent.com/75025794/193677828-dc194268-6550-472e-9e2e-a78de17bad90.png)
+![Темы](https://user-images.githubusercontent.com/75025794/193677840-26f9c0e5-fd23-46e3-9ea8-e7681d915529.jpg)
+![Страны](https://user-images.githubusercontent.com/75025794/193677860-14181804-4523-4487-b92b-3a11d9816fdf.jpg)
 
 ______________________________________________________________________________________________________________________________________________________________
 Обратная связь: gb.android.juniors@rambler.ru
