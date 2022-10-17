@@ -6,20 +6,9 @@
     android:background="@color/app_background_color"
     tools:context=".main.ui.MainActivity">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/network_lost_image"
-        android:layout_width="@dimen/ic_network_size"
-        android:layout_height="@dimen/ic_network_size"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_network_connection_lost"
-        android:tint="@color/ic_network_tint_color"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
 
 </FrameLayout>

@@ -2,9 +2,7 @@ package com.example.newsgb.main.ui
 
 import android.content.Context
 import android.content.ContextWrapper
-import android.net.ConnectivityManager
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -15,8 +13,6 @@ import com.example.newsgb.databinding.MainActivityBinding
 import com.example.newsgb.utils.Constants
 import com.example.newsgb.utils.ContextUtils
 import com.example.newsgb.utils.PreferencesHelper
-import com.example.newsgb.utils.network.OnlineLiveData
-import com.example.newsgb.utils.ui.AlertDialogFragment
 import com.example.newsgb.utils.ui.Countries
 import com.example.newsgb.utils.ui.ThemeModes
 import org.koin.android.ext.android.inject
@@ -28,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModel()
 
     private lateinit var binding: MainActivityBinding
-    private var isNetworkAvailable: Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,11 +38,7 @@ class MainActivity : AppCompatActivity() {
         binding = MainActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setTheme(R.style.CustomThemeIndigo)
-        //проверяем наличие интернет-подключения на старте
-        isNetworkAvailable =
-            (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnected == true
         startMainScreen()
-        subscribeToNetworkChange()
     }
 
     /**
@@ -88,56 +79,9 @@ class MainActivity : AppCompatActivity() {
         App.countryCode = Countries.values()[index].countryCode
     }
 
-    /**
-     * если интернет недоступен, уведомляем пользователя с помощью ImageView в активити и AlertDialog,
-     * иначе запускаем основной фрагмент
-     * */
     private fun startMainScreen() {
-        if (!isNetworkAvailable && isDialogNull()) {
-            showNoInternetConnectionInfo()
-        } else if (isNetworkAvailable) {
-            binding.networkLostImage.visibility = View.GONE
-            binding.mainContainer.visibility = View.VISIBLE
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.main_container, NavigationFragment.newInstance())
-                .commit()
-        }
-    }
-
-    /**
-     * метод проверяет, что AlertDialog не отображается в данный момент
-     **/
-    private fun isDialogNull(): Boolean =
-        supportFragmentManager.findFragmentByTag(DIALOG_FRAGMENT_TAG) == null
-
-    /**
-     * Метод делает картинку отсутствия интернета видимой в макете и запускает AlertDialog
-     * */
-    private fun showNoInternetConnectionInfo() = with(binding) {
-        networkLostImage.visibility = View.VISIBLE
-        mainContainer.visibility = View.GONE
-        showNoInternetConnectionDialog()
-    }
-
-    private fun showNoInternetConnectionDialog() {
-        showAlertDialog(
-            getString(R.string.dialog_title_device_is_offline),
-            getString(R.string.dialog_message_device_is_offline)
-        )
-    }
-
-    private fun showAlertDialog(title: String?, message: String?) =
-        AlertDialogFragment.newInstance(title, message)
-            .show(supportFragmentManager, DIALOG_FRAGMENT_TAG)
-
-    private fun subscribeToNetworkChange() {
-        OnlineLiveData(this).observe(this@MainActivity) {
-            isNetworkAvailable = it
-            startMainScreen()
-        }
-    }
-
-    companion object {
-        const val DIALOG_FRAGMENT_TAG = "74a54328-5d62-46bf-ab6b-cbf5d8c79522"
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.main_container, NavigationFragment.newInstance())
+            .commit()
     }
 }

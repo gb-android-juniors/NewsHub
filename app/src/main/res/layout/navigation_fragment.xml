@@ -21,4 +21,14 @@
         android:layout_gravity="bottom"
         app:menu="@menu/menu_bottom_navigation" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/network_lost_image"
+        android:layout_width="@dimen/ic_network_size"
+        android:layout_height="@dimen/ic_network_size"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_network_connection_lost"
+        android:tint="?attr/colorPrimary"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
 </FrameLayout>
