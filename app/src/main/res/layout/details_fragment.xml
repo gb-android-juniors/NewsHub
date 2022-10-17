@@ -26,7 +26,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/share"
                 style="@style/ToolBarButton"
-                android:src="@drawable/ic_share_24"/>
+                android:src="@drawable/ic_share_24" />
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -129,7 +129,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/ic_warning_amber_96" />
+        android:src="@drawable/ic_warning_amber_96"
+        android:tint="?attr/colorPrimary" />
 
     <ProgressBar
         android:id="@+id/loader"

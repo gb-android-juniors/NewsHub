@@ -41,8 +41,8 @@
             android:hint="@string/enter_text"
             android:textColorHint="@color/text_hint_color"
             app:endIconDrawable="@drawable/ic_search_24"
-            app:endIconTint="@color/start_icon_tint_color"
-            app:endIconMode="custom">
+            app:endIconMode="custom"
+            app:endIconTint="@color/start_icon_tint_color">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search_edit_text"
@@ -76,7 +76,7 @@
             android:layout_height="@dimen/empty_bookmarks_warning_image_size"
             android:layout_gravity="center"
             android:src="@drawable/ic_search_off_24"
-            android:tint="@color/textDarkSecondary" />
+            android:tint="?attr/colorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -99,6 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/ic_warning_amber_96" />
+        android:src="@drawable/ic_warning_amber_96"
+        android:tint="?attr/colorPrimary" />
 
 </FrameLayout>

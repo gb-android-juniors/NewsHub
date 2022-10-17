@@ -38,7 +38,7 @@
             android:layout_height="@dimen/empty_bookmarks_warning_image_size"
             android:layout_gravity="center"
             android:src="@drawable/ic_bookmarks_24"
-            android:tint="@color/textDarkSecondary" />
+            android:tint="?attr/colorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
