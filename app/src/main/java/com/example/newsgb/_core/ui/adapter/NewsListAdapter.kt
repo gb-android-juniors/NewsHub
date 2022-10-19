@@ -3,7 +3,6 @@ package com.example.newsgb._core.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsgb._core.ui.model.Article
@@ -17,7 +16,7 @@ class NewsListAdapter(
 ) :
     RecyclerView.Adapter<BaseViewHolder>() {
 
-    private val newsListDiffer = AsyncListDiffer(this, DIFF_CALLBACK)
+    private val newsListDiffer = AsyncListDiffer(this, ArticleDiffUtilCallback())
 
     fun submitList(list: List<Article>) = newsListDiffer.submitList(list)
 
@@ -105,16 +104,6 @@ class NewsListAdapter(
     }
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Article>() {
-            override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
-                return oldItem.isTheSame(newItem)
-            }
-
-            override fun areContentsTheSame(oldItem: Article, newItem: Article): Boolean {
-                return oldItem == newItem
-            }
-        }
-
         const val TYPE_FIRST_ARTICLE = 0
         const val TYPE_DEFAULT_ARTICLE = 1
     }
