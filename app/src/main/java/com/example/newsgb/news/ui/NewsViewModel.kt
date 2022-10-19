@@ -15,6 +15,8 @@ class NewsViewModel(
     private val category: Category
 ) : ViewModel() {
 
+    private var pageNumber = INITIAL_PAGE
+
     /** переменная состояния экрана со списком новостей */
     private val _viewState = MutableStateFlow<ListViewState>(ListViewState.Loading)
     val viewState: StateFlow<ListViewState> = _viewState.asStateFlow()
@@ -116,7 +118,7 @@ class NewsViewModel(
     private fun getNewsByCategory(isRefreshing: Boolean) {
         viewModelScope.launch {
             useCases.getNewsByCategory(
-                page = INITIAL_PAGE,
+                page = pageNumber,
                 category = category,
                 isRefreshing = isRefreshing
             )
