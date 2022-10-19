@@ -28,8 +28,17 @@
             android:textSize="@dimen/first_news_source_text_size"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="@+id/first_news_image"
-            app:layout_constraintEnd_toEndOf="@+id/first_news_image"
+            app:layout_constraintStart_toStartOf="@+id/first_news_image"
             tools:text="@string/example_resource_name_text" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/first_news_bookmark_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_8"
+            android:src="@drawable/ic_bookmarks_24"
+            app:layout_constraintBottom_toBottomOf="@+id/first_news_image"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/first_news_header"
@@ -43,6 +52,7 @@
             app:layout_constraintStart_toStartOf="@+id/first_news_image"
             app:layout_constraintTop_toBottomOf="@id/first_news_image"
             tools:text="@string/example_first_news_header_text" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

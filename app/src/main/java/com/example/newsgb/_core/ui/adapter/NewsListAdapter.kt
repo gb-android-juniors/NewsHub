@@ -87,6 +87,14 @@ class NewsListAdapter(
         override fun bind(itemArticle: Article) = with(binding) {
             firstNewsHeader.text = itemArticle.title
             firstNewsSource.text = itemArticle.sourceName
+            firstNewsBookmarkImage.apply {
+                setBookmarkIconColor(
+                    context = itemView.context,
+                    bookmarkImage = this,
+                    isChecked = itemArticle.isChecked
+                )
+                setOnClickListener { listener.onBookmarkCheck(itemArticle) }
+            }
             Glide.with(firstNewsImage.context)
                 .load(itemArticle.imageUrl)
                 .error(itemArticle.category.imgResId)
