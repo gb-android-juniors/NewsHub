@@ -7,11 +7,15 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.newsgb._core.ui.model.Article
-import com.example.newsgb.databinding.NewsFragmentRecyclerItemBinding
+import com.example.newsgb.databinding.DefaultArticleRecyclerItemBinding
+import com.example.newsgb.databinding.FirstArticleRecyclerItemBinding
 import com.example.newsgb.utils.setBookmarkIconColor
 
-class NewsListAdapter(private val listener: RecyclerItemListener) :
-    RecyclerView.Adapter<NewsListAdapter.NewsViewHolder>() {
+class NewsListAdapter(
+    private val listener: RecyclerItemListener,
+    private val isMainNewsScreen: Boolean = false
+) :
+    RecyclerView.Adapter<BaseViewHolder>() {
 
     private val newsListDiffer = AsyncListDiffer(this, DIFF_CALLBACK)
 
@@ -19,22 +23,45 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
 
     override fun getItemCount(): Int = newsListDiffer.currentList.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = NewsFragmentRecyclerItemBinding.inflate(inflater, parent, false)
-        return NewsViewHolder(binding)
+        return when (viewType) {
+            TYPE_FIRST_ARTICLE -> {
+                val binding = FirstArticleRecyclerItemBinding.inflate(inflater, parent, false)
+                FirstArticleViewHolder(binding)
+            }
+            else -> {
+                val binding = DefaultArticleRecyclerItemBinding.inflate(inflater, parent, false)
+                DefaultArticleViewHolder(binding)
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
+    override fun getItemViewType(position: Int): Int {
+        return if (isMainNewsScreen && position == 0) {
+            TYPE_FIRST_ARTICLE
+        } else {
+            TYPE_DEFAULT_ARTICLE
+        }
+    }
+
+    override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
         val article = newsListDiffer.currentList[position]
-        holder.bind(itemArticle = article)
+        when (getItemViewType(position)) {
+            TYPE_FIRST_ARTICLE -> {
+                (holder as FirstArticleViewHolder).bind(itemArticle = article)
+            }
+            else -> {
+                (holder as DefaultArticleViewHolder).bind(itemArticle = article)
+            }
+        }
     }
 
-    inner class NewsViewHolder(
-        private val binding: NewsFragmentRecyclerItemBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
+    inner class DefaultArticleViewHolder(
+        private val binding: DefaultArticleRecyclerItemBinding
+    ) : BaseViewHolder(binding.root) {
 
-        fun bind(itemArticle: Article) = with(binding) {
+        override fun bind(itemArticle: Article) = with(binding) {
             newsHeader.text = itemArticle.title
             newsResourceName.text = itemArticle.sourceName
             newsItemBookmarkImage.apply {
@@ -55,6 +82,20 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
         }
     }
 
+    inner class FirstArticleViewHolder(private val binding: FirstArticleRecyclerItemBinding) :
+        BaseViewHolder(binding.root) {
+        override fun bind(itemArticle: Article) = with(binding) {
+            firstNewsHeader.text = itemArticle.title
+            firstNewsSource.text = itemArticle.sourceName
+            Glide.with(firstNewsImage.context)
+                .load(itemArticle.imageUrl)
+                .error(itemArticle.category.imgResId)
+                .into(firstNewsImage)
+
+            itemView.setOnClickListener { listener.onItemClick(itemArticle) }
+        }
+    }
+
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Article>() {
             override fun areItemsTheSame(oldItem: Article, newItem: Article): Boolean {
@@ -65,5 +106,8 @@ class NewsListAdapter(private val listener: RecyclerItemListener) :
                 return oldItem == newItem
             }
         }
+
+        const val TYPE_FIRST_ARTICLE = 0
+        const val TYPE_DEFAULT_ARTICLE = 1
     }
 }

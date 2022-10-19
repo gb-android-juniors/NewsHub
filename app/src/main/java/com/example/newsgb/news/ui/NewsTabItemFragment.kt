@@ -8,7 +8,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb._core.ui.adapter.NewsListAdapter
@@ -46,8 +45,9 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
         }
     }
 
-    /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
-    private val newsListAdapter: NewsListAdapter = NewsListAdapter(listener = recyclerItemListener)
+    /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка и флаг, что это главный экран*/
+    private val newsListAdapter: NewsListAdapter =
+        NewsListAdapter(listener = recyclerItemListener, isMainNewsScreen = true)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -118,35 +118,8 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
         }
     }
 
-    /**
-     * метод инициализации контента на экране
-     * */
     private fun initContent(data: List<Article>) {
-        createFirstNews(data.first())
-        initRecycleContent(data)
-    }
-
-    private fun initRecycleContent(data: List<Article>) {
-        if (data.size > 1) {
-            newsListAdapter.submitList(data.subList(1, data.size - 1))
-        } else {
-            newsListAdapter.submitList(listOf())
-        }
-    }
-
-    /**
-     * метод инициализации главной новости на экране
-     * */
-    private fun createFirstNews(article: Article) {
-        binding.firstNewsHeader.text = article.title
-        binding.firstNewsSource.text = article.sourceName
-        binding.firstNewsContent.setOnClickListener {
-            showFragment(fragment = ArticleFragment.newInstance(article = article))
-        }
-        Glide.with(binding.firstNewsImage)
-            .load(article.imageUrl)
-            .error(article.category.imgResId)
-            .into(binding.firstNewsImage)
+        newsListAdapter.submitList(data)
     }
 
     private fun enableEmptyState(state: Boolean) {
@@ -180,7 +153,8 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
 
     companion object {
         private const val ARG_CATEGORY = "arg_category"
-        private const val ARTICLE_DETAILS_FRAGMENT_FROM_NEWS_LIST = "ArticleDetailsFragmentFromNewsList"
+        private const val ARTICLE_DETAILS_FRAGMENT_FROM_NEWS_LIST =
+            "ArticleDetailsFragmentFromNewsList"
 
         @JvmStatic
         fun newInstance(category: Category?): NewsTabItemFragment =

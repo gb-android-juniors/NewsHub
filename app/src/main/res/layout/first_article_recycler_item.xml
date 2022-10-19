@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/first_news_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/first_news_image"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/news_image_height"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/example_first_news" />
+
+        <TextView
+            android:id="@+id/first_news_source"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:textColor="@color/textLightSecondary"
+            android:textSize="@dimen/first_news_source_text_size"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@+id/first_news_image"
+            app:layout_constraintEnd_toEndOf="@+id/first_news_image"
+            tools:text="@string/example_resource_name_text" />
+
+        <TextView
+            android:id="@+id/first_news_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/first_news_text_background"
+            android:padding="@dimen/margin_8"
+            android:textColor="@color/textLightPrimary"
+            android:textSize="@dimen/first_news_source_text_size"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/first_news_image"
+            app:layout_constraintTop_toBottomOf="@id/first_news_image"
+            tools:text="@string/example_first_news_header_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -61,7 +61,7 @@
             android:layout_margin="@dimen/margin_4"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="2"
-            tools:listitem="@layout/news_fragment_recycler_item" />
+            tools:listitem="@layout/default_article_recycler_item" />
     </LinearLayout>
 
     <LinearLayout
