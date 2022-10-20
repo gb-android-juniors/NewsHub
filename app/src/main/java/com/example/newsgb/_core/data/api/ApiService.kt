@@ -21,7 +21,7 @@ interface ApiService {
         @Query("category") category: String = DEFAULT_CATEGORY,
         @Query("page") pageNumber: Int = 1,
         @Query("apiKey") apiKey: String,
-        @Query("pageSize") pageSize: Int = DEFAULT_PAGE_SIZE
+        @Query("pageSize") pageSize: Int = Constants.DEFAULT_API_PAGE_SIZE
     ): ResponseDTO
 
     @GET(SEARCH_ENDPOINT)
@@ -30,7 +30,7 @@ interface ApiService {
         @Query("page") pageNumber: Int = 1,
         @Query("apiKey") apiKey: String,
         @Query("language") language: String = verifySearchLanguage(App.countryCode),
-        @Query("pageSize") pageSize: Int = DEFAULT_PAGE_SIZE
+        @Query("pageSize") pageSize: Int = Constants.DEFAULT_API_PAGE_SIZE
     ): ResponseDTO
 
     companion object {
@@ -45,7 +45,6 @@ interface ApiService {
         }
 
         private const val DEFAULT_CATEGORY = "general"
-        private const val DEFAULT_PAGE_SIZE = 100
     }
 }
 

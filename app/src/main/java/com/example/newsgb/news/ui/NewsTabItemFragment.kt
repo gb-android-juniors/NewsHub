@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb._core.ui.adapter.NewsListAdapter
@@ -66,6 +67,15 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
             viewModel.refreshData()
             swipeRefresh.isRefreshing = false
         }
+
+        mainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(3)) {
+                    viewModel.getMoreDataToList()
+                }
+            }
+        })
     }
 
     private fun initViewModel() {
@@ -74,7 +84,7 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
     }
 
     private fun initData() {
-        category?.let { viewModel.getData() }
+        category?.let { viewModel.getInitData() }
     }
 
     /**
@@ -87,24 +97,35 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
                 enableProgress(state = false)
                 enableError(state = false)
                 enableContent(state = false)
+                enableRecyclerProgress(state = false)
             }
             is ListViewState.Loading -> {
                 enableProgress(state = true)
                 enableEmptyState(state = true)
                 enableError(state = false)
                 enableContent(state = false)
+                enableRecyclerProgress(state = false)
+            }
+            is ListViewState.MoreLoading -> {
+                enableProgress(state = state.mainProgressState)
+                enableRecyclerProgress(state = state.recyclerProgressState)
+                enableEmptyState(state = state.mainProgressState)
+                enableError(state = false)
+                enableContent(state = state.recyclerProgressState)
             }
             is ListViewState.Refreshing -> {
                 enableProgress(state = true)
                 enableEmptyState(state = false)
                 enableError(state = false)
                 enableContent(state = true)
+                enableRecyclerProgress(state = false)
             }
             is ListViewState.Error -> {
                 enableError(state = true)
                 enableEmptyState(state = false)
                 enableProgress(state = false)
                 enableContent(state = false)
+                enableRecyclerProgress(state = false)
                 showToastMessage(message = state.message ?: getString(R.string.unknown_error))
             }
             is ListViewState.Data -> {
@@ -112,9 +133,9 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
                 enableEmptyState(state = false)
                 enableProgress(state = false)
                 enableError(state = false)
+                enableRecyclerProgress(state = false)
                 initContent(data = state.data)
             }
-            else -> {}
         }
     }
 
@@ -130,8 +151,12 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
         binding.loader.isVisible = state
     }
 
+    private fun enableRecyclerProgress(state: Boolean) {
+        binding.recyclerLoader.isVisible = state
+    }
+
     private fun enableContent(state: Boolean) {
-        binding.content.isVisible = state
+        binding.mainRecycler.isVisible = state
     }
 
     private fun enableError(state: Boolean) {

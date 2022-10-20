@@ -46,13 +46,13 @@ class NavigationFragment : BaseFragment<NavigationFragmentBinding>() {
         }
     }
     private fun checkInternetAvailability() {
-        if (!isNetworkAvailable(requireContext()) && isDialogNull()) {
-            disableNetwork()
-            showNoInternetConnectionDialog()
-        } else if (isNetworkAvailable(requireContext())) {
+//        if (!isNetworkAvailable() && isDialogNull()) {
+//            disableNetwork()
+//            showNoInternetConnectionDialog()
+//        } else if (isNetworkAvailable()) {
             enableNetwork()
             showFragment(NewsFragment.newInstance())
-        }
+//        }
     }
 
     private fun showFragment(fragment: Fragment?) {

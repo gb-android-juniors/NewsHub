@@ -53,6 +53,13 @@ class NewsStore : CoroutineScope by MainScope() {
                         launch { _storeEffect.emit(AppEffect.LoadData(isRefreshing = true)) }
                         AppState.Refreshing(data = currentState.data)
                     }
+                    is AppState.MoreLoading ->{
+                        launch { _storeEffect.emit(AppEffect.Refresh) }
+                        AppState.Refreshing(data = currentState.data)
+                    }
+                    is AppState.Refreshing -> {
+                        AppState.Data(data = currentState.data)
+                    }
                     else -> currentState
                 }
             }
@@ -102,6 +109,10 @@ class NewsStore : CoroutineScope by MainScope() {
                     is AppState.Data -> {
                         launch { _storeEffect.emit(AppEffect.LoadData(isRefreshing = false)) }
                         AppState.MoreLoading(data = currentState.data)
+                    }
+                    is AppState.MoreLoading -> {
+                        launch { _storeEffect.emit(AppEffect.LoadData(isRefreshing = false)) }
+                        AppState.Refreshing(data = currentState.data)
                     }
                     else -> currentState
                 }
@@ -154,5 +165,4 @@ class NewsStore : CoroutineScope by MainScope() {
             currentData + bookmark
         }
     }
-
 }
