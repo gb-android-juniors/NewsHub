@@ -46,13 +46,13 @@ class NavigationFragment : BaseFragment<NavigationFragmentBinding>() {
         }
     }
     private fun checkInternetAvailability() {
-//        if (!isNetworkAvailable() && isDialogNull()) {
-//            disableNetwork()
-//            showNoInternetConnectionDialog()
-//        } else if (isNetworkAvailable()) {
+        if (!isNetworkAvailable() && isDialogNull()) {
+            disableNetwork()
+            showNoInternetConnectionDialog()
+        } else if (isNetworkAvailable()) {
             enableNetwork()
             showFragment(NewsFragment.newInstance())
-//        }
+        }
     }
 
     private fun showFragment(fragment: Fragment?) {
@@ -88,7 +88,7 @@ class NavigationFragment : BaseFragment<NavigationFragmentBinding>() {
             .show(requireActivity().supportFragmentManager, ALERT_DIALOG_NETWORK_DISABLE_TAG)
 
     private fun subscribeToNetworkChange() {
-        OnlineLiveData(requireActivity()).observe(requireActivity()) { checkInternetAvailability() }
+        OnlineLiveData(requireActivity()).observe(viewLifecycleOwner) { checkInternetAvailability() }
     }
 
     companion object {
