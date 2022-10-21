@@ -24,19 +24,14 @@ ________________________________________________________________________________
 ______________________________________________________________________________________________________________________________________________________________
 
 Снапшот проекта:
-https://user-images.githubusercontent.com/75025794/193679699-5a71e8e5-4ad2-4aa1-84c7-d387c98c3a39.mp4
 
+https://user-images.githubusercontent.com/75025794/196247852-43a70755-924c-4a3f-82fb-a8f6611225b1.mp4
 ______________________________________________________________________________________________________________________________________________________________
-Скриншоты проекта:
+Ссылка на релиз в RuStore: https://apps.rustore.ru/app/com.example.newsgb
 
-![1](https://user-images.githubusercontent.com/75025794/193677693-c95a31bd-5cf7-4518-a019-45b8e2630bd9.jpg)
-![2](https://user-images.githubusercontent.com/75025794/193677715-b44afcbe-2818-4370-bf85-57c0b2084057.jpg)
-![3](https://user-images.githubusercontent.com/75025794/193677748-3bd3d6fb-ec18-4e78-b6d5-3ef341e79348.jpg)
-![4](https://user-images.githubusercontent.com/75025794/193677800-4de021e1-f36b-4fe6-9352-b8e0f7818528.jpg)
-![5](https://user-images.githubusercontent.com/75025794/193677814-8ebcf0c3-2a2f-43e4-90bc-953ee728e722.jpg)
-![6](https://user-images.githubusercontent.com/75025794/193677828-dc194268-6550-472e-9e2e-a78de17bad90.png)
-![Темы](https://user-images.githubusercontent.com/75025794/193677840-26f9c0e5-fd23-46e3-9ea8-e7681d915529.jpg)
-![Страны](https://user-images.githubusercontent.com/75025794/193677860-14181804-4523-4487-b92b-3a11d9816fdf.jpg)
+![white](https://user-images.githubusercontent.com/75025794/197234541-8cfab1f3-83b7-4ccf-a31b-ef80b0b7edda.png)
+
+
 
 ______________________________________________________________________________________________________________________________________________________________
 Обратная связь: gb.android.juniors@rambler.ru
