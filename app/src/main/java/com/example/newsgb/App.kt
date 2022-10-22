@@ -15,7 +15,7 @@ import org.koin.core.logger.Level
 
 class App : Application() {
 
-     override fun onCreate() {
+    override fun onCreate() {
         super.onCreate()
         initKoin()
         instance = this

@@ -11,10 +11,14 @@ import java.io.IOException
 
 class SearchRepositoryImpl(private val apiService: ApiService) : SearchRepository {
 
-    override suspend fun getNewsByPhrase(page: Int, phrase: String, token: String): Result<ResponseDTO> {
+    override suspend fun getNewsByPhrase(
+        page: Int,
+        phrase: String,
+        apiKey: String
+    ): Result<ResponseDTO> {
         return try {
             val response = withContext(Dispatchers.IO) {
-                apiService.searchNewsByPhrase(pageNumber = page, phrase = phrase, apiKey = token)
+                apiService.searchNewsByPhrase(pageNumber = page, phrase = phrase, apiKey = apiKey)
             }
             when (response.status) {
                 STATUS_OK -> Result.success(value = response)
