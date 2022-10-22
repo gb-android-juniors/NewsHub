@@ -6,6 +6,7 @@ import com.example.newsgb._core.ui.model.*
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.news.domain.NewsUseCases
 import com.example.newsgb.utils.Constants
+import com.example.newsgb.utils.Constants.Companion.INITIAL_PAGE
 import com.example.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -167,9 +168,5 @@ class NewsViewModel(
     /** метод обработки нажатия на фложок закладки */
     fun checkBookmark(article: Article) {
         store.dispatch(event = AppEvent.BookmarkCheck(article = article))
-    }
-
-    companion object {
-        private const val INITIAL_PAGE = 1
     }
 }

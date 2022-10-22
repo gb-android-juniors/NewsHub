@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb._core.ui.adapter.NewsListAdapter
@@ -98,9 +99,18 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
 
     private fun initView() = with(binding) {
         searchRecycler.adapter = searchListAdapter
+        searchRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    viewModel.getMoreDataToList()
+                }
+            }
+        })
+
         searchInputLayout.setEndIconOnClickListener {
             hideKeyboard()
-            viewModel.getData(phrase = searchEditText.text.toString())
+            viewModel.getData(phrase = searchEditText.text.toString(), newSearch = true)
         }
         searchEditText.text?.apply {
             if (phrase.isBlank()) clear() else replace(0, this.length, phrase)
@@ -108,7 +118,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
     }
 
     private fun initData() {
-        viewModel.getData(phrase = phrase)
+        viewModel.getData(phrase = phrase, newSearch = true)
     }
 
     /**
@@ -118,6 +128,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
         when (state) {
             is ListViewState.Data -> {
                 enableProgress(state = false)
+                enableRecyclerProgress(state = false)
                 enableEmptyState(state = false)
                 enableError(state = false)
                 enableContent(state = true)
@@ -125,12 +136,21 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
             }
             is ListViewState.Loading -> {
                 enableProgress(state = true)
+                enableRecyclerProgress(state = false)
                 enableEmptyState(state = false)
                 enableContent(state = false)
                 enableError(state = false)
             }
+            is ListViewState.MoreLoading -> {
+                enableProgress(state = state.mainProgressState)
+                enableRecyclerProgress(state = state.recyclerProgressState)
+                enableEmptyState(state = state.mainProgressState)
+                enableError(state = false)
+                enableContent(state = state.recyclerProgressState)
+            }
             is ListViewState.Empty -> {
                 enableProgress(state = false)
+                enableRecyclerProgress(state = false)
                 enableEmptyState(state = true)
                 enableContent(state = false)
                 enableError(state = false)
@@ -138,18 +158,19 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
             is ListViewState.Error -> {
                 enableEmptyState(state = false)
                 enableProgress(state = false)
+                enableRecyclerProgress(state = false)
                 enableContent(state = false)
                 enableError(state = true)
                 showToastMessage(message = state.message ?: getString(R.string.unknown_error))
             }
 
             is ListViewState.Refreshing -> {
-                enableProgress(state = true)
+                enableProgress(state = false)
+                enableRecyclerProgress(state = true)
                 enableContent(state = true)
                 enableEmptyState(state = false)
                 enableError(state = false)
             }
-            else -> {}
         }
     }
 
@@ -166,6 +187,10 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
 
     private fun enableProgress(state: Boolean) {
         binding.loader.isVisible = state
+    }
+
+    private fun enableRecyclerProgress(state: Boolean) {
+        binding.recyclerLoader.isVisible = state
     }
 
     private fun enableEmptyState(state: Boolean) {

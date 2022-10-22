@@ -5,11 +5,17 @@ import androidx.lifecycle.viewModelScope
 import com.example.newsgb._core.ui.model.*
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.search.domain.SearchUseCases
+import com.example.newsgb.utils.Constants.Companion.INITIAL_PAGE
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class SearchViewModel(private val useCases: SearchUseCases, private val store: NewsStore) :
     ViewModel() {
+
+    private var currentPageNumber = INITIAL_PAGE
+    private var hasMoreResults: Boolean = true
+    private lateinit var currentSearchPhrase: String
+    private val currentArticlesList = mutableListOf<Article>()
 
     /** переменная состояния экрана со списком новостей */
     private val _viewState = MutableStateFlow<ListViewState>(ListViewState.Empty)
@@ -31,7 +37,7 @@ class SearchViewModel(private val useCases: SearchUseCases, private val store: N
             is AppState.BookmarkChecking -> {
                 val currentState = viewState.value
                 if (currentState is ListViewState.Data)
-                _viewState.value = ListViewState.Refreshing(data = currentState.data)
+                    _viewState.value = ListViewState.Refreshing(data = currentState.data)
             }
             else -> {}
         }
@@ -44,27 +50,50 @@ class SearchViewModel(private val useCases: SearchUseCases, private val store: N
         }
     }
 
-    /** метод обработки нажатия на фложок закладки */
-    fun checkBookmark(article: Article) {
-        store.dispatch(event = AppEvent.BookmarkCheck(article = article))
-    }
-
-    fun getData(phrase: String) {
+    fun getData(phrase: String, newSearch: Boolean) {
         if (phrase.isBlank()) {
+            hasMoreResults = false
             _viewState.value = ListViewState.Empty
         } else {
-            _viewState.value = ListViewState.Loading
+            if (newSearch) {
+                resetToDefaultState(phrase)
+                _viewState.value = ListViewState.Loading
+            } else {
+                _viewState.value = ListViewState.MoreLoading(mainProgressState = false, recyclerProgressState = true)
+            }
             viewModelScope.launch {
-                useCases.getNewsByPhrase(page = INITIAL_PAGE, phrase = phrase)
-                    .onSuccess { newsList ->
+                useCases.getNewsByPhrase(page = currentPageNumber, phrase = phrase)
+                    .onSuccess { newData ->
+                        if (newData.isEmpty()) {
+                            currentPageNumber--
+                            hasMoreResults = false
+                        }
                         _viewState.value =
-                            if(newsList.isEmpty()) ListViewState.Empty else ListViewState.Data(data = newsList)
+                            if (newData.isEmpty() && newSearch) {
+                                ListViewState.Empty
+                            } else {
+                                currentArticlesList += newData
+                                ListViewState.Data(data = currentArticlesList.toList())
+                            }
                     }
                     .onFailure { ex ->
-                        _viewState.value = ListViewState.Error(message = ex.message)
+                        currentPageNumber--
+                        hasMoreResults = false
+                        if (ex.message == "HTTP 426 ") {
+                            _viewState.value = ListViewState.Data(currentArticlesList.toList())
+                        } else {
+                            _viewState.value = ListViewState.Error(message = ex.message)
+                        }
                     }
             }
         }
+    }
+
+    private fun resetToDefaultState(phrase: String) {
+        currentSearchPhrase = phrase
+        currentPageNumber = INITIAL_PAGE
+        hasMoreResults = true
+        currentArticlesList.clear()
     }
 
     private fun checkBookmarkInDatabase(article: Article) {
@@ -75,7 +104,10 @@ class SearchViewModel(private val useCases: SearchUseCases, private val store: N
                     store.dispatch(event = AppEvent.DataReceived(data = listOf(checkedArticle)))
                     val currentState = viewState.value
                     if (currentState is ListViewState.Refreshing) {
-                        val newData = checkBookmarkInCurrentData(bookmark = checkedArticle, data = currentState.data)
+                        val newData = checkBookmarkInCurrentData(
+                            bookmark = checkedArticle,
+                            data = currentState.data
+                        )
                         _viewState.value = ListViewState.Data(data = newData)
                     }
                 }
@@ -94,7 +126,15 @@ class SearchViewModel(private val useCases: SearchUseCases, private val store: N
             }
         }
 
-    companion object {
-        private const val INITIAL_PAGE = 1
+    /** метод обработки нажатия на фложок закладки */
+    fun checkBookmark(article: Article) {
+        store.dispatch(event = AppEvent.BookmarkCheck(article = article))
+    }
+
+    fun getMoreDataToList() {
+        if (hasMoreResults && viewState.value is ListViewState.Data) {
+            currentPageNumber++
+            getData(phrase = currentSearchPhrase, newSearch = false)
+        }
     }
 }

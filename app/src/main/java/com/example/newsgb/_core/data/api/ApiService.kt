@@ -3,6 +3,7 @@ package com.example.newsgb._core.data.api
 import com.example.newsgb.App
 import com.example.newsgb._core.data.api.model.ResponseDTO
 import com.example.newsgb.utils.Constants
+import com.example.newsgb.utils.Constants.Companion.INITIAL_PAGE
 import com.example.newsgb.utils.Constants.Companion.SEARCH_ENDPOINT
 import com.example.newsgb.utils.Constants.Companion.TOP_HEADLINES_ENDPOINT
 import com.example.newsgb.utils.verifySearchLanguage
@@ -19,7 +20,7 @@ interface ApiService {
     suspend fun getNewsList(
         @Query("country") countryCode: String = App.countryCode,
         @Query("category") category: String = DEFAULT_CATEGORY,
-        @Query("page") pageNumber: Int = 1,
+        @Query("page") pageNumber: Int = INITIAL_PAGE,
         @Query("apiKey") apiKey: String,
         @Query("pageSize") pageSize: Int = Constants.DEFAULT_API_PAGE_SIZE
     ): ResponseDTO
@@ -27,7 +28,7 @@ interface ApiService {
     @GET(SEARCH_ENDPOINT)
     suspend fun searchNewsByPhrase(
         @Query("q") phrase: String,
-        @Query("page") pageNumber: Int = 1,
+        @Query("page") pageNumber: Int = INITIAL_PAGE,
         @Query("apiKey") apiKey: String,
         @Query("language") language: String = verifySearchLanguage(App.countryCode),
         @Query("pageSize") pageSize: Int = Constants.DEFAULT_API_PAGE_SIZE

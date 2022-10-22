@@ -28,7 +28,7 @@
     <LinearLayout
         android:id="@+id/search_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
         android:orientation="vertical">
 
@@ -57,10 +57,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="@dimen/margin_4"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="2"
+            tools:itemCount="4"
             tools:listitem="@layout/default_article_recycler_item" />
     </LinearLayout>
 
@@ -88,12 +88,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/loader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/error"
         android:layout_width="wrap_content"
@@ -101,5 +95,20 @@
         android:layout_gravity="center"
         android:src="@drawable/ic_warning_amber_96"
         android:tint="?attr/colorPrimary" />
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_top_progress_bar"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/recycler_loader"
+        style="@style/RecycleProgressIndicatorStyle"
+        android:layout_gravity="bottom"
+        tools:visibility="visible" />
 
 </FrameLayout>
