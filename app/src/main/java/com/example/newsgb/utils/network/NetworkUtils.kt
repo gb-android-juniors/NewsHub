@@ -71,7 +71,7 @@ fun Fragment.isNetworkAvailable(): Boolean {
             }
         }
         return false
-    } else {
+    } else @Suppress("DEPRECATION") {
         return connectivityManager.activeNetworkInfo?.isConnected == true
     }
 }

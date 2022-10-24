@@ -1,5 +1,6 @@
 package com.example.newsgb.article.ui
 
+import android.os.Build.VERSION
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,8 +23,8 @@ import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ItemViewState
 import com.example.newsgb.databinding.DetailsFragmentBinding
 import com.example.newsgb.utils.formatApiStringToDate
-import com.example.newsgb.utils.setBookmarkIconColor
 import com.example.newsgb.utils.getShareNewsIntent
+import com.example.newsgb.utils.setBookmarkIconColor
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -33,7 +34,13 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
 
     /** вытягиваем url статьи из аргументов, если его там нет, то заменяем на пустую строку */
     private val article: Article by lazy {
-        requireArguments().getParcelable<Article>(ARG_ARTICLE_DATA) as Article
+        if (VERSION.SDK_INT >= 33) {
+            requireArguments().getParcelable(ARG_ARTICLE_DATA, Article::class.java) as Article
+        } else {
+            @Suppress("DEPRECATION")
+            requireArguments().getParcelable<Article>(ARG_ARTICLE_DATA) as Article
+        }
+
     }
 
     private val viewModel: ArticleViewModel by viewModel { parametersOf(article) }
@@ -60,7 +67,8 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
                 return when (menuItem.itemId) {
                     /** инициализируем системную кнопку "назад" */
                     android.R.id.home -> {
-                        requireActivity().onBackPressed()
+//                        requireActivity().onBackPressed()
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
                         true
                     }
                     else -> false
