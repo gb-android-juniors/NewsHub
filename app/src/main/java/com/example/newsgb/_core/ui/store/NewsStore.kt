@@ -1,6 +1,5 @@
 package com.example.newsgb._core.ui.store
 
-import android.util.Log
 import com.example.newsgb._core.ui.model.AppEffect
 import com.example.newsgb._core.ui.model.AppEvent
 import com.example.newsgb._core.ui.model.AppState
@@ -54,6 +53,13 @@ class NewsStore : CoroutineScope by MainScope() {
                         launch { _storeEffect.emit(AppEffect.LoadData(isRefreshing = true)) }
                         AppState.Refreshing(data = currentState.data)
                     }
+                    is AppState.MoreLoading ->{
+                        launch { _storeEffect.emit(AppEffect.Refresh) }
+                        AppState.Refreshing(data = currentState.data)
+                    }
+                    is AppState.Refreshing -> {
+                        AppState.Data(data = currentState.data)
+                    }
                     else -> currentState
                 }
             }
@@ -104,6 +110,10 @@ class NewsStore : CoroutineScope by MainScope() {
                         launch { _storeEffect.emit(AppEffect.LoadData(isRefreshing = false)) }
                         AppState.MoreLoading(data = currentState.data)
                     }
+                    is AppState.MoreLoading -> {
+                        launch { _storeEffect.emit(AppEffect.LoadData(isRefreshing = false)) }
+                        AppState.Refreshing(data = currentState.data)
+                    }
                     else -> currentState
                 }
             }
@@ -126,7 +136,6 @@ class NewsStore : CoroutineScope by MainScope() {
                 }
             }
         }
-        Log.d("TAG_STORE", "dispatch() called with: \n current AppState = ${currentState.javaClass.canonicalName} \n event = ${event.javaClass.canonicalName} \n new AppState = ${newState.javaClass.canonicalName}")
         //если новое состояне отличается от текущего, то устанавливаем новое состояние
         if (newState != currentState) {
             _storeState.value = newState
@@ -156,5 +165,4 @@ class NewsStore : CoroutineScope by MainScope() {
             currentData + bookmark
         }
     }
-
 }

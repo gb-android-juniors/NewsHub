@@ -1,6 +1,6 @@
 package com.example.newsgb.main.domain
 
-import com.example.newsgb._core.data.api.model.ApiKeys
+import com.example.newsgb._core.data.api.model.ApiKey
 import com.example.newsgb._core.ui.mapper.EntitiesToArticleMapper
 import com.example.newsgb._core.ui.mapper.NewsDtoToUiMapper
 import com.example.newsgb._core.ui.model.Article
@@ -16,15 +16,10 @@ class MainUseCases(
      */
     suspend fun getInitialData(initialPage: Int): Result<List<Article>> {
 
-        var tokenIndex = 0
-        var token = ApiKeys.values()[tokenIndex].token
-
-        var result = mainRepo.getBreakingNews(page = initialPage, apiKey = token)
+        var result = mainRepo.getBreakingNews(page = initialPage, apiKey = ApiKey.getKey())
         while (result.isFailure && result.exceptionOrNull()?.message == "HTTP 429 ") {
-            if (++tokenIndex < ApiKeys.values().size) {
-                token = ApiKeys.values()[tokenIndex].token
-                result = mainRepo.getBreakingNews(page = initialPage, apiKey = token)
-            } else break
+            val nextKey = ApiKey.nextKey() ?: break
+            result = mainRepo.getBreakingNews(page = initialPage, apiKey = nextKey)
         }
 
         return result.map { response ->
@@ -43,7 +38,7 @@ class MainUseCases(
                 }
                 remoteArticles += bookmarkArticles
             }
-           remoteArticles
+            remoteArticles
         }
     }
 }

@@ -19,8 +19,8 @@
             android:maxLines="3"
             android:textColor="@color/textDarkPrimary"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/news_image"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/news_image"
             app:layout_constraintTop_toTopOf="parent"
             tool:text="@string/example_header_text" />
 

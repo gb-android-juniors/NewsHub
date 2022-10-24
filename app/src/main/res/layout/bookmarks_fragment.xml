@@ -38,7 +38,7 @@
             android:layout_height="@dimen/empty_bookmarks_warning_image_size"
             android:layout_gravity="center"
             android:src="@drawable/ic_bookmarks_24"
-            android:tint="@color/textDarkSecondary" />
+            android:tint="?attr/colorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
             android:layout_marginBottom="@dimen/margin_4"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="2"
-            tools:listitem="@layout/news_fragment_recycler_item" />
+            tools:listitem="@layout/default_article_recycler_item" />
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>

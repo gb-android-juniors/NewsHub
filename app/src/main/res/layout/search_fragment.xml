@@ -28,7 +28,7 @@
     <LinearLayout
         android:id="@+id/search_content"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="?actionBarSize"
         android:orientation="vertical">
 
@@ -41,8 +41,8 @@
             android:hint="@string/enter_text"
             android:textColorHint="@color/text_hint_color"
             app:endIconDrawable="@drawable/ic_search_24"
-            app:endIconTint="@color/start_icon_tint_color"
-            app:endIconMode="custom">
+            app:endIconMode="custom"
+            app:endIconTint="@color/start_icon_tint_color">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search_edit_text"
@@ -57,11 +57,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/search_recycler"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="@dimen/margin_4"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:itemCount="2"
-            tools:listitem="@layout/news_fragment_recycler_item" />
+            tools:itemCount="4"
+            tools:listitem="@layout/default_article_recycler_item" />
     </LinearLayout>
 
     <LinearLayout
@@ -76,7 +76,7 @@
             android:layout_height="@dimen/empty_bookmarks_warning_image_size"
             android:layout_gravity="center"
             android:src="@drawable/ic_search_off_24"
-            android:tint="@color/textDarkSecondary" />
+            android:tint="?attr/colorPrimary" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -88,17 +88,27 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/loader"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center" />
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/error"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/ic_warning_amber_96" />
+        android:src="@drawable/ic_warning_amber_96"
+        android:tint="?attr/colorPrimary" />
+
+    <ProgressBar
+        android:id="@+id/loader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_top_progress_bar"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/recycler_loader"
+        style="@style/RecycleProgressIndicatorStyle"
+        android:layout_gravity="bottom"
+        tools:visibility="visible" />
 
 </FrameLayout>

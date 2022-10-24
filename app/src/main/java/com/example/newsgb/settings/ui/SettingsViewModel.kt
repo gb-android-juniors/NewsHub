@@ -8,6 +8,7 @@ import com.example.newsgb._core.ui.model.AppState
 import com.example.newsgb._core.ui.model.SettingsViewState
 import com.example.newsgb._core.ui.store.NewsStore
 import com.example.newsgb.main.domain.MainUseCases
+import com.example.newsgb.utils.Constants.Companion.INITIAL_PAGE
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -47,9 +48,4 @@ class SettingsViewModel(private val useCases: MainUseCases, private val store: N
     fun refreshData() {
         store.dispatch(event = AppEvent.Refresh)
     }
-
-    companion object {
-        private const val INITIAL_PAGE = 1
-    }
-
 }

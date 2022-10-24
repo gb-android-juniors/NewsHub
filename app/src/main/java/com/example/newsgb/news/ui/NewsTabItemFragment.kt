@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
+import androidx.recyclerview.widget.RecyclerView
 import com.example.newsgb.R
 import com.example.newsgb._core.ui.BaseFragment
 import com.example.newsgb._core.ui.adapter.NewsListAdapter
@@ -46,8 +46,9 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
         }
     }
 
-    /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
-    private val newsListAdapter: NewsListAdapter = NewsListAdapter(listener = recyclerItemListener)
+    /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка и флаг, что это главный экран*/
+    private val newsListAdapter: NewsListAdapter =
+        NewsListAdapter(listener = recyclerItemListener, isMainNewsScreen = true)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -66,6 +67,15 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
             viewModel.refreshData()
             swipeRefresh.isRefreshing = false
         }
+
+        mainRecycler.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!recyclerView.canScrollVertically(1)) {
+                    viewModel.getMoreDataToList()
+                }
+            }
+        })
     }
 
     private fun initViewModel() {
@@ -74,7 +84,7 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
     }
 
     private fun initData() {
-        category?.let { viewModel.getData() }
+        category?.let { viewModel.getInitData() }
     }
 
     /**
@@ -87,24 +97,35 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
                 enableProgress(state = false)
                 enableError(state = false)
                 enableContent(state = false)
+                enableRecyclerProgress(state = false)
             }
             is ListViewState.Loading -> {
                 enableProgress(state = true)
                 enableEmptyState(state = true)
                 enableError(state = false)
                 enableContent(state = false)
+                enableRecyclerProgress(state = false)
+            }
+            is ListViewState.MoreLoading -> {
+                enableProgress(state = state.mainProgressState)
+                enableRecyclerProgress(state = state.recyclerProgressState)
+                enableEmptyState(state = state.mainProgressState)
+                enableError(state = false)
+                enableContent(state = state.recyclerProgressState)
             }
             is ListViewState.Refreshing -> {
                 enableProgress(state = true)
                 enableEmptyState(state = false)
                 enableError(state = false)
                 enableContent(state = true)
+                enableRecyclerProgress(state = false)
             }
             is ListViewState.Error -> {
                 enableError(state = true)
                 enableEmptyState(state = false)
                 enableProgress(state = false)
                 enableContent(state = false)
+                enableRecyclerProgress(state = false)
                 showToastMessage(message = state.message ?: getString(R.string.unknown_error))
             }
             is ListViewState.Data -> {
@@ -112,41 +133,14 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
                 enableEmptyState(state = false)
                 enableProgress(state = false)
                 enableError(state = false)
+                enableRecyclerProgress(state = false)
                 initContent(data = state.data)
             }
-            else -> {}
         }
     }
 
-    /**
-     * метод инициализации контента на экране
-     * */
     private fun initContent(data: List<Article>) {
-        createFirstNews(data.first())
-        initRecycleContent(data)
-    }
-
-    private fun initRecycleContent(data: List<Article>) {
-        if (data.size > 1) {
-            newsListAdapter.submitList(data.subList(1, data.size - 1))
-        } else {
-            newsListAdapter.submitList(listOf())
-        }
-    }
-
-    /**
-     * метод инициализации главной новости на экране
-     * */
-    private fun createFirstNews(article: Article) {
-        binding.firstNewsHeader.text = article.title
-        binding.firstNewsSource.text = article.sourceName
-        binding.firstNewsContent.setOnClickListener {
-            showFragment(fragment = ArticleFragment.newInstance(article = article))
-        }
-        Glide.with(binding.firstNewsImage)
-            .load(article.imageUrl)
-            .error(article.category.imgResId)
-            .into(binding.firstNewsImage)
+        newsListAdapter.submitList(data)
     }
 
     private fun enableEmptyState(state: Boolean) {
@@ -157,8 +151,12 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
         binding.loader.isVisible = state
     }
 
+    private fun enableRecyclerProgress(state: Boolean) {
+        binding.recyclerLoader.isVisible = state
+    }
+
     private fun enableContent(state: Boolean) {
-        binding.content.isVisible = state
+        binding.mainRecycler.isVisible = state
     }
 
     private fun enableError(state: Boolean) {
@@ -180,7 +178,8 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
 
     companion object {
         private const val ARG_CATEGORY = "arg_category"
-        private const val ARTICLE_DETAILS_FRAGMENT_FROM_NEWS_LIST = "ArticleDetailsFragmentFromNewsList"
+        private const val ARTICLE_DETAILS_FRAGMENT_FROM_NEWS_LIST =
+            "ArticleDetailsFragmentFromNewsList"
 
         @JvmStatic
         fun newInstance(category: Category?): NewsTabItemFragment =
