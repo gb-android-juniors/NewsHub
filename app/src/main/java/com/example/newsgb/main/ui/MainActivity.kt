@@ -3,6 +3,7 @@ package com.example.newsgb.main.ui
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -15,8 +16,10 @@ import com.example.newsgb.utils.ContextUtils
 import com.example.newsgb.utils.PreferencesHelper
 import com.example.newsgb.utils.ui.Countries
 import com.example.newsgb.utils.ui.ThemeModes
+import com.yandex.mobile.ads.common.MobileAds
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +42,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setTheme(R.style.CustomThemeIndigo)
         startMainScreen()
+        initAdMob()
+    }
+
+    private fun initAdMob() {
+        MobileAds.initialize(this) { Log.d("TAG", "SDK initialized") }
     }
 
     /**
