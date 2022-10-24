@@ -22,8 +22,13 @@ import com.example.newsgb._core.ui.model.Article
 import com.example.newsgb._core.ui.model.ItemViewState
 import com.example.newsgb.databinding.DetailsFragmentBinding
 import com.example.newsgb.utils.formatApiStringToDate
-import com.example.newsgb.utils.setBookmarkIconColor
 import com.example.newsgb.utils.getShareNewsIntent
+import com.example.newsgb.utils.setBookmarkIconColor
+import com.yandex.mobile.ads.banner.AdSize
+import com.yandex.mobile.ads.banner.BannerAdEventListener
+import com.yandex.mobile.ads.common.AdRequest
+import com.yandex.mobile.ads.common.AdRequestError
+import com.yandex.mobile.ads.common.ImpressionData
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -123,6 +128,29 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
             .load(article.imageUrl)
             .error(article.category.imgResId)
             .into(articleImage)
+
+        loadAdBanner()
+    }
+
+    private fun loadAdBanner() = with(binding){
+        bannerAdView.setAdUnitId(BANNER_AD_TEST_ID)
+        bannerAdView.setAdSize(AdSize.flexibleSize(300, 160))
+        val adRequest = AdRequest.Builder().build()
+        bannerAdView.setBannerAdEventListener(object : BannerAdEventListener{
+            override fun onAdLoaded() {}
+
+            override fun onAdFailedToLoad(p0: AdRequestError) {}
+
+            override fun onAdClicked() {}
+
+            override fun onLeftApplication() {}
+
+            override fun onReturnedToApplication() {}
+
+            override fun onImpression(p0: ImpressionData?) {}
+
+        })
+        bannerAdView.loadAd(adRequest)
     }
 
     private fun enableProgress(state: Boolean) {
@@ -151,6 +179,8 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
 
     companion object {
         private const val ARG_ARTICLE_DATA = "arg_article_data"
+        private const val BANNER_AD_ID = "R-M-1994249-1"
+        private const val BANNER_AD_TEST_ID = "R-M-DEMO-300x250"
 
         @JvmStatic
         fun newInstance(article: Article): ArticleFragment =
