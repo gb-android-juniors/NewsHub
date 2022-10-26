@@ -22,4 +22,6 @@
     <dimen name="news_recycler_item_height">95dp</dimen>
     <dimen name="logo_image_size">100dp</dimen>
     <dimen name="toolbar_button_size">40dp</dimen>
+    <dimen name="yandex_banner_width">300dp</dimen>
+    <dimen name="yandex_banner_height">160dp</dimen>
 </resources>

@@ -25,6 +25,8 @@ import com.example.newsgb.databinding.DetailsFragmentBinding
 import com.example.newsgb.utils.formatApiStringToDate
 import com.example.newsgb.utils.getShareNewsIntent
 import com.example.newsgb.utils.setBookmarkIconColor
+import com.yandex.mobile.ads.banner.AdSize
+import com.yandex.mobile.ads.common.AdRequest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -130,6 +132,15 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
             .load(article.imageUrl)
             .error(article.category.imgResId)
             .into(articleImage)
+
+        loadAdBanner()
+    }
+
+    private fun loadAdBanner() = with(binding){
+        bannerAdView.setAdUnitId(BANNER_AD_ID)
+        bannerAdView.setAdSize(AdSize.flexibleSize(FLEX_BANNER_WIDTH, FLEX_BANNER_HEIGHT))
+        val adRequest = AdRequest.Builder().build()
+        bannerAdView.loadAd(adRequest)
     }
 
     private fun enableProgress(state: Boolean) {
@@ -158,6 +169,10 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
 
     companion object {
         private const val ARG_ARTICLE_DATA = "arg_article_data"
+        private const val BANNER_AD_ID = "R-M-1994249-1"
+        private const val FLEX_BANNER_WIDTH = 300
+        private const val FLEX_BANNER_HEIGHT = 160
+
 
         @JvmStatic
         fun newInstance(article: Article): ArticleFragment =
