@@ -125,12 +125,12 @@
 
             <com.yandex.mobile.ads.banner.BannerAdView
                 android:id="@+id/banner_ad_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/yandex_banner_width"
+                android:layout_height="@dimen/yandex_banner_height"
                 android:layout_marginTop="@dimen/margin_8"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/details_button"
-                />
+                ads:layout_constraintEnd_toEndOf="parent"
+                ads:layout_constraintTop_toBottomOf="@+id/details_button"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
