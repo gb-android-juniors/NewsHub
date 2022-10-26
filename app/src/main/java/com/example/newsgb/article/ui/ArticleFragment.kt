@@ -51,6 +51,7 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
         super.onViewCreated(view, savedInstanceState)
         initMenu()
         initViewModel()
+        initAdBanner()
     }
 
     /** метод инициализации меню в апбаре экрана */
@@ -81,6 +82,13 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
     private fun initViewModel() {
         /**подписываемся на изменения состояний экрана */
         viewModel.viewState.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun initAdBanner() = with(binding){
+        bannerAdView.setAdUnitId(BANNER_AD_ID)
+        bannerAdView.setAdSize(AdSize.flexibleSize(FLEX_BANNER_WIDTH, FLEX_BANNER_HEIGHT))
+        val adRequest = AdRequest.Builder().build()
+        bannerAdView.loadAd(adRequest)
     }
 
     /**
@@ -132,15 +140,6 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
             .load(article.imageUrl)
             .error(article.category.imgResId)
             .into(articleImage)
-
-        loadAdBanner()
-    }
-
-    private fun loadAdBanner() = with(binding){
-        bannerAdView.setAdUnitId(BANNER_AD_ID)
-        bannerAdView.setAdSize(AdSize.flexibleSize(FLEX_BANNER_WIDTH, FLEX_BANNER_HEIGHT))
-        val adRequest = AdRequest.Builder().build()
-        bannerAdView.loadAd(adRequest)
     }
 
     private fun enableProgress(state: Boolean) {
