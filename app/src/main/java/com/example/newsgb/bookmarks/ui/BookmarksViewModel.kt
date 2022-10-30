@@ -13,20 +13,14 @@ class BookmarksViewModel(
     private val store: NewsStore
 ) : ViewModel() {
 
-    /** переменная состояния экрана со списком закладок */
     private val _viewState = MutableStateFlow<ListViewState>(ListViewState.Empty)
     val viewState: StateFlow<ListViewState> = _viewState.asStateFlow()
 
     init {
-        /** При инициализации подписываемся на обновления состояний и команд от NewsStore */
         store.storeState.onEach { renderStoreState(it) }.launchIn(viewModelScope)
         store.storeEffect.onEach { renderAppEffect(it) }.launchIn(viewModelScope)
     }
 
-    /**
-     * метод обработки состояний NewsStore
-     * конвертируем состояния приложения в состояния экрана
-     * */
     private fun renderStoreState(storeState: AppState) {
         when (storeState) {
             is AppState.Empty, AppState.Loading, is AppState.Refreshing, is AppState.MoreLoading   -> _viewState.value = ListViewState.Loading
@@ -37,13 +31,6 @@ class BookmarksViewModel(
         }
     }
 
-    /**
-     * метод обработки команд от NewsStore
-     *
-     * AppEffect.LoadData - команда на загрузку данных
-     * AppEffect.CheckBookmark - команда на добавление\удаление статьи из БД
-     * AppEffect.Error - команда отображение ошибки при дозагрузке данных
-     * */
     private fun renderAppEffect(effect: AppEffect) {
         when (effect) {
             AppEffect.ClearBookmarks -> deleteBookmarksFromDB()

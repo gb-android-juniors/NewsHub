@@ -10,36 +10,14 @@ import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
-/** Класс-хранилище текущего состояния приложения (вместе с данными)
- *
- * Создается в активити и, соответственно, имеет жизненный цикл активитии.
- * Экземпляр класса, созданный в активити, переается фрагментам,
- * таким образом фрагменты всегда знают текущее состояние приложения, даже после пересоздания,
- * и могут в любой момент подписаться на него
- *
- * */
-
 class NewsStore : CoroutineScope by MainScope() {
 
-    /** Flow текущих состояний стора */
     private val _storeState = MutableStateFlow<AppState>(AppState.Empty)
     val storeState: StateFlow<AppState> = _storeState.asStateFlow()
 
-    /** Flow команд от стора */
     private val _storeEffect: MutableSharedFlow<AppEffect> = MutableSharedFlow()
     val storeEffect: SharedFlow<AppEffect> = _storeEffect.asSharedFlow()
 
-    /**
-     * Метод обработки событий
-     * При событии Refresh: передаем команду на загрузку данных (AppEffect.LoadData) и переключаемся в состояние загрузки (AppState.Loading)
-     * При событии ErrorReceived: если предыдущим было состояние пустой загрузки, то переключаемся в состояние ошибки (AppState.Error)
-     *                            если предыдущим было состояние дозагрузки, то передаем команду на вывод сообщениея об ошибке
-     * При событии DataReceived: если предыдущим было состояние пустой загрузки, то при пустых нанных переключаемся в состояние AppState.Empty
-     *                                                                           при непустых данных переключаемся в состояние AppState.Data и передаем туда данные
-     *                           если предыдущим было состояние дозагрузки, то переключаемся в состояние AppState.Data прибавляя к старым данным вновь полученные данные
-     * При событии LoadMore: передаем команду на загрузку данных (AppEffect.LoadData)
-     * и переключаемся в состояние дозагрузки (AppState.MoreLoading) сохраняя в параметрах ранее загруженные данные
-     * */
     fun dispatch(event: AppEvent) {
         val currentState = storeState.value // сохраняем в переменную текущее состояние
         val newState = when (event) {
@@ -136,7 +114,7 @@ class NewsStore : CoroutineScope by MainScope() {
                 }
             }
         }
-        //если новое состояне отличается от текущего, то устанавливаем новое состояние
+
         if (newState != currentState) {
             _storeState.value = newState
         }
@@ -147,11 +125,6 @@ class NewsStore : CoroutineScope by MainScope() {
             article.copy(isChecked = false)
         }
 
-
-    /**
-     * Ищем в текущем списке статью соответсвующую статье bookmark, если она есть, то меняем ее флаг isChecked,
-     * если такой статьи в текущем списке нет, то добавляем ее в список
-     **/
     private fun checkBookmarkInCurrentData(bookmark: Article, currentData: List<Article>): List<Article> {
         return if (currentData.any { it.isTheSame(bookmark) }) {
             currentData.map { article ->

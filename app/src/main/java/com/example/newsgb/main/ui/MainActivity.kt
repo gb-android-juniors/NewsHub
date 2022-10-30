@@ -49,9 +49,6 @@ class MainActivity : AppCompatActivity() {
         MobileAds.initialize(this) { Log.d("TAG", "SDK initialized") }
     }
 
-    /**
-     * Настраиваем язык приложения выбранный пользователем
-     */
     override fun attachBaseContext(newBase: Context) {
         val selectedLang = PreferencesHelper(
             context = newBase,
@@ -77,9 +74,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * метод который устанавливает код страны для запроса, сохраненный в SharedPreferences или по умолчанию
-     */
     private fun setCountryCodeForApi() = PreferencesHelper(
         context = this,
         prefName = Constants.APP_PREFERENCES_COUNTRY_CODE

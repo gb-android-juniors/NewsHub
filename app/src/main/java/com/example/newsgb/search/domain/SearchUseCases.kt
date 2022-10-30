@@ -43,9 +43,6 @@ class SearchUseCases(
         }
     }
 
-    /**
-     * метод добавления или удаления статьи из БД
-     */
     suspend fun checkArticleInBookMarks(article: Article): Result<Boolean> {
         return if (article.isChecked) {
             bookmarkRepo.saveBookmark(article)

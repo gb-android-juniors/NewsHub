@@ -11,9 +11,6 @@ class MainUseCases(
     private val mainRepo: MainRepository
 ) {
 
-    /**
-     * итоговый список статей, содержащий статьи из закладок + статьи полученнные от API.
-     */
     suspend fun getInitialData(initialPage: Int): Result<List<Article>> {
 
         var result = mainRepo.getBreakingNews(page = initialPage, apiKey = ApiKey.getKey())

@@ -20,20 +20,14 @@ class NewsViewModel(
     private var currentPageNumber = INITIAL_PAGE
     private var hasMoreResults: Boolean = true
 
-    /** переменная состояния экрана со списком новостей */
     private val _viewState = MutableStateFlow<ListViewState>(ListViewState.Loading)
     val viewState: StateFlow<ListViewState> = _viewState.asStateFlow()
 
     init {
-        /** При инициализации подписываемся на обновления состояний и команд от NewsStore */
         store.storeState.onEach { renderStoreState(it) }.launchIn(viewModelScope)
         store.storeEffect.onEach { renderAppEffect(it) }.launchIn(viewModelScope)
     }
 
-    /**
-     * метод обработки состояний NewsStore
-     * конвертируем состояния приложения в состояния экрана
-     * */
     private fun renderStoreState(storeState: AppState) {
         when (storeState) {
             AppState.Empty, AppState.Loading -> _viewState.value = ListViewState.Loading
@@ -49,13 +43,6 @@ class NewsViewModel(
         }
     }
 
-    /**
-     * метод обработки команд от NewsStore
-     *
-     * AppEffect.LoadData - команда на загрузку данных
-     * AppEffect.CheckBookmark - команда на добавление\удаление статьи из БД
-     * AppEffect.Error - команда отображение ошибки при дозагрузке данных
-     * */
     private fun renderAppEffect(effect: AppEffect) {
         when (effect) {
             is AppEffect.LoadData -> getNewsByCategory(isRefreshing = effect.isRefreshing)
@@ -77,10 +64,6 @@ class NewsViewModel(
         }
     }
 
-    /**
-     * отфильтровываем список данных из стора по категории и
-     * передаем их в соответствующем состоянии для отображения на экране
-     **/
     private fun setSuccessState(data: List<Article>) {
         val filteredData = data.filter { it.category == category }
         _viewState.value = if (filteredData.isEmpty()) {
@@ -112,7 +95,6 @@ class NewsViewModel(
         }
     }
 
-    /** метод обновления списков статей для всех категорий */
     fun refreshData() {
         currentPageNumber = INITIAL_PAGE
         hasMoreResults = true
@@ -132,11 +114,6 @@ class NewsViewModel(
         }
     }
 
-    /**
-     * метод получения списка новостей по категории.
-     * Проверяем, если данные уже загружены ранее и хранятся в стор, берем их от туда отфильтровав по категории.
-     * Если данные еще не загружены, инициируем событие по дозагрузке данных
-     **/
     fun getInitData() {
         when (val currentStoreState = store.storeState.value) {
             is AppState.Data -> dispatchFilteredDataStore(currentStoreState.data)
@@ -165,7 +142,6 @@ class NewsViewModel(
         }
     }
 
-    /** метод обработки нажатия на фложок закладки */
     fun checkBookmark(article: Article) {
         store.dispatch(event = AppEvent.BookmarkCheck(article = article))
     }

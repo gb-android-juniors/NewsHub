@@ -37,10 +37,6 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
         requireArguments().getString(ARG_SEARCH_PHRASE, "")
     }
 
-    /** инициализируем слушатель нажатий на элементы списка
-     * onItemClick - колбэк нажатия на элемент списка
-     * onBookmarkCheck - колбэк нажатия на закладку на элеменете списка
-     * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
             showFragment(fragment = ArticleFragment.newInstance(article = itemArticle))
@@ -51,7 +47,6 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
         }
     }
 
-    /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
     private val searchListAdapter: NewsListAdapter = NewsListAdapter(listener = recyclerItemListener)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -68,21 +63,16 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
 
     override fun getViewBinding() = SearchFragmentBinding.inflate(layoutInflater)
 
-    /** метод инициализации меню в апбаре экрана */
     private fun initMenu() {
         (requireActivity() as AppCompatActivity).apply {
-            /** привязываемся к тулбару в разметке */
             setSupportActionBar(binding.searchToolbar)
-            /** подключаем к меню системную кнопку "назад" */
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-        /** добавляем и инициализируем элементы меню */
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    /** инициализируем системную кнопку "назад" */
                     android.R.id.home -> {
                         requireActivity().onBackPressed()
                         true
@@ -121,9 +111,6 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
         viewModel.getData(phrase = phrase, newSearch = true)
     }
 
-    /**
-     * метод обработки состояний экрана
-     * */
     private fun renderState(state: ListViewState) {
         when (state) {
             is ListViewState.Data -> {
@@ -174,9 +161,6 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
         }
     }
 
-    /**
-     * метод инициализации списка закладок на экране
-     * */
     private fun setDataToAdapter(data: List<Article>) {
         searchListAdapter.submitList(data)
     }
