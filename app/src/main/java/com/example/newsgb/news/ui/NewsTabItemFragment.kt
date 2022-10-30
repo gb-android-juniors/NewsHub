@@ -1,5 +1,6 @@
 package com.example.newsgb.news.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -25,17 +26,15 @@ import org.koin.core.parameter.parametersOf
 
 class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
 
-    /** вытягиваем из аргументов переданную категорию новостей */
     private val category: Category?
-        get() = requireArguments().getSerializable(ARG_CATEGORY) as? Category
+        get() = if (Build.VERSION.SDK_INT >= 33) {
+            requireArguments().getSerializable(ARG_CATEGORY, Category::class.java)
+        } else @Suppress("DEPRECATION") {
+            requireArguments().getSerializable(ARG_CATEGORY) as? Category
+        }
 
-    /** во viewModel в качестве параметров передаем экземпляр NewsStore и категорию новостей */
     private val viewModel by viewModel<NewsViewModel> { parametersOf(category) }
 
-    /** инициализируем слушатель нажатий на элементы списка
-     * onItemClick - колбэк нажатия на элемент списка
-     * onBookmarkCheck - колбэк нажатия на закладку на элеменете списка (пока не реализовано!)
-     * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
             showFragment(fragment = ArticleFragment.newInstance(article = itemArticle))
@@ -46,7 +45,6 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
         }
     }
 
-    /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка и флаг, что это главный экран*/
     private val newsListAdapter: NewsListAdapter =
         NewsListAdapter(listener = recyclerItemListener, isMainNewsScreen = true)
 
@@ -79,7 +77,6 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
     }
 
     private fun initViewModel() {
-        /**подписываемся на изменения состояний экрана */
         viewModel.viewState.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
@@ -87,9 +84,6 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
         category?.let { viewModel.getInitData() }
     }
 
-    /**
-     * метод обработки состояний экрана
-     * */
     private fun renderState(state: ListViewState) {
         when (state) {
             is ListViewState.Empty -> {

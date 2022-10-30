@@ -12,10 +12,6 @@ class MainViewModel(
     private val store: NewsStore
 ) : ViewModel() {
 
-    /**
-     * метод запроса первой страницы главных новостей
-     * сохраняем полученные состояние и данные в NewsStore
-     * */
     fun getInitialData() {
         store.dispatch(event = AppEvent.Refresh)
         viewModelScope.launch {

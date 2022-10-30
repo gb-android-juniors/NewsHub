@@ -37,7 +37,6 @@ class NewsFragment : BaseFragment<NewsFragmentBinding>() {
         disableViewPagerCache()
     }
 
-    /** метод отключает кэширование фрагментов вьюпейджера */
     private fun disableViewPagerCache() {
         (binding.viewPager.getChildAt(0) as RecyclerView).apply {
             layoutManager?.isItemPrefetchEnabled = false

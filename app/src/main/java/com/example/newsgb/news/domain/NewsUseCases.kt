@@ -11,9 +11,7 @@ class NewsUseCases(
     private val bookmarkRepo: BookmarkRepository,
     private val newsRepo: NewsRepository
 ) {
-    /**
-     * метод запроса первой страницы новостей по категории.
-     **/
+
     suspend fun getNewsByCategory(
         page: Int,
         category: Category,
@@ -53,9 +51,6 @@ class NewsUseCases(
         }
     }
 
-    /**
-     * метод добавления или удаления статьи из БД
-     */
     suspend fun checkArticleInBookMarks(article: Article): Result<Boolean> {
         return if (article.isChecked) {
             bookmarkRepo.saveBookmark(article)

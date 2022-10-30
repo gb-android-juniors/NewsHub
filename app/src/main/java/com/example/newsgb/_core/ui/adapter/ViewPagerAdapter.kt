@@ -13,11 +13,6 @@ class ViewPagerAdapter(fragment: NewsFragment) :
         return Category.values().size - 2
     }
 
-    /**
-     * Выбираем из enum-класса элемент по позиции нажатого таба,
-     * и передаем этот элемент в качестве аргумента в создаваемый фрагмент ленты новостей.
-     * Конструкция try-catch на случай если элемент по такому индексу не будет найден
-     **/
     override fun createFragment(position: Int): Fragment {
         return try {
             val category = Category.values().elementAt(index = position)

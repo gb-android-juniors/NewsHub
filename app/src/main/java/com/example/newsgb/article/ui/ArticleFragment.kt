@@ -34,12 +34,10 @@ import org.koin.core.parameter.parametersOf
 
 class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
 
-    /** вытягиваем url статьи из аргументов, если его там нет, то заменяем на пустую строку */
     private val article: Article by lazy {
         if (VERSION.SDK_INT >= 33) {
             requireArguments().getParcelable(ARG_ARTICLE_DATA, Article::class.java) as Article
-        } else {
-            @Suppress("DEPRECATION")
+        } else @Suppress("DEPRECATION") {
             requireArguments().getParcelable<Article>(ARG_ARTICLE_DATA) as Article
         }
 
@@ -54,21 +52,16 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
         initAdBanner()
     }
 
-    /** метод инициализации меню в апбаре экрана */
     private fun initMenu() {
         (requireActivity() as AppCompatActivity).apply {
-            /** привязываемся к тулбару в разметке */
             setSupportActionBar(binding.detailsToolbar)
-            /** подключаем к меню системную кнопку "назад" */
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-        /** добавляем и инициализируем элементы меню */
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    /** инициализируем системную кнопку "назад" */
                     android.R.id.home -> {
                         requireActivity().onBackPressedDispatcher.onBackPressed()
                         true
@@ -80,20 +73,16 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
     }
 
     private fun initViewModel() {
-        /**подписываемся на изменения состояний экрана */
         viewModel.viewState.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    private fun initAdBanner() = with(binding){
+    private fun initAdBanner() = with(binding) {
         bannerAdView.setAdUnitId(BANNER_AD_ID)
         bannerAdView.setAdSize(AdSize.flexibleSize(FLEX_BANNER_WIDTH, FLEX_BANNER_HEIGHT))
         val adRequest = AdRequest.Builder().build()
         bannerAdView.loadAd(adRequest)
     }
 
-    /**
-     * метод обработки состояний экрана
-     * */
     private fun renderState(state: ItemViewState) {
         when (state) {
             is ItemViewState.Loading -> {
@@ -132,7 +121,11 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
             showArticleFragment(WebViewFragment.newInstance(article.contentUrl))
         }
         bookmarkIcon.apply {
-            setBookmarkIconColor(context = requireContext(), bookmarkImage = this, isChecked = article.isChecked)
+            setBookmarkIconColor(
+                context = requireContext(),
+                bookmarkImage = this,
+                isChecked = article.isChecked
+            )
             setOnClickListener { viewModel.checkBookmark(article = article) }
         }
 

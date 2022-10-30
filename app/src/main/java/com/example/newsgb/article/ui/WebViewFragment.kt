@@ -24,21 +24,16 @@ class WebViewFragment : BaseFragment<ArticleFragmentBinding>() {
         initView()
     }
 
-    /** метод инициализации меню в апбаре экрана */
     private fun initMenu() {
         (requireActivity() as AppCompatActivity).apply {
-            /** привязываемся к тулбару в разметке */
             setSupportActionBar(binding.webViewToolbar)
-            /** подключаем к меню системную кнопку "назад" */
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
         }
-        /** добавляем и инициализируем элементы меню */
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}
 
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
-                    /** инициализируем системную кнопку "назад" */
                     android.R.id.home -> {
                         requireActivity().onBackPressed()
                         true

@@ -24,10 +24,6 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
 
     private val viewModel by viewModel<BookmarksViewModel>()
 
-    /** инициализируем слушатель нажатий на элементы списка
-     * onItemClick - колбэк нажатия на элемент списка
-     * onBookmarkCheck - колбэк нажатия на закладку на элеменете списка (пока не реализовано!)
-     * */
     private val recyclerItemListener = object : RecyclerItemListener {
         override fun onItemClick(itemArticle: Article) {
             showFragment(fragment = ArticleFragment.newInstance(article = itemArticle))
@@ -38,7 +34,6 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
         }
     }
 
-    /** инициализируем адаптер для RecyclerView и передаем туда слушатель нажатий на элементы списка */
     private val bookmarksListAdapter: NewsListAdapter =
         NewsListAdapter(listener = recyclerItemListener)
 
@@ -67,13 +62,9 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
     }
 
     private fun initViewModel() {
-        /**подписываемся на изменения состояний экрана */
         viewModel.viewState.onEach { renderState(it) }.launchIn(viewLifecycleOwner.lifecycleScope)
     }
 
-    /**
-     * метод обработки состояний экрана
-     * */
     private fun renderState(state: ListViewState) {
         when (state) {
             is ListViewState.Data -> {
@@ -108,9 +99,6 @@ class BookmarksFragment : BaseFragment<BookmarksFragmentBinding>() {
         }
     }
 
-    /**
-     * метод инициализации списка закладок на экране
-     * */
     private fun setDataToAdapter(data: List<Article>) {
         bookmarksListAdapter.submitList(data)
     }

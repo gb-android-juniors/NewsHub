@@ -17,20 +17,14 @@ class SearchViewModel(private val useCases: SearchUseCases, private val store: N
     private lateinit var currentSearchPhrase: String
     private val currentArticlesList = mutableListOf<Article>()
 
-    /** переменная состояния экрана со списком новостей */
     private val _viewState = MutableStateFlow<ListViewState>(ListViewState.Empty)
     val viewState: StateFlow<ListViewState> = _viewState.asStateFlow()
 
     init {
-        /** При инициализации подписываемся на обновления состояний и команд от NewsStore */
         store.storeState.onEach { renderStoreState(it) }.launchIn(viewModelScope)
         store.storeEffect.onEach { renderAppEffect(it) }.launchIn(viewModelScope)
     }
 
-    /**
-     * метод обработки состояний NewsStore
-     * конвертируем состояния приложения в состояния экрана
-     * */
     private fun renderStoreState(storeState: AppState) {
         when (storeState) {
             is AppState.Loading -> _viewState.value = ListViewState.Loading
@@ -126,7 +120,6 @@ class SearchViewModel(private val useCases: SearchUseCases, private val store: N
             }
         }
 
-    /** метод обработки нажатия на фложок закладки */
     fun checkBookmark(article: Article) {
         store.dispatch(event = AppEvent.BookmarkCheck(article = article))
     }

@@ -14,21 +14,15 @@ class ArticleViewModel(
     private val article: Article
     ) : ViewModel() {
 
-    /** переменная состояния экрана детализации */
     private val _viewState = MutableStateFlow<ItemViewState>(ItemViewState.Loading)
     val viewState: StateFlow<ItemViewState> = _viewState.asStateFlow()
 
     init {
-        /** При инициализации подписываемся на обновления состояний от NewsStore */
         store.storeState.onEach { renderStoreState(it) }.launchIn(viewModelScope)
         store.storeEffect.onEach { renderAppEffect(it) }.launchIn(viewModelScope)
 
     }
 
-    /**
-     * метод обработки состояний NewsStore
-     * конвертируем состояния приложения в состояния экрана
-     * */
     private fun renderStoreState(storeState: AppState) {
         when(storeState) {
             AppState.Empty, AppState.Loading, is AppState.MoreLoading -> _viewState.value = ItemViewState.Loading
@@ -39,13 +33,6 @@ class ArticleViewModel(
         }
     }
 
-    /**
-     * метод обработки команд от NewsStore
-     *
-     * AppEffect.LoadData - команда на загрузку данных
-     * AppEffect.CheckBookmark - команда на добавление\удаление статьи из БД
-     * AppEffect.Error - команда отображение ошибки при дозагрузке данных
-     * */
     private fun renderAppEffect(effect: AppEffect) {
         when(effect) {
             is AppEffect.CheckBookmark -> checkBookmarkInDatabase(article = effect.dataItem)
@@ -53,11 +40,6 @@ class ArticleViewModel(
         }
     }
 
-    /**
-     * ищем в сторе нужную статью по ее URL и
-     * передаем ее в соответствующем состоянии для отображения на экране
-     * если статься не найдена, выдаем состояние ошибки
-     **/
     private fun setSuccessState(data: List<Article>) {
         try {
             val article = data.first { it.contentUrl == article.contentUrl }
@@ -67,9 +49,6 @@ class ArticleViewModel(
         }
     }
 
-    /**
-     * метод обработки нажатия на фложок закладки
-     */
     fun checkBookmark(article: Article) {
         store.dispatch(event = AppEvent.BookmarkCheck(article = article))
     }
