@@ -1,5 +1,6 @@
 package com.example.newsgb.main.ui
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Bundle
@@ -19,6 +20,8 @@ import com.example.newsgb.utils.ui.ThemeModes
 import com.yandex.mobile.ads.common.MobileAds
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -43,6 +46,8 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.CustomThemeIndigo)
         startMainScreen()
         initAdMob()
+
+        showAlertDialogFragment() //TODO DELETE THIS
     }
 
     private fun initAdMob() {
@@ -85,5 +90,20 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_container, NavigationFragment.newInstance())
             .commit()
+    }
+
+
+
+    //TODO DELETE THIS METHOD
+    private fun showAlertDialogFragment() {
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ROOT)
+        val strDate: Date = sdf.parse("15/11/2022") as Date
+        if (Date().after(strDate)) {
+            AlertDialog.Builder(this)
+                .setView(R.layout.new_release_dialog_fragment)
+                .setCancelable(true)
+                .create()
+                .show()
+        }
     }
 }
