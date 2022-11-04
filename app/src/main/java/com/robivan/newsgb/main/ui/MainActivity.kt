@@ -1,5 +1,6 @@
 package com.robivan.newsgb.main.ui
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Bundle
@@ -44,10 +45,7 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.CustomThemeIndigo)
         startMainScreen()
         initAdMob()
-    }
-
-    private fun initAdMob() {
-        MobileAds.initialize(this) { Log.d("TAG", "SDK initialized") }
+        checkIsItFirstLaunchApp()
     }
 
     override fun attachBaseContext(newBase: Context) {
@@ -86,5 +84,26 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.main_container, NavigationFragment.newInstance())
             .commit()
+    }
+
+    private fun initAdMob() {
+        MobileAds.initialize(this) { Log.d("TAG", "SDK initialized") }
+    }
+
+    private fun checkIsItFirstLaunchApp() {
+        val prefHelper = PreferencesHelper(context = this, prefName = Constants.APP_PREFERENCES_FIRST_LAUNCH_APP)
+        val isFirstAppLaunch = prefHelper.readBoolean()
+        if (isFirstAppLaunch) {
+            prefHelper.save(false)
+            showAttentionAlertDialog()
+        }
+    }
+
+    private fun showAttentionAlertDialog() {
+        AlertDialog.Builder(this)
+            .setView(R.layout.first_launch_app_alert_dialog_fragment)
+            .setCancelable(true)
+            .create()
+            .show()
     }
 }

@@ -14,7 +14,13 @@ class PreferencesHelper(context: Context, private val prefName: String) {
         sharedPreferences.edit().putString(prefName, parameter).apply()
     }
 
+    fun save(parameter: Boolean) {
+        sharedPreferences.edit().putBoolean(prefName, parameter).apply()
+    }
+
     fun readInt(): Int  = sharedPreferences.getInt(prefName, 0)
 
     fun readString(): String? = sharedPreferences.getString(prefName, null)
+
+    fun readBoolean(): Boolean = sharedPreferences.getBoolean(prefName, true)
 }
