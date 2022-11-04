@@ -86,6 +86,9 @@
     <string name="dialog_title_device_is_offline">Pas de connexion Internet</string>
     <string name="dialog_button_cancel">Annuler</string>
     <string name="dialog_title_stub">Erreur non définie</string>
+    <string name="alert_first_visit_message">Certaines sources d\'information peuvent ne pas être ouvertes en raison des restrictions imposées par la législation de votre pays.\nPour pouvoir lire ces ressources, vous pouvez utiliser n\'importe quel service VPN. *</string>
+    <string name="alert_message_subtext">* Sauf si les lois de votre pays l\'interdisent.</string>
+    <string name="attention">Attention !</string>
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Aucun article en vedette</string>
@@ -121,4 +124,5 @@
     <string name="developers_list">Robilko Alexander\nMyasnikov Dmitry\nBronski Kirill\nPodobedov Andrey\nErshov Konstantin</string>
     <string name="connect_us">Connecte-toi avec nous</string>
     <string name="email_clients_not_found">Aucun client de messagerie n\'est installé.</string>
+
 </resources>
