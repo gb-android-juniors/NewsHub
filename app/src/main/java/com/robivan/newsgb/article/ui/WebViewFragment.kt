@@ -35,7 +35,7 @@ class WebViewFragment : BaseFragment<ArticleFragmentBinding>() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     android.R.id.home -> {
-                        requireActivity().onBackPressed()
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
                         true
                     }
                     else -> false
@@ -48,6 +48,7 @@ class WebViewFragment : BaseFragment<ArticleFragmentBinding>() {
         val url = arguments?.getString(URL)
         webView.apply {
             webViewClient = WebViewClient()
+            @Suppress("SetJavaScriptEnabled")
             settings.javaScriptEnabled = true
             if (url != null) {
                 loadUrl(url)

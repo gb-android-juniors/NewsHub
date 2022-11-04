@@ -18,7 +18,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         initKoin()
-        com.robivan.newsgb.App.Companion.instance = this
+        instance = this
     }
 
     private fun initKoin() {
@@ -38,7 +38,7 @@ class App : Application() {
     }
 
     companion object {
-        var instance: com.robivan.newsgb.App? = null
+        var instance: App? = null
             private set
         var countryCode: String = ""
     }

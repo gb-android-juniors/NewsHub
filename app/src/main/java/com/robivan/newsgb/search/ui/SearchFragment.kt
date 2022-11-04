@@ -74,7 +74,7 @@ class SearchFragment : BaseFragment<SearchFragmentBinding>() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 return when (menuItem.itemId) {
                     android.R.id.home -> {
-                        requireActivity().onBackPressed()
+                        requireActivity().onBackPressedDispatcher.onBackPressed()
                         true
                     }
                     else -> false

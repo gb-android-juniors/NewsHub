@@ -35,14 +35,14 @@ interface ApiService {
     ): ResponseDTO
 
     companion object {
-        fun getInstance(): com.robivan.newsgb._core.data.api.ApiService {
+        fun getInstance(): ApiService {
             return Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .client(OkHttpClient.Builder().build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(CoroutineCallAdapterFactory())
                 .build()
-                .create(com.robivan.newsgb._core.data.api.ApiService::class.java)
+                .create(ApiService::class.java)
         }
 
         private const val DEFAULT_CATEGORY = "general"
