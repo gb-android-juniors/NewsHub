@@ -87,6 +87,9 @@
     <string name="dialog_title_device_is_offline">Нет соединения с интернетом</string>
     <string name="dialog_button_cancel">Отмена</string>
     <string name="dialog_title_stub">Неопределенная ошибка</string>
+    <string name="alert_first_visit_message">Некоторые новостные источники  могут не открываться, из-за ограничений, установленных законодательством вашей страны.\nЧтобы иметь возможность читать данные ресурсы, вы можете воспользоваться любым VPN-сервисом. *</string>
+    <string name="alert_message_subtext">* Если это не запрещено законами вашей страны.</string>
+    <string name="attention">Внимание !</string>
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Нет избранных статей</string>

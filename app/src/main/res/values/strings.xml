@@ -95,6 +95,9 @@
     <string name="dialog_title_device_is_offline">No internet connection</string>
     <string name="dialog_button_cancel">Cancel</string>
     <string name="dialog_title_stub">Undefined error</string>
+    <string name="alert_first_visit_message">Some news sources may not be opened due to restrictions imposed by the legislation of your country.\nTo be able to read these resources, you can use any VPN service. *</string>
+    <string name="alert_message_subtext">* Unless prohibited by the laws of your country.</string>
+    <string name="attention">Attention !</string>
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">No favourite articles</string>

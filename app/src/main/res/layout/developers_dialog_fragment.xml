@@ -4,19 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/dev_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/margin_8"
-        android:contentDescription="@string/developers_header"
-        android:src="@drawable/ic_developers_24"
-        app:layout_constraintBottom_toBottomOf="@+id/dev_header"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/dev_header"
-        app:tint="@color/start_icon_tint_color" />
-
     <TextView
         android:id="@+id/dev_header"
         android:layout_width="wrap_content"
@@ -25,10 +12,12 @@
         android:layout_margin="@dimen/margin_8"
         android:layout_marginStart="@dimen/margin_4"
         android:text="@string/developers_header"
-        android:textColor="@color/text_hint_color"
+        android:textColor="?attr/colorPrimary"
         android:textSize="@dimen/header_text_size"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/dev_icon"
+        app:drawableStartCompat="@drawable/ic_developers_24"
+        app:drawableTint="?attr/colorPrimary"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout

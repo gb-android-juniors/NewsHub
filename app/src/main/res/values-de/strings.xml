@@ -87,6 +87,9 @@
     <string name="dialog_title_device_is_offline">Keine Internetverbindung</string>
     <string name="dialog_button_cancel">Absagen</string>
     <string name="dialog_title_stub">Undefinierter Fehler</string>
+    <string name="alert_first_visit_message">Einige Nachrichtenquellen können aufgrund von Sperren, die durch die Gesetzgebung Ihres Landes festgelegt wurden, möglicherweise nicht geöffnet werden.\nUm diese Ressourcen lesen zu können, können Sie einen beliebigen VPN-Dienst verwenden. *</string>
+    <string name="alert_message_subtext">* Sofern nicht durch die Gesetze Ihres Landes verboten.</string>
+    <string name="attention">Aufmerksamkeit !</string>
 
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Keine ausgewählten Artikel</string>
