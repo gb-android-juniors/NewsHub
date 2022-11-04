@@ -10,7 +10,7 @@ android {
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.newsgb"
+        applicationId "com.robivan.newsgb"
         minSdk 21
         targetSdk 33
         versionCode 5
