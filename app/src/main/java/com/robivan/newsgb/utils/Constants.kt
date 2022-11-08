@@ -13,5 +13,6 @@ class Constants {
         const val APP_PREFERENCES_FIRST_LAUNCH_APP = "APP_PREFERENCES_FIRST_LAUNCH_APP"
         const val INITIAL_PAGE = 1
         const val DEFAULT_API_PAGE_SIZE = 30
+        const val COUNT_ARTICLES_BEFORE_AD = 10
     }
 }

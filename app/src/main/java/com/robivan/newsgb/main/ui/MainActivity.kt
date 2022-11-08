@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -87,7 +86,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initAdMob() {
-        MobileAds.initialize(this) { Log.d("TAG", "SDK initialized") }
+        MobileAds.initialize(this) { }
     }
 
     private fun checkIsItFirstLaunchApp() {
