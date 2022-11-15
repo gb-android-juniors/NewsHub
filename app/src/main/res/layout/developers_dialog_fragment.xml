@@ -5,22 +5,65 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/api_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/margin_8"
+        android:text="@string/news_api_source"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="@dimen/header_text_size"
+        android:textStyle="bold"
+        app:drawableTint="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/api_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/api_header">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/logo_image_size"
+            android:layout_height="@dimen/logo_api_height"
+            android:layout_margin="@dimen/margin_8"
+            android:src="@drawable/ic_news_api_logo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_8"
+            android:maxLines="5"
+            android:text="@string/news_api_url"
+            android:textIsSelectable="true"
+            android:textSize="@dimen/common_text_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
         android:id="@+id/dev_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="@dimen/margin_8"
-        android:layout_marginStart="@dimen/margin_4"
         android:text="@string/developers_header"
         android:textColor="?attr/colorPrimary"
         android:textSize="@dimen/header_text_size"
         android:textStyle="bold"
         app:drawableStartCompat="@drawable/ic_developers_24"
         app:drawableTint="?attr/colorPrimary"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/api_layout" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -44,5 +87,18 @@
             android:textSize="@dimen/common_text_size"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:maxLines="5"
+        android:text="@string/developers_email"
+        android:textIsSelectable="true"
+        android:textSize="@dimen/common_text_size"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

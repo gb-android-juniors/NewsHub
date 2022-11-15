@@ -50,6 +50,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     private fun initView() = with(binding) {
         root.setOnClickListener { hideKeyboard() }
         connectUs.setOnClickListener { showDevelopersDialogFragment() }
+        aboutAppButton.setOnClickListener { showDevelopersDialogFragment() }
         selectCountryText.setText(getSelectedCountryNameFromPreferences())
         selectAppThemeText.setText(getSelectedAppThemeName())
         selectAppLanguageText.setText(getSelectedLanguage())

@@ -111,6 +111,7 @@
     <string name="settings_divider_content_name">Inhaltseinstellungen</string>
     <string name="settings_divider_interface_name">Schnittstelleneinstellungen</string>
     <string name="settings_save_button_name">Speichern</string>
+    <string name="about_app_button_text">Über Bewerbung</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Titel suchen</string>
@@ -121,10 +122,11 @@
     <string name="source">Quelle</string>
 
     <!--    Developers DialogFragment-->
-    <string name="developers_header">Entwickler:</string>
+    <string name="developers_header">NewsHub-Entwickler:</string>
     <string name="developers_list">Robilko Alexander\nMyasnikov Dmitry\nBronski Kirill\nPodobedov Andrey\nErshov Konstantin</string>
     <string name="connect_us">Verbinde dich mit uns</string>
     <string name="email_clients_not_found">Es sind keine E-Mail-Clients installiert.</string>
+    <string name="news_api_source">Quelle der Nachrichtenartikel:</string>
 
     <!--Ads-->
     <string name="no_ad_title">Hier sollte Werbung sein :(</string>

@@ -14,9 +14,12 @@ import androidx.lifecycle.Lifecycle
 import com.robivan.newsgb._core.ui.BaseFragment
 import com.robivan.newsgb.databinding.ArticleFragmentBinding
 import com.robivan.newsgb.utils.Constants.Companion.URL
+import com.robivan.newsgb.utils.getBaseUrl
 import com.robivan.newsgb.utils.getShareNewsIntent
 
 class WebViewFragment : BaseFragment<ArticleFragmentBinding>() {
+
+    private val contentUrl: String by lazy { arguments?.getString(URL).toString() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -28,6 +31,7 @@ class WebViewFragment : BaseFragment<ArticleFragmentBinding>() {
         (requireActivity() as AppCompatActivity).apply {
             setSupportActionBar(binding.webViewToolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.subtitle = getBaseUrl(contentUrl)
         }
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}
@@ -45,15 +49,14 @@ class WebViewFragment : BaseFragment<ArticleFragmentBinding>() {
     }
 
     private fun initView() = with(binding) {
-        val url = arguments?.getString(URL)
         webView.apply {
             webViewClient = WebViewClient()
             @Suppress("SetJavaScriptEnabled")
             settings.javaScriptEnabled = true
-            if (url != null) {
-                loadUrl(url)
+            if (contentUrl.isNotEmpty()) {
+                loadUrl(contentUrl)
                 loader.isVisible = false
-                share.setOnClickListener { getShareNewsIntent(url)?.let { startActivity(it) } }
+                share.setOnClickListener { getShareNewsIntent(contentUrl)?.let { startActivity(it) } }
             }
         }
     }

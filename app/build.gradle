@@ -13,8 +13,8 @@ android {
         applicationId "com.robivan.newsgb"
         minSdk 21
         targetSdk 33
-        versionCode 8
-        versionName "1.2"
+        versionCode 9
+        versionName "1.21"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -91,5 +91,5 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
     // Yandex Mobile Ads
-    implementation 'com.yandex.android:mobileads:5.3.2'
+    implementation 'com.yandex.android:mobileads:5.4.0'
 }

@@ -32,8 +32,19 @@
             android:textColor="@color/textDarkSecondary"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/news_image"
+            app:layout_constraintStart_toEndOf="@+id/news_resource_title"
             tool:text="@string/example_resource_name_text" />
+
+        <TextView
+            android:id="@+id/news_resource_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_8"
+            android:text="@string/news_source"
+            android:textColor="@color/textDarkSecondary"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/news_image" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/news_image"
