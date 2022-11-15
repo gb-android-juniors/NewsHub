@@ -38,7 +38,7 @@ https://user-images.githubusercontent.com/75025794/196247852-43a70755-924c-4a3f-
 _________________________________________________________________________________________________________________________________________________________
 Скачать:
 --------
-Ссылка на релиз в RuStore: https://apps.rustore.ru/app/com.example.newsgb
+Ссылка на релиз в RuStore: https://apps.rustore.ru/app/com.robivan.newsgb
 
 ![white](https://user-images.githubusercontent.com/75025794/197234541-8cfab1f3-83b7-4ccf-a31b-ef80b0b7edda.png)
 

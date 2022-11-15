@@ -178,6 +178,7 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
     companion object {
         private const val ARG_ARTICLE_DATA = "arg_article_data"
         private const val BANNER_AD_ID = "R-M-2006130-1"
+
         private const val BANNER_WIDTH = 300
         private const val BANNER_HEIGHT = 200
 
