@@ -125,4 +125,7 @@
     <string name="connect_us">Connecte-toi avec nous</string>
     <string name="email_clients_not_found">Aucun client de messagerie n\'est installé.</string>
 
+    <!--Ads-->
+    <string name="no_ad_title">Il devrait y avoir des pubs ici :(</string>
+
 </resources>

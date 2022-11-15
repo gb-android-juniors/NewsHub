@@ -14,8 +14,10 @@ import com.robivan.newsgb.R
 import com.robivan.newsgb._core.ui.BaseFragment
 import com.robivan.newsgb._core.ui.adapter.NewsListAdapter
 import com.robivan.newsgb._core.ui.adapter.RecyclerItemListener
+import com.robivan.newsgb._core.ui.model.AdBanner
 import com.robivan.newsgb._core.ui.model.Article
 import com.robivan.newsgb._core.ui.model.ListViewState
+import com.robivan.newsgb._core.ui.model.NewsListItem
 import com.robivan.newsgb.article.ui.ArticleFragment
 import com.robivan.newsgb.databinding.NewsFragmentTabItemBinding
 import com.robivan.newsgb.utils.ui.Category
@@ -134,7 +136,20 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
     }
 
     private fun initContent(data: List<Article>) {
-        newsListAdapter.submitList(data)
+        val resultData = insertAdToDataList(data)
+        newsListAdapter.submitList(resultData)
+    }
+
+    private fun insertAdToDataList(data: List<Article>): List<NewsListItem> {
+        val result = mutableListOf<NewsListItem>()
+        var adItemId = 0
+        for ((index, article) in data.withIndex()) {
+            result.add(article)
+            if ((index + 1) % 10 == 0) {
+                result.add(AdBanner(id = adItemId++))
+            }
+        }
+        return result
     }
 
     private fun enableEmptyState(state: Boolean) {

@@ -41,7 +41,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     }
 
     private fun renderState(state: SettingsViewState) = with(binding) {
-        when(state) {
+        when (state) {
             is SettingsViewState.CountryLoading -> countryLoader.isVisible = true
             else -> countryLoader.isVisible = false
         }
@@ -63,29 +63,31 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     }
 
     private fun showDevelopersDialogFragment() {
-        AlertDialog.Builder(requireContext())
-            .setView(R.layout.developers_dialog_fragment)
-            .setCancelable(true)
-            .setPositiveButton(R.string.connect_us) { _, _ -> composeEmail(arrayOf(getString(R.string.developers_email)), getString(R.string.mail_header_feedback)) }
-            .create()
-            .show()
+        AlertDialog.Builder(requireContext()).setView(R.layout.developers_dialog_fragment)
+            .setCancelable(true).setPositiveButton(R.string.connect_us) { _, _ ->
+                composeEmail(
+                    arrayOf(getString(R.string.developers_email)),
+                    getString(R.string.mail_header_feedback)
+                )
+            }.create().show()
     }
 
     private fun composeEmail(emails: Array<String>, subject: String) {
         try {
             startActivity(getEmailSendingIntent(emails, subject))
         } catch (ex: ActivityNotFoundException) {
-            Toast.makeText(requireContext(), getString(R.string.email_clients_not_found), Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                requireContext(), getString(R.string.email_clients_not_found), Toast.LENGTH_LONG
+            ).show()
         }
     }
 
     private fun setCountryListListener() = with(binding) {
-        val adapter =
-            ArrayAdapter(
-                requireContext(),
-                R.layout.settings_options_list_item,
-                getMapOfCountryNamesWithIndexes().keys.toTypedArray().sorted()
-            )
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.settings_options_list_item,
+            getMapOfCountryNamesWithIndexes().keys.toTypedArray().sorted()
+        )
         selectCountryText.setAdapter(adapter)
         selectCountryText.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView, _, position, _ ->
@@ -111,8 +113,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
                 if (getString(ThemeModes.values()[position].nameResId) != getSelectedAppThemeName()) {
                     val selectedTheme = ThemeModes.values()[position].name
                     PreferencesHelper(
-                        context = requireContext(),
-                        prefName = Constants.APP_PREFERENCES_THEME_MODE
+                        context = requireContext(), prefName = Constants.APP_PREFERENCES_THEME_MODE
                     ).save(parameter = selectedTheme)
                     selectAppThemeLayout.helperText = getString(R.string.settings_theme_helper_text)
                     setSaveButtonActive()
@@ -133,8 +134,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
                 if (getString(Languages.values()[position].nameResId) != getSelectedLanguage()) {
                     val selectedLanguage = Languages.values()[position].languageCode
                     PreferencesHelper(
-                        context = requireContext(),
-                        prefName = Constants.APP_PREFERENCES_LANGUAGE
+                        context = requireContext(), prefName = Constants.APP_PREFERENCES_LANGUAGE
                     ).save(parameter = selectedLanguage)
                     selectAppLanguageLayout.helperText =
                         getString(R.string.settings_theme_helper_text)
@@ -148,8 +148,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
             isEnabled = true
             setBackgroundColor(
                 ContextCompat.getColor(
-                    requireContext(),
-                    R.color.settings_save_button_selected_color
+                    requireContext(), R.color.settings_save_button_selected_color
                 )
             )
         }
@@ -159,30 +158,26 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
     private fun saveSelectedCountry(selectedCountryName: String) {
         getMapOfCountryNamesWithIndexes()[selectedCountryName]?.let { index ->
             PreferencesHelper(
-                context = requireContext(),
-                prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
+                context = requireContext(), prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
             ).save(index = index)
             App.countryCode = Countries.values()[index].countryCode
         }
     }
 
     private fun getSelectedAppThemeName(): String = PreferencesHelper(
-        context = requireContext(),
-        prefName = Constants.APP_PREFERENCES_THEME_MODE
+        context = requireContext(), prefName = Constants.APP_PREFERENCES_THEME_MODE
     ).readString()?.let { selectedTheme ->
         getString(ThemeModes.valueOf(selectedTheme).nameResId)
     } ?: getString(ThemeModes.SYSTEM_MODE.nameResId)
 
     private fun getSelectedCountryNameFromPreferences(): String = PreferencesHelper(
-        context = requireContext(),
-        prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
+        context = requireContext(), prefName = Constants.APP_PREFERENCES_COUNTRY_CODE
     ).readInt().let { index ->
         getString(Countries.values()[index].nameResId)
     }
 
     private fun getSelectedLanguage(): String = PreferencesHelper(
-        context = requireContext(),
-        prefName = Constants.APP_PREFERENCES_LANGUAGE
+        context = requireContext(), prefName = Constants.APP_PREFERENCES_LANGUAGE
     ).readString()?.let { selectedLocale ->
         getString(Languages.valueOf(selectedLocale.uppercase()).nameResId)
     } ?: getString(Languages.DEFAULT.nameResId)

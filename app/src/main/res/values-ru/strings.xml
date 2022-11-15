@@ -126,4 +126,7 @@
     <string name="connect_us">Связаться с нами</string>
     <string name="email_clients_not_found">Почтовые клиенты не установлены.</string>
 
+    <!--Ads-->
+    <string name="no_ad_title">Здесь должна быть реклама :(</string>
+
 </resources>

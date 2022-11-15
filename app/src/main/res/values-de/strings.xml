@@ -126,4 +126,7 @@
     <string name="connect_us">Verbinde dich mit uns</string>
     <string name="email_clients_not_found">Es sind keine E-Mail-Clients installiert.</string>
 
+    <!--Ads-->
+    <string name="no_ad_title">Hier sollte Werbung sein :(</string>
+
 </resources>

@@ -135,4 +135,7 @@
     <string name="email_clients_not_found">There are no email clients installed.</string>
     <string name="mail_header_feedback" translatable="false">User feedback about app \"NewsHub\"</string>
 
+    <!--Ads-->
+    <string name="no_ad_title">There should be ads here :(</string>
+
 </resources>
