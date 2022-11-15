@@ -29,7 +29,7 @@ class NewsListAdapter(
 
     private var adWidth: Int = 0
 
-    private val newsListDiffer = AsyncListDiffer(this, ArticleDiffUtilCallback())
+    private val newsListDiffer = AsyncListDiffer(this, NewsListItemDiffUtilCallback())
 
     fun submitList(list: List<NewsListItem>) = newsListDiffer.submitList(list)
 

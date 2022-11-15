@@ -5,7 +5,7 @@ import com.robivan.newsgb._core.ui.model.AdBanner
 import com.robivan.newsgb._core.ui.model.Article
 import com.robivan.newsgb._core.ui.model.NewsListItem
 
-class ArticleDiffUtilCallback : DiffUtil.ItemCallback<NewsListItem>() {
+class NewsListItemDiffUtilCallback : DiffUtil.ItemCallback<NewsListItem>() {
     override fun areItemsTheSame(oldItem: NewsListItem, newItem: NewsListItem): Boolean {
         return when {
             oldItem is Article && newItem is Article -> oldItem.isTheSame(newItem)

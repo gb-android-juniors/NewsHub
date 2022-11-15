@@ -24,6 +24,7 @@ import com.robivan.newsgb._core.ui.model.Article
 import com.robivan.newsgb._core.ui.model.ItemViewState
 import com.robivan.newsgb.databinding.DetailsFragmentBinding
 import com.robivan.newsgb.utils.formatApiStringToDate
+import com.robivan.newsgb.utils.getBaseUrl
 import com.robivan.newsgb.utils.getShareNewsIntent
 import com.robivan.newsgb.utils.setBookmarkIconColor
 import com.yandex.mobile.ads.banner.AdSize
@@ -60,6 +61,7 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
         (requireActivity() as AppCompatActivity).apply {
             setSupportActionBar(binding.detailsToolbar)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            supportActionBar?.subtitle = getBaseUrl(article.contentUrl)
         }
         (requireActivity() as MenuHost).addMenuProvider(object : MenuProvider {
             override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {}
@@ -84,11 +86,12 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
         bannerAdView.apply {
             setAdSize(AdSize.flexibleSize(BANNER_WIDTH, BANNER_HEIGHT))
             setAdUnitId(BANNER_AD_ID)
-            setBannerAdEventListener(object : BannerAdEventListener{
+            setBannerAdEventListener(object : BannerAdEventListener {
                 override fun onAdLoaded() {}
                 override fun onAdFailedToLoad(error: AdRequestError) {
                     Log.d("TAG", error.description)
                 }
+
                 override fun onAdClicked() {}
                 override fun onLeftApplication() {}
                 override fun onReturnedToApplication() {}

@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app:navigationIconTint="@color/white"
-            app:title="@string/source"
+            app:title="@string/news_source"
             app:titleTextColor="@color/textLightPrimary">
 
             <androidx.appcompat.widget.AppCompatImageView

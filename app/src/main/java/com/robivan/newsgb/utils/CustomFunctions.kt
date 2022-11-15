@@ -4,11 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.robivan.newsgb.R
+import java.net.MalformedURLException
+import java.net.URL
 
 /**
  * Метод для форматирования строки с датой, приходящей из API
@@ -24,12 +27,16 @@ fun setBookmarkIconColor(context: Context, bookmarkImage: AppCompatImageView, is
     } else {
         R.color.bookmark_unselected_color
     }
-    bookmarkImage.setColorFilter(ContextCompat.getColor(context, tintColor), android.graphics.PorterDuff.Mode.SRC_IN)
+    bookmarkImage.setColorFilter(
+        ContextCompat.getColor(context, tintColor),
+        android.graphics.PorterDuff.Mode.SRC_IN
+    )
 }
 
 internal fun Fragment.hideKeyboard() {
     view?.let { view ->
-        val imm = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm =
+            requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
@@ -37,7 +44,7 @@ internal fun Fragment.hideKeyboard() {
 /**
  * Метод для получения интента отправки ссылки на новость посредством мессенджеров и смс
  */
-fun getShareNewsIntent(contentUrl:String): Intent? {
+fun getShareNewsIntent(contentUrl: String): Intent? {
     val shareIntent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, contentUrl)
@@ -60,7 +67,16 @@ fun getEmailSendingIntent(emails: Array<String>, subject: String): Intent? {
 /**
  * Метод верификации языка запроса поиска статей в API, в зависимости от выбранного региона новостей
  */
-fun verifySearchLanguage(selectedCountryCode: String?) : String = when(selectedCountryCode) {
+fun verifySearchLanguage(selectedCountryCode: String?): String = when (selectedCountryCode) {
     "ar", "de", "en", "es", "fr", "he", "it", "nl", "no", "pt", "ru", "sv", "ud", "zh" -> selectedCountryCode
     else -> "en"
 }
+
+fun getBaseUrl(foolUrl: String): String? =
+    try {
+        val url = URL(foolUrl)
+        url.host
+    } catch (e: MalformedURLException) {
+        Log.d("TAG", "getBaseUrl() called with: foolUrl = $foolUrl")
+        null
+    }

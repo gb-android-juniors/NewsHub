@@ -20,6 +20,7 @@ import com.robivan.newsgb._core.ui.model.ListViewState
 import com.robivan.newsgb._core.ui.model.NewsListItem
 import com.robivan.newsgb.article.ui.ArticleFragment
 import com.robivan.newsgb.databinding.NewsFragmentTabItemBinding
+import com.robivan.newsgb.utils.Constants
 import com.robivan.newsgb.utils.ui.Category
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -145,7 +146,7 @@ class NewsTabItemFragment : BaseFragment<NewsFragmentTabItemBinding>() {
         var adItemId = 0
         for ((index, article) in data.withIndex()) {
             result.add(article)
-            if ((index + 1) % 10 == 0) {
+            if ((index + 1) % Constants.COUNT_ARTICLES_BEFORE_AD == 0) {
                 result.add(AdBanner(id = adItemId++))
             }
         }
