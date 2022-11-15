@@ -25,7 +25,7 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/connect_us"
                 style="@style/ToolBarButton"
-                android:src="@drawable/ic_about_app_24"/>
+                android:src="@drawable/ic_about_app_24" />
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -151,5 +151,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/select_app_language_layout" />
+
+    <TextView
+        android:id="@+id/about_app_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/margin_16"
+        android:text="@string/about_app_button_text"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="@dimen/common_text_size"
+        app:drawableStartCompat="@drawable/ic_about_app_24"
+        app:drawableTint="?attr/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

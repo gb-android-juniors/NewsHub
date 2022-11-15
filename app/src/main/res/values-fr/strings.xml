@@ -110,6 +110,7 @@
     <string name="settings_divider_content_name">Paramètres de contenu</string>
     <string name="settings_divider_interface_name">Paramètres de l\'interface</string>
     <string name="settings_save_button_name">Sauvegarder</string>
+    <string name="about_app_button_text">À propos de la candidature</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Titres de recherche</string>
@@ -120,10 +121,11 @@
     <string name="source">Source</string>
 
     <!--    Developers DialogFragment-->
-    <string name="developers_header">Développeurs:</string>
+    <string name="developers_header">Développeurs NewsHub:</string>
     <string name="developers_list">Robilko Alexander\nMyasnikov Dmitry\nBronski Kirill\nPodobedov Andrey\nErshov Konstantin</string>
     <string name="connect_us">Connecte-toi avec nous</string>
     <string name="email_clients_not_found">Aucun client de messagerie n\'est installé.</string>
+    <string name="news_api_source">Source des articles de presse:</string>
 
     <!--Ads-->
     <string name="no_ad_title">Il devrait y avoir des pubs ici :(</string>

@@ -111,6 +111,7 @@
     <string name="settings_divider_content_name">Настройки контента</string>
     <string name="settings_divider_interface_name">Настройки интерфейса</string>
     <string name="settings_save_button_name">Сохранить</string>
+    <string name="about_app_button_text">О приложении</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Поиск статей</string>
@@ -121,10 +122,11 @@
     <string name="source">Источник</string>
 
     <!--    Developers DialogFragment-->
-    <string name="developers_header">Разработчики:</string>
+    <string name="developers_header">Разработчики NewsHub:</string>
     <string name="developers_list">Робилко Александр\nМясников Дмитрий\nБронски Кирилл\nПодобедов Андрей\nЕршов Константин</string>
     <string name="connect_us">Связаться с нами</string>
     <string name="email_clients_not_found">Почтовые клиенты не установлены.</string>
+    <string name="news_api_source">Источник новостных статей:</string>
 
     <!--Ads-->
     <string name="no_ad_title">Здесь должна быть реклама :(</string>

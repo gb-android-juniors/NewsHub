@@ -119,6 +119,7 @@
     <string name="settings_divider_content_name">Content settings</string>
     <string name="settings_divider_interface_name">Interface settings</string>
     <string name="settings_save_button_name">Save</string>
+    <string name="about_app_button_text">About application</string>
 
     <!--    Search Fragment-->
     <string name="search_titles">Search titles</string>
@@ -129,11 +130,13 @@
     <string name="source">Source</string>
 
     <!--    Developers DialogFragment-->
-    <string name="developers_header">Developers:</string>
+    <string name="developers_header">NewsHub developers:</string>
     <string name="developers_list">Robilko Alexander\nMyasnikov Dmitry\nBronski Kirill\nPodobedov Andrey\nErshov Konstantin</string>
     <string name="connect_us">Connect with us</string>
     <string name="email_clients_not_found">There are no email clients installed.</string>
     <string name="mail_header_feedback" translatable="false">User feedback about app \"NewsHub\"</string>
+    <string name="news_api_source">Source of news articles:</string>
+    <string name="news_api_url" translatable="false">https://newsapi.org</string>
 
     <!--Ads-->
     <string name="no_ad_title">There should be ads here :(</string>
