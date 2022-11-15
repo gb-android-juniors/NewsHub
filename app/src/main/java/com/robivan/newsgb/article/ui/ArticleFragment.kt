@@ -2,6 +2,7 @@ package com.robivan.newsgb.article.ui
 
 import android.os.Build.VERSION
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -26,7 +27,10 @@ import com.robivan.newsgb.utils.formatApiStringToDate
 import com.robivan.newsgb.utils.getShareNewsIntent
 import com.robivan.newsgb.utils.setBookmarkIconColor
 import com.yandex.mobile.ads.banner.AdSize
+import com.yandex.mobile.ads.banner.BannerAdEventListener
 import com.yandex.mobile.ads.common.AdRequest
+import com.yandex.mobile.ads.common.AdRequestError
+import com.yandex.mobile.ads.common.ImpressionData
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -77,8 +81,20 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
     }
 
     private fun initAdBanner() = with(binding) {
-        bannerAdView.setAdUnitId(BANNER_AD_ID)
-        bannerAdView.setAdSize(AdSize.flexibleSize(FLEX_BANNER_WIDTH, FLEX_BANNER_HEIGHT))
+        bannerAdView.apply {
+            setAdSize(AdSize.flexibleSize(BANNER_WIDTH, BANNER_HEIGHT))
+            setAdUnitId(BANNER_AD_ID)
+            setBannerAdEventListener(object : BannerAdEventListener{
+                override fun onAdLoaded() {}
+                override fun onAdFailedToLoad(error: AdRequestError) {
+                    Log.d("TAG", error.description)
+                }
+                override fun onAdClicked() {}
+                override fun onLeftApplication() {}
+                override fun onReturnedToApplication() {}
+                override fun onImpression(p0: ImpressionData?) {}
+            })
+        }
         val adRequest = AdRequest.Builder().build()
         bannerAdView.loadAd(adRequest)
     }
@@ -161,9 +177,9 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
 
     companion object {
         private const val ARG_ARTICLE_DATA = "arg_article_data"
-        private const val BANNER_AD_ID = "R-M-1994249-1"
-        private const val FLEX_BANNER_WIDTH = 300
-        private const val FLEX_BANNER_HEIGHT = 160
+        private const val BANNER_AD_ID = "R-M-2006130-1"
+        private const val BANNER_WIDTH = 300
+        private const val BANNER_HEIGHT = 200
 
 
         @JvmStatic

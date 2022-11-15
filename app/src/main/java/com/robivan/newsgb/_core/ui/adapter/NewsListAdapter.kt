@@ -3,6 +3,7 @@ package com.robivan.newsgb._core.ui.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -14,13 +15,19 @@ import com.robivan.newsgb.databinding.DefaultArticleRecyclerItemBinding
 import com.robivan.newsgb.databinding.FirstArticleRecyclerItemBinding
 import com.robivan.newsgb.utils.setBookmarkIconColor
 import com.yandex.mobile.ads.banner.AdSize
+import com.yandex.mobile.ads.banner.BannerAdEventListener
+import com.yandex.mobile.ads.banner.BannerAdView
 import com.yandex.mobile.ads.common.AdRequest
+import com.yandex.mobile.ads.common.AdRequestError
+import com.yandex.mobile.ads.common.ImpressionData
 
 class NewsListAdapter(
     private val listener: RecyclerItemListener,
     private val isMainNewsScreen: Boolean = false
 ) :
     RecyclerView.Adapter<BaseViewHolder>() {
+
+    private var adWidth: Int = 0
 
     private val newsListDiffer = AsyncListDiffer(this, ArticleDiffUtilCallback())
 
@@ -30,6 +37,7 @@ class NewsListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder {
         val inflater = LayoutInflater.from(parent.context)
+        adWidth = parent.width
         return when (viewType) {
             TYPE_FIRST_ARTICLE -> {
                 val binding = FirstArticleRecyclerItemBinding.inflate(inflater, parent, false)
@@ -121,18 +129,36 @@ class NewsListAdapter(
     inner class AdBannerViewHolder(private val binding: AdBannerRecyclerItemBinding) :
         BaseViewHolder(binding.root) {
         override fun bind(newsListItem: NewsListItem) {
-            with (binding) {
+            with(binding) {
                 newsListItem as AdBanner
-                Log.d("TAG", "bind() called with ${newsListItem.id} and ${newsListItem.bannerId}")
-                recyclerBannerAdView.setAdUnitId(newsListItem.bannerId)
-                recyclerBannerAdView.setAdSize(
-                    AdSize.flexibleSize(
-                        300,
-                        160
-                    )
-                )
+                val adContainer = adContainer
+                adContainer.isVisible = false
+                val adView = BannerAdView(root.context)
+                adView.apply {
+                    setAdSize(AdSize.flexibleSize(adWidth, AD_HEIGHT))
+                    setAdUnitId(newsListItem.bannerId)
+                    setBannerAdEventListener(object : BannerAdEventListener {
+                        override fun onAdLoaded() {
+                            adContainer.isVisible = true
+                        }
+
+                        override fun onAdFailedToLoad(error: AdRequestError) {
+                            Log.d("TAG", error.description)
+                            adContainer.isVisible = false
+                        }
+
+                        override fun onAdClicked() {}
+                        override fun onLeftApplication() {}
+                        override fun onReturnedToApplication() {}
+                        override fun onImpression(p0: ImpressionData?) {}
+                    })
+                }
+                adContainer.apply {
+                    removeAllViews()
+                    addView(adView)
+                }
                 val adRequest = AdRequest.Builder().build()
-                recyclerBannerAdView.loadAd(adRequest)
+                adView.loadAd(adRequest)
             }
         }
     }
@@ -141,5 +167,6 @@ class NewsListAdapter(
         const val TYPE_FIRST_ARTICLE = 0
         const val TYPE_DEFAULT_ARTICLE = 1
         const val TYPE_AD_BANNER = 2
+        const val AD_HEIGHT = 200
     }
 }

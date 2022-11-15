@@ -8,6 +8,8 @@ import com.robivan.newsgb.main.di.mainModule
 import com.robivan.newsgb.news.di.newsModule
 import com.robivan.newsgb.search.di.searchModule
 import com.robivan.newsgb.settings.di.settingsModule
+import com.yandex.mobile.ads.common.MobileAds
+import com.yandex.mobile.ads.instream.MobileInstreamAds
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -19,6 +21,8 @@ class App : Application() {
         super.onCreate()
         initKoin()
         instance = this
+        MobileInstreamAds.setAdGroupPreloading(true)
+        MobileAds.initialize(this) { }
     }
 
     private fun initKoin() {
