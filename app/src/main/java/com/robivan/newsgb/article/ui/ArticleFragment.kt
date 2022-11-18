@@ -22,6 +22,7 @@ import com.robivan.newsgb.R
 import com.robivan.newsgb._core.ui.BaseFragment
 import com.robivan.newsgb._core.ui.model.Article
 import com.robivan.newsgb._core.ui.model.ItemViewState
+import com.robivan.newsgb.article.ui.webview.WebViewFragment
 import com.robivan.newsgb.databinding.DetailsFragmentBinding
 import com.robivan.newsgb.utils.formatApiStringToDate
 import com.robivan.newsgb.utils.getBaseUrl

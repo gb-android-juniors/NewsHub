@@ -94,7 +94,6 @@
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Нет избранных статей</string>
     <string name="more_details">Подробнее…</string>
-    <string name="unknown_error">Неизвестная ошибка!</string>
     <string name="closing_warning">Вы уверены, что хотите удалить все закладки?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
@@ -130,5 +129,16 @@
 
     <!--Ads-->
     <string name="no_ad_title">Здесь должна быть реклама :(</string>
+
+    <!--    Error messages-->
+    <string name="error_failed_ssl_handshake">Не удалось выполнить подтверждение SSL.</string>
+    <string name="error_host_lookup">Ошибка поиска имени хоста сервера или прокси.</string>
+    <string name="error_redirect_loop">Слишком много перенаправлений.</string>
+    <string name="error_unsupported_scheme">Неподдерживаемая схема.</string>
+    <string name="error_io">Сервер не смог связаться. Попробуйте позже.</string>
+    <string name="unknown_error">Неизвестная ошибка!</string>
+    <string name="error_timeout">Серверу требуется слишком много времени для связи. Попробуйте позже.</string>
+    <string name="error_too_many_requests">Слишком много запросов во время этой загрузки.</string>
+    <string name="error_connect">Не удалось подключиться к серверу.\nВозможно, ресурс заблокирован в вашей стране.</string>
 
 </resources>
