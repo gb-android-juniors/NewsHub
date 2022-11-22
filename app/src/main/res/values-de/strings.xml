@@ -94,7 +94,6 @@
     <!--    Bookmarks Fragment news-->
     <string name="empty_bookmark_warning_text">Keine ausgewählten Artikel</string>
     <string name="more_details">Mehr Details…</string>
-    <string name="unknown_error">Unbekannter Fehler!</string>
     <string name="closing_warning">Möchten Sie wirklich alle Lesezeichen löschen?</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
@@ -130,5 +129,16 @@
 
     <!--Ads-->
     <string name="no_ad_title">Hier sollte Werbung sein :(</string>
+
+    <!--    Error messages-->
+    <string name="error_connect">Keine Verbindung zum Server möglich.\nMöglicherweise ist die Ressource in Ihrem Land gesperrt.</string>
+    <string name="error_failed_ssl_handshake">SSL-Handshake konnte nicht eingerichtet werden.</string>
+    <string name="error_host_lookup">Suche nach Server- oder Proxy-Hostnamen fehlgeschlagen.</string>
+    <string name="error_redirect_loop">Zu viele Weiterleitungen.</string>
+    <string name="error_unsupported_scheme">Nicht unterstütztes Schema.</string>
+    <string name="error_io">Der Server konnte nicht kommunizieren. Versuchen Sie es später noch einmal.</string>
+    <string name="unknown_error">Unbekannter Fehler!</string>
+    <string name="error_timeout">Die Kommunikation des Servers dauert zu lange. Versuche es später.</string>
+    <string name="error_too_many_requests">Zu viele Anfragen während dieses Downloads.</string>
 
 </resources>

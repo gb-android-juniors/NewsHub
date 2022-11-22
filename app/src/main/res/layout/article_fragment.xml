@@ -7,7 +7,7 @@
     android:background="@color/app_background_color"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".article.ui.WebViewFragment">
+    tools:context=".article.ui.webview.WebViewFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -41,5 +41,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
+
+    <TextView
+        android:id="@+id/error_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/margin_16"
+        android:gravity="center"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="@dimen/common_text_size"
+        android:visibility="gone"
+        app:drawableTint="?attr/colorPrimary"
+        app:drawableTopCompat="@drawable/ic_warning_amber_96"
+        tools:text="@string/unknown_error"
+        tools:visibility="visible">
+
+    </TextView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
