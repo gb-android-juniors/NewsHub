@@ -38,7 +38,12 @@ https://user-images.githubusercontent.com/75025794/196247852-43a70755-924c-4a3f-
 _________________________________________________________________________________________________________________________________________________________
 Скачать:
 --------
-Ссылка на релиз в RuStore: https://apps.rustore.ru/app/com.robivan.newsgb
+
+[Ссылка на релиз в Google Play.] (https://play.google.com/store/apps/details?id=com.robivan.newsgb)
+
+![logo 236_70](https://user-images.githubusercontent.com/108457224/205396214-2840a4e5-d8d0-4e8c-a35f-12e2f11d0ac2.png)
+
+[Ссылка на релиз в RuStore.] (https://apps.rustore.ru/app/com.robivan.newsgb)
 
 ![white](https://user-images.githubusercontent.com/75025794/197234541-8cfab1f3-83b7-4ccf-a31b-ef80b0b7edda.png)
 
