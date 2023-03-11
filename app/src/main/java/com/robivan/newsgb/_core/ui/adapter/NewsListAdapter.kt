@@ -7,6 +7,7 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.robivan.newsgb.R
 import com.robivan.newsgb._core.ui.model.AdBanner
 import com.robivan.newsgb._core.ui.model.Article
 import com.robivan.newsgb._core.ui.model.NewsListItem
@@ -84,7 +85,7 @@ class NewsListAdapter(
         override fun bind(newsListItem: NewsListItem) = with(binding) {
             newsListItem as Article
             newsHeader.text = newsListItem.title
-            newsResourceName.text = newsListItem.sourceName
+            newsResourceName.text = newsListItem.author
             newsItemBookmarkImage.apply {
                 setBookmarkIconColor(
                     context = itemView.context,
@@ -95,7 +96,8 @@ class NewsListAdapter(
             }
             Glide.with(newsImage.context)
                 .load(newsListItem.imageUrl)
-                .error(newsListItem.category.imgResId)
+                .placeholder(R.drawable.news_placeholder)
+                .error(R.drawable.news_placeholder)
                 .into(newsImage)
             itemView.setOnClickListener {
                 listener.onItemClick(newsListItem)
@@ -108,7 +110,7 @@ class NewsListAdapter(
         override fun bind(newsListItem: NewsListItem) = with(binding) {
             newsListItem as Article
             firstNewsHeader.text = newsListItem.title
-            firstNewsSource.text = newsListItem.sourceName
+            firstNewsSource.text = newsListItem.author
             firstNewsBookmarkImage.apply {
                 setBookmarkIconColor(
                     context = itemView.context,

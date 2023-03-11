@@ -58,6 +58,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
         setThemeListListener()
         setLanguageListListener()
         with(settingsSaveButton) {
+            isVisible = false
             isEnabled = false
             setOnClickListener { requireActivity().recreate() }
         }
@@ -146,6 +147,7 @@ class SettingsFragment : BaseFragment<SettingsFragmentBinding>() {
 
     private fun setSaveButtonActive() = with(binding) {
         settingsSaveButton.apply {
+            isVisible = true
             isEnabled = true
             setBackgroundColor(
                 ContextCompat.getColor(
