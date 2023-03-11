@@ -83,6 +83,7 @@
 
     <!--    Details Fragment news-->
     <string name="news_source">Source:</string>
+    <string name="publication_by">Publication by</string>
     <string name="publication_date">Publication date:</string>
 
     <!--    BottomNavigation names-->

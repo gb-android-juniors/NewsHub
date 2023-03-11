@@ -134,7 +134,7 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
     private fun initContent(article: Article) = with(binding) {
         share.setOnClickListener { getShareNewsIntent(article.contentUrl)?.let { startActivity(it) } }
         articleHeaderText.text = article.title
-        articleSourceName.text = article.sourceName
+        articleSourceName.text = article.author
         publicationDate.text = article.publishedDate.formatApiStringToDate()
         descriptionText.text = article.description
         detailsButton.setOnClickListener {

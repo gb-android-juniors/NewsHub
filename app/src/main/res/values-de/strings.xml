@@ -140,5 +140,6 @@
     <string name="unknown_error">Unbekannter Fehler!</string>
     <string name="error_timeout">Die Kommunikation des Servers dauert zu lange. Versuche es später.</string>
     <string name="error_too_many_requests">Zu viele Anfragen während dieses Downloads.</string>
+    <string name="publication_by">Geschrieben von</string>
 
 </resources>

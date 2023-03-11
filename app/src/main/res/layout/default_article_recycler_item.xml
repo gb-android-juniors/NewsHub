@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_8"
-            android:text="@string/news_source"
+            android:text="@string/publication_by"
             android:textColor="@color/textDarkSecondary"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +54,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tool:src="@drawable/example_image" />
+            tool:src="@drawable/news_placeholder" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/news_item_bookmark_image"

@@ -139,5 +139,6 @@
     <string name="unknown_error">Erreur inconnue!</string>
     <string name="error_timeout">La communication avec le serveur prend trop de temps. Essayer plus tard.</string>
     <string name="error_too_many_requests">Trop de requêtes lors de ce téléchargement.</string>
+    <string name="publication_by">Publication par</string>
 
 </resources>

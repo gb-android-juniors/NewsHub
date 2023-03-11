@@ -140,5 +140,6 @@
     <string name="error_timeout">Серверу требуется слишком много времени для связи. Попробуйте позже.</string>
     <string name="error_too_many_requests">Слишком много запросов во время этой загрузки.</string>
     <string name="error_connect">Не удалось подключиться к серверу.\nВозможно, ресурс заблокирован в вашей стране.</string>
+    <string name="publication_by">Сообщение от</string>
 
 </resources>
