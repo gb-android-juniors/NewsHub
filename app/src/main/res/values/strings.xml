@@ -131,7 +131,7 @@
 
     <!--    Developers DialogFragment-->
     <string name="developers_header">NewsHub developers:</string>
-    <string name="developers_list">Robilko Alexander\nMyasnikov Dmitry\nBronski Kirill\nPodobedov Andrey\nErshov Konstantin</string>
+    <string name="developers_list">Robilko Alexander\nMyasnikov Dmitry\nBronski Kirill</string>
     <string name="connect_us">Connect with us</string>
     <string name="email_clients_not_found">There are no email clients installed.</string>
     <string name="mail_header_feedback" translatable="false">User feedback about app \"NewsHub\"</string>
