@@ -89,7 +89,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
     //Preference
-    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'androidx.preference:preference-ktx:1.2.1'
 
     // Yandex Mobile Ads
     implementation 'com.yandex.android:mobileads:6.3.0'
