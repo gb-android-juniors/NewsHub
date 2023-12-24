@@ -122,7 +122,7 @@
 
     <!--    Developers DialogFragment-->
     <string name="developers_header">NewsHub-Entwickler:</string>
-    <string name="developers_list">Robilko Alexander\nMyasnikov Dmitry\nBronski Kirill\nPodobedov Andrey\nErshov Konstantin</string>
+    <string name="developers_list">Robilko Alexander\nMyasnikov Dmitry\nBronski Kirill</string>
     <string name="connect_us">Verbinde dich mit uns</string>
     <string name="email_clients_not_found">Es sind keine E-Mail-Clients installiert.</string>
     <string name="news_api_source">Quelle der Nachrichtenartikel:</string>

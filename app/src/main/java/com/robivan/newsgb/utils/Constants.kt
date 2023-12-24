@@ -2,6 +2,7 @@ package com.robivan.newsgb.utils
 
 class Constants {
     companion object {
+        const val TOKENS = "689627db5cd24ea4a3567efa62a092e8@eea649ffccf84bacbaf3684c366c82c2@db300ae771fd44508376f909bafbc805@20f095f3271a43d98fe01c8bacab9769@37f0cf1abd7d43adb0557c1003cf1045@0756a78eea4146cfa812f55a98f69e6c@ba8788d045394580bba1ef697cbcd0ee@f4f6f7ba556140f888d15ff714000d4d@0b91fdb7370243cb9d11f37ec21a3090@9d7478a1503f4b8080082f63a23e7e61@4be1f325622a4e19b75b5ef6762d1561@38917e3f7c1f4e34bb040ea30f67172a@145c8aa89d3843dab4e70ac6ab808515@ead9d712f633418a9cfef71c77e38549@ab136c2edbc44b98bc43009ba7db6e19@ea263571633f4ab98a429e95a6384a7f@c3c197450fe846e7a1b50ae3da027706@fe69d71bac17433a8499818ba99d8689@ecdab20d0599402d9adc95da4ee12170@72cda86f86124cc998d9127a629bbb5a@7bfb87ccf7bd4fab9635f3b5e3bf2de4@fe43252e7b664cd4badc32bfb116e6c7@6916688761a3492099bfa9ba150c996b@b55b7eac10a44be5b6414145fccacc8f@25d2d867dcf74843ac7fed3366546b37"
         const val BASE_URL = "https://newsapi.org/v2/"
         const val TOP_HEADLINES_ENDPOINT = "top-headlines"
         const val SEARCH_ENDPOINT = "everything"

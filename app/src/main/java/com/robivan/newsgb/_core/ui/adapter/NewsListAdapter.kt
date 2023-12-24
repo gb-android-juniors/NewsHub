@@ -15,8 +15,8 @@ import com.robivan.newsgb.databinding.AdBannerRecyclerItemBinding
 import com.robivan.newsgb.databinding.DefaultArticleRecyclerItemBinding
 import com.robivan.newsgb.databinding.FirstArticleRecyclerItemBinding
 import com.robivan.newsgb.utils.setBookmarkIconColor
-import com.yandex.mobile.ads.banner.AdSize
 import com.yandex.mobile.ads.banner.BannerAdEventListener
+import com.yandex.mobile.ads.banner.BannerAdSize
 import com.yandex.mobile.ads.banner.BannerAdView
 import com.yandex.mobile.ads.common.AdRequest
 import com.yandex.mobile.ads.common.AdRequestError
@@ -137,7 +137,7 @@ class NewsListAdapter(
                 adContainer.isVisible = false
                 val adView = BannerAdView(root.context)
                 adView.apply {
-                    setAdSize(AdSize.flexibleSize(adWidth, AD_HEIGHT))
+                    setAdSize(BannerAdSize.fixedSize(context, adWidth, AD_HEIGHT))
                     setAdUnitId(newsListItem.bannerId)
                     setBannerAdEventListener(object : BannerAdEventListener {
                         override fun onAdLoaded() {
