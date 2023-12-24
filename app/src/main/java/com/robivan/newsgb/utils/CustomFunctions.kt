@@ -55,7 +55,7 @@ fun getShareNewsIntent(contentUrl: String): Intent? {
 /**
  * Метод для получения интента отправки email письма с обратной связью разработчикам.
  */
-fun getEmailSendingIntent(emails: Array<String>, subject: String): Intent? {
+fun getEmailSendingIntent(emails: Array<String>, subject: String): Intent {
     val mailIntent = Intent(Intent.ACTION_SENDTO).apply {
         data = Uri.parse("mailto:") // only email apps should handle this
         putExtra(Intent.EXTRA_EMAIL, emails)

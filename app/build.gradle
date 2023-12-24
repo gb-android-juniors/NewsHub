@@ -85,8 +85,8 @@ dependencies {
     androidTestImplementation "android.arch.navigation:navigation-testing:2.5.0"
 
     //Navigation
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.6'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.6'
 
     //Preference
     implementation 'androidx.preference:preference-ktx:1.2.1'
