@@ -7,12 +7,12 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.robivan.newsgb"
         minSdk 26
-        targetSdk 33
+        targetSdk 34
         versionCode 11
         versionName "1.23"
 
@@ -92,5 +92,5 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.2.0'
 
     // Yandex Mobile Ads
-    implementation 'com.yandex.android:mobileads:5.6.0'
+    implementation 'com.yandex.android:mobileads:6.3.0'
 }

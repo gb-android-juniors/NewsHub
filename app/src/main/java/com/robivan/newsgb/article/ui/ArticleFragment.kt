@@ -28,8 +28,8 @@ import com.robivan.newsgb.utils.formatApiStringToDate
 import com.robivan.newsgb.utils.getBaseUrl
 import com.robivan.newsgb.utils.getShareNewsIntent
 import com.robivan.newsgb.utils.setBookmarkIconColor
-import com.yandex.mobile.ads.banner.AdSize
 import com.yandex.mobile.ads.banner.BannerAdEventListener
+import com.yandex.mobile.ads.banner.BannerAdSize
 import com.yandex.mobile.ads.common.AdRequest
 import com.yandex.mobile.ads.common.AdRequestError
 import com.yandex.mobile.ads.common.ImpressionData
@@ -85,7 +85,7 @@ class ArticleFragment : BaseFragment<DetailsFragmentBinding>() {
 
     private fun initAdBanner() = with(binding) {
         bannerAdView.apply {
-            setAdSize(AdSize.flexibleSize(BANNER_WIDTH, BANNER_HEIGHT))
+            setAdSize(BannerAdSize.fixedSize(context, BANNER_WIDTH, BANNER_HEIGHT))
             setAdUnitId(BANNER_AD_ID)
             setBannerAdEventListener(object : BannerAdEventListener {
                 override fun onAdLoaded() {}
